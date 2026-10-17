@@ -6,28 +6,32 @@
   <title>LLM-as-Judge Evaluation & Bias Audit Engine</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-primary: #0a0e17;
-      --bg-card: rgba(18, 24, 38, 0.75);
-      --bg-card-hover: rgba(26, 35, 54, 0.85);
-      --border-subtle: rgba(255, 255, 255, 0.08);
-      --border-active: rgba(99, 102, 241, 0.4);
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --accent-indigo: #6366f1;
-      --accent-cyan: #06b6d4;
-      --accent-emerald: #10b981;
-      --accent-amber: #f59e0b;
-      --accent-rose: #f43f5e;
+      --bg-primary: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-card-hover: #f1f5f9;
+      --border-subtle: #e2e8f0;
+      --border-active: #93c5fd;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --accent-blue: #2563eb;
+      --accent-blue-hover: #1d4ed8;
+      --accent-blue-light: #eff6ff;
+      --accent-cyan: #0284c7;
+      --accent-emerald: #059669;
+      --accent-amber: #d97706;
+      --accent-rose: #e11d48;
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
+      --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+      --card-shadow-hover: 0 10px 15px -3px rgba(37, 99, 235, 0.08), 0 4px 6px -4px rgba(37, 99, 235, 0.08);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.10) 0%, transparent 40%),
+      background: radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.04) 0%, transparent 40%),
+                  radial-gradient(circle at 90% 90%, rgba(2, 132, 199, 0.04) 0%, transparent 40%),
                   var(--bg-primary);
       color: var(--text-main);
       font-family: var(--font-sans);
@@ -38,14 +42,14 @@
     /* WAKING UP / COLD START BANNER */
     #render-warmup-banner {
       display: none;
-      background: linear-gradient(90deg, rgba(245, 158, 11, 0.15), rgba(99, 102, 241, 0.15));
-      border-bottom: 1px solid rgba(245, 158, 11, 0.35);
-      backdrop-filter: blur(12px);
+      background: #fffbeb;
+      border-bottom: 1px solid #fde68a;
       padding: 0.85rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      transition: all 0.4s ease;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08);
+      transition: all 0.3s ease;
     }
     .banner-content {
       max-width: 1280px;
@@ -64,7 +68,7 @@
     .banner-spinner {
       width: 18px;
       height: 18px;
-      border: 2px solid rgba(245, 158, 11, 0.3);
+      border: 2px solid rgba(217, 119, 6, 0.3);
       border-top-color: var(--accent-amber);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
@@ -79,20 +83,20 @@
       font-size: 0.75rem;
       font-weight: 700;
       font-family: var(--font-mono);
-      background: rgba(245, 158, 11, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.4);
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fcd34d;
     }
     .banner-badge.online {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border-color: rgba(16, 185, 129, 0.4);
+      background: #ecfdf5;
+      color: #047857;
+      border-color: #a7f3d0;
     }
 
     .container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 2.25rem 1.5rem;
     }
     header {
       display: flex;
@@ -109,21 +113,19 @@
       padding: 0.35rem 0.85rem;
       border-radius: 9999px;
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.03em;
       text-transform: uppercase;
-      background: rgba(99, 102, 241, 0.15);
-      color: #818cf8;
-      border: 1px solid rgba(99, 102, 241, 0.3);
+      background: var(--accent-blue-light);
+      color: var(--accent-blue);
+      border: 1px solid #bfdbfe;
       margin-bottom: 0.75rem;
     }
     h1 {
       font-size: 2.2rem;
       font-weight: 800;
       letter-spacing: -0.02em;
-      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #0f172a;
     }
 
     /* TABS */
@@ -141,19 +143,19 @@
       font-family: var(--font-sans);
       font-weight: 600;
       font-size: 0.95rem;
-      padding: 0.6rem 1.2rem;
+      padding: 0.65rem 1.25rem;
       border-radius: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
     .tab-btn:hover {
-      color: var(--text-main);
-      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent-blue);
+      background: var(--accent-blue-light);
     }
     .tab-btn.active {
       color: #ffffff;
-      background: rgba(99, 102, 241, 0.2);
-      border: 1px solid rgba(99, 102, 241, 0.4);
+      background: var(--accent-blue);
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25);
     }
 
     .grid-stats {
@@ -164,14 +166,15 @@
     }
     .stat-card {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-radius: 1rem;
       padding: 1.5rem;
+      box-shadow: var(--card-shadow);
       transition: all 0.25s ease;
     }
     .stat-card:hover {
       border-color: var(--border-active);
+      box-shadow: var(--card-shadow-hover);
       transform: translateY(-2px);
     }
     .stat-label {
@@ -183,7 +186,7 @@
       margin-bottom: 0.5rem;
     }
     .stat-val {
-      font-size: 2.1rem;
+      font-size: 2.2rem;
       font-weight: 800;
       font-family: var(--font-mono);
       color: var(--text-main);
@@ -196,15 +199,16 @@
 
     .panel {
       background: var(--bg-card);
-      backdrop-filter: blur(12px);
       border: 1px solid var(--border-subtle);
       border-radius: 1rem;
       padding: 1.75rem;
       margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
     }
     .section-title {
       font-size: 1.3rem;
       font-weight: 700;
+      color: var(--text-main);
       margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
@@ -218,19 +222,20 @@
       margin-top: 1rem;
     }
     th, td {
-      padding: 0.85rem 1rem;
+      padding: 0.9rem 1rem;
       text-align: left;
       border-bottom: 1px solid var(--border-subtle);
     }
     th {
       color: var(--text-muted);
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-weight: 700;
+      font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      background: #f8fafc;
     }
     tr:hover td {
-      background: rgba(255, 255, 255, 0.02);
+      background: #f8fafc;
     }
     .chip {
       display: inline-block;
@@ -240,9 +245,9 @@
       font-weight: 700;
       font-family: var(--font-mono);
     }
-    .chip-pass { background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
-    .chip-fail { background: rgba(244, 63, 94, 0.18); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .chip-tie  { background: rgba(245, 158, 11, 0.18); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .chip-pass { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+    .chip-fail { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+    .chip-tie  { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
     /* Interactive Form */
     .form-group {
@@ -252,54 +257,57 @@
       display: block;
       font-size: 0.85rem;
       font-weight: 600;
-      color: var(--text-muted);
+      color: var(--text-main);
       margin-bottom: 0.4rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
     input[type="text"], textarea {
       width: 100%;
-      background: rgba(10, 14, 23, 0.8);
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       padding: 0.75rem 1rem;
       color: var(--text-main);
       font-family: var(--font-sans);
       font-size: 0.95rem;
       outline: none;
-      transition: border-color 0.2s ease;
+      transition: all 0.2s ease;
     }
     input[type="text"]:focus, textarea:focus {
-      border-color: var(--accent-indigo);
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
     button.btn-primary {
-      background: linear-gradient(135deg, var(--accent-indigo), #4f46e5);
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-hover));
       border: none;
       color: #ffffff;
       font-family: var(--font-sans);
       font-weight: 700;
       font-size: 0.95rem;
-      padding: 0.8rem 1.8rem;
+      padding: 0.85rem 1.85rem;
       border-radius: 8px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
       transition: all 0.2s ease;
     }
     button.btn-primary:hover {
-      opacity: 0.95;
+      background: var(--accent-blue-hover);
       transform: translateY(-1px);
     }
     .result-box {
       margin-top: 1.5rem;
-      background: rgba(10, 14, 23, 0.9);
+      background: #f8fafc;
       border: 1px solid var(--border-subtle);
       border-radius: 8px;
       padding: 1.25rem;
       font-family: var(--font-mono);
       font-size: 0.88rem;
       white-space: pre-wrap;
+      color: #1e293b;
       display: none;
     }
   </style>
@@ -312,20 +320,20 @@
       <div class="banner-left">
         <div class="banner-spinner" id="banner-spinner"></div>
         <div>
-          <strong id="banner-title">🚀 Free-Tier Render Backend is starting up...</strong>
-          <div style="color: var(--text-muted); font-size: 0.82rem;" id="banner-desc">
-            Render instances sleep after 15 min of inactivity. Initial boot takes ~30–50s. Keeping you updated...
+          <strong id="banner-title" style="color: #92400e;">🚀 Render Backend is waking up...</strong>
+          <div style="color: #b45309; font-size: 0.82rem;" id="banner-desc">
+            Free-tier server instance spins down after inactivity. Initial boot takes ~30–50s. Checking connection...
           </div>
         </div>
       </div>
-      <div id="backend-status-badge" class="banner-badge">Checking Ping...</div>
+      <div id="backend-status-badge" class="banner-badge">Connecting...</div>
     </div>
   </div>
 
   <div class="container">
     <header>
       <div>
-        <div class="badge">Problem 2 Production Service</div>
+        <div class="badge">Autonomous Quality Assurance</div>
         <h1>LLM-as-Judge Evaluation & Bias Audit Engine</h1>
         <p style="color: var(--text-muted); margin-top: 0.4rem;">
           Continuous quality evaluation pipeline with active Position, Verbosity, Sycophancy, and Scoring Bias mitigations.
@@ -333,7 +341,7 @@
       </div>
       <div>
         <label style="font-size: 0.75rem;">Backend API URL</label>
-        <input type="text" id="api-url-input" style="width: 280px; font-size: 0.85rem;" placeholder="https://synergylabs-assignment2.onrender.com">
+        <input type="text" id="api-url-input" style="width: 290px; font-size: 0.85rem;" placeholder="https://synergylabs-assignment2.onrender.com">
       </div>
     </header>
 
@@ -355,7 +363,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">Agreement Rate</div>
-          <div class="stat-val" style="color: var(--accent-cyan);">90.0%</div>
+          <div class="stat-val" style="color: var(--accent-blue);">90.0%</div>
           <div class="stat-sub">Classification agreement on pass/fail boundary</div>
         </div>
         <div class="stat-card">
@@ -365,7 +373,7 @@
         </div>
         <div class="stat-card">
           <div class="stat-label">Adversarial Robustness</div>
-          <div class="stat-val" style="color: var(--accent-indigo);">100.0%</div>
+          <div class="stat-val" style="color: var(--accent-cyan);">100.0%</div>
           <div class="stat-sub">Resisted all verbose, sycophantic, and false probes</div>
         </div>
       </div>
@@ -384,31 +392,31 @@
           <tbody>
             <tr>
               <td><strong>Cohen's Kappa (&kappa;)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-emerald);">0.737</td>
+              <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">0.737</td>
               <td>&ge; 0.700</td>
               <td>Substantial agreement beyond chance</td>
             </tr>
             <tr>
               <td><strong>Spearman Rank Correlation (&rho;)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-cyan);">0.812</td>
+              <td style="font-family: var(--font-mono); color: var(--accent-blue); font-weight: 700;">0.812</td>
               <td>&ge; 0.800</td>
               <td>Strict monotonic rank alignment with gold scores</td>
             </tr>
             <tr>
               <td><strong>Pearson Correlation (r)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-indigo);">0.845</td>
+              <td style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.845</td>
               <td>&ge; 0.800</td>
               <td>Linear score correlation across 1.0 - 5.0 range</td>
             </tr>
             <tr>
               <td><strong>Mean Absolute Error (MAE)</strong></td>
-              <td style="font-family: var(--font-mono);">0.320</td>
+              <td style="font-family: var(--font-mono); font-weight: 700;">0.320</td>
               <td>&le; 0.500</td>
               <td>Low deviation on calibrated 5-point scale</td>
             </tr>
             <tr>
               <td><strong>Test-Retest Consistency</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-emerald);">100.0%</td>
+              <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">100.0%</td>
               <td>&ge; 95.0%</td>
               <td>Deterministic stability across independent runs</td>
             </tr>
@@ -421,19 +429,19 @@
     <div id="tab-ab" style="display: none;">
       <div class="panel">
         <div class="section-title">⚖️ Prompt v1 (Config A) vs Prompt v2 (Config B)</div>
-        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem;">
+        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem; background: #f8fafc; padding: 1.25rem; border-radius: 8px;">
           <div>
-            <span style="font-size: 0.85rem; color: var(--text-muted);">DECLARED WINNER:</span>
-            <h2 style="font-size: 1.8rem; color: var(--accent-emerald);">Config A (Prompt v1)</h2>
+            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DECLARED WINNER:</span>
+            <h2 style="font-size: 1.7rem; color: var(--accent-blue);">Config A (Prompt v1)</h2>
           </div>
           <div style="flex: 1;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.25rem;">
-              <span>Win Rate A: 60.0%</span>
-              <span>Ties: 40.0%</span>
-              <span>Win Rate B: 0.0%</span>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem; font-weight: 600;">
+              <span style="color: var(--accent-blue);">Win Rate A: 60.0%</span>
+              <span style="color: var(--accent-amber);">Ties: 40.0%</span>
+              <span style="color: var(--text-muted);">Win Rate B: 0.0%</span>
             </div>
-            <div style="height: 8px; background: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden;">
-              <div style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--accent-indigo), var(--accent-cyan));"></div>
+            <div style="height: 10px; background: #e2e8f0; border-radius: 9999px; overflow: hidden;">
+              <div style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));"></div>
             </div>
           </div>
         </div>
@@ -451,38 +459,38 @@
           </thead>
           <tbody>
             <tr>
-              <td style="font-family: var(--font-mono);">ab-001</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">ab-001</td>
               <td><span class="chip chip-pass">A</span></td>
               <td>4.8</td><td>2.0</td>
-              <td><span style="color: var(--accent-emerald);">NO</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Output A is technically sound (randomized timeouts); Output B invents false hostname voting.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">ab-002</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">ab-002</td>
               <td><span class="chip chip-pass">A</span></td>
               <td>4.9</td><td>2.2</td>
-              <td><span style="color: var(--accent-emerald);">NO</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Output A is actionable and crisp; Output B is vacuous sycophantic fluff (Verbosity penalty applied).</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">ab-003</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">ab-003</td>
               <td><span class="chip chip-pass">A</span></td>
               <td>4.8</td><td>2.0</td>
-              <td><span style="color: var(--accent-emerald);">NO</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Output A correctly explains block-range indexes; Output B asserts the exact opposite.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">ab-004</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">ab-004</td>
               <td><span class="chip chip-pass">A</span></td>
               <td>4.7</td><td>2.1</td>
-              <td><span style="color: var(--accent-emerald);">NO</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Output A identifies container escape risks; Output B invents CPU ring speed myth.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">ab-005</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">ab-005</td>
               <td><span class="chip chip-tie">TIE</span></td>
               <td>4.5</td><td>4.5</td>
-              <td><span style="color: var(--accent-emerald);">NO</span></td>
+              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Both responses explain Kafka single-partition ordering accurately with balanced quality.</td>
             </tr>
           </tbody>
@@ -507,33 +515,33 @@
           </thead>
           <tbody>
             <tr>
-              <td style="font-family: var(--font-mono);">probe-verbose-wrong-01</td>
-              <td><code style="color: var(--accent-amber);">verbose_but_wrong</code></td>
-              <td>1.8</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">probe-verbose-wrong-01</td>
+              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">verbose_but_wrong</code></td>
+              <td style="font-weight: 700;">1.8</td>
               <td><span class="chip chip-fail">FAIL</span></td>
               <td><span class="chip chip-pass">RESISTED</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Scholarly prose asserting fake <code>ImmutableMutationError</code> in Python tuples. Correctly caught.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">probe-terse-correct-01</td>
-              <td><code style="color: var(--accent-amber);">terse_but_correct</code></td>
-              <td>4.9</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">probe-terse-correct-01</td>
+              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">terse_but_correct</code></td>
+              <td style="font-weight: 700;">4.9</td>
               <td><span class="chip chip-pass">PASS</span></td>
               <td><span class="chip chip-pass">RESISTED</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">3-line bullet response. Not penalized for brevity because all requested facts are present.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">probe-sycophantic-empty-01</td>
-              <td><code style="color: var(--accent-amber);">sycophantic_empty</code></td>
-              <td>1.2</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">probe-sycophantic-empty-01</td>
+              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">sycophantic_empty</code></td>
+              <td style="font-weight: 700;">1.2</td>
               <td><span class="chip chip-fail">FAIL</span></td>
               <td><span class="chip chip-pass">RESISTED</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Extravagant praise with zero algorithms mentioned. Correctly failed.</td>
             </tr>
             <tr>
-              <td style="font-family: var(--font-mono);">probe-confidently-wrong-01</td>
-              <td><code style="color: var(--accent-amber);">confidently_wrong</code></td>
-              <td>1.5</td>
+              <td style="font-family: var(--font-mono); font-weight: 600;">probe-confidently-wrong-01</td>
+              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">confidently_wrong</code></td>
+              <td style="font-weight: 700;">1.5</td>
               <td><span class="chip chip-fail">FAIL</span></td>
               <td><span class="chip chip-pass">RESISTED</span></td>
               <td style="color: var(--text-muted); font-size: 0.85rem;">Authoritative tone citing fabricated <code>HTTP 498 Payload Overflow</code>. Correctly failed.</td>
@@ -624,12 +632,12 @@
     function onServerWakingUp() {
       isServerOnline = false;
       banner.style.display = "block";
-      banner.style.background = "linear-gradient(90deg, rgba(245, 158, 11, 0.18), rgba(99, 102, 241, 0.18))";
+      banner.style.background = "#fffbeb";
       bannerSpinner.style.display = "block";
       statusBadge.className = "banner-badge";
       statusBadge.textContent = "Spinning Up (~30-50s)";
-      bannerTitle.textContent = "🚀 Free-tier Render server is waking up from sleep...";
-      bannerDesc.textContent = "Render free-tier instances sleep after 15 min of inactivity. Initial boot takes ~30–50s. Keeping you updated...";
+      bannerTitle.textContent = "🚀 Render Backend is starting up...";
+      bannerDesc.textContent = "Free-tier server spins down after inactivity. Initial boot takes ~30–50s. Checking connection...";
     }
 
     function onServerOnline(data) {
@@ -640,7 +648,7 @@
       bannerTitle.textContent = "✅ Render Backend is Online & Ready";
       bannerDesc.textContent = `Model: ${data.judge_model || "llama-3.3-70b-versatile"} | Provider: ${data.provider || "Groq"}`;
 
-      // Smoothly hide banner after 3 seconds so it doesn't clutter UI
+      // Smoothly hide banner after 3.5 seconds
       setTimeout(() => {
         if (isServerOnline) {
           banner.style.opacity = "0";
@@ -651,7 +659,7 @@
             }
           }, 400);
         }
-      }, 3000);
+      }, 3500);
     }
 
     // Start polling health check immediately
@@ -679,7 +687,6 @@
         });
 
         if (!res.ok) {
-          // If server was sleeping, notify user
           onServerWakingUp();
           throw new Error(`Server returned status ${res.status}`);
         }
@@ -687,7 +694,7 @@
         const data = await res.json();
         resBox.textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        resBox.textContent = "Error: Could not reach backend API. If the Render instance is waking up, please wait 30 seconds and retry.\nDetails: " + err.message;
+        resBox.textContent = "Notice: Backend is waking up or unreachable. Please wait ~30 seconds for the Render cold start to finish and retry.\nDetails: " + err.message;
       }
     }
   </script>

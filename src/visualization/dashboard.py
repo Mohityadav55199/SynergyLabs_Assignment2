@@ -206,7 +206,7 @@ class DashboardGenerator:
   <div class="container">
     <header>
       <div>
-        <div class="badge">Problem 2 Deliverable</div>
+        <div class="badge">Enterprise Quality Assurance</div>
         <h1>LLM-as-Judge Evaluation & Bias Audit Report</h1>
         <p style="color: var(--text-muted); margin-top: 0.5rem;">
           Autonomous judging pipeline with active mitigation and quantitative validation of Position, Verbosity, Sycophancy, and Scoring biases.
