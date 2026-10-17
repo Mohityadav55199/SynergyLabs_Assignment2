@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from pydantic import BaseModel
 from typing import Dict, Any, Optional
 
-from .config import config
+from .config import config, BASE_DIR
 from .schema import TestCase, PairwiseTestCase
 from .judge.pointwise import PointwiseJudge
 from .judge.pairwise import PairwiseJudge
@@ -48,7 +48,7 @@ def health_check():
 
 @app.get("/", response_class=HTMLResponse, summary="Serve Visual Dashboard")
 def serve_dashboard():
-    index_file = config.BASE_DIR / "index.html"
+    index_file = BASE_DIR / "index.html"
     if index_file.exists():
         with open(index_file, "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
