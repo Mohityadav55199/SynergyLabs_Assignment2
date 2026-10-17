@@ -1,0 +1,82 @@
+[
+  {
+    "id": "gold-001",
+    "input": "Explain the difference between synchronous and asynchronous IO in Node.js.",
+    "model_output": "Synchronous IO blocks the Node.js event loop thread until the operation completes (e.g. fs.readFileSync), preventing any other requests or timers from executing. Asynchronous IO (e.g. fs.readFile) delegates the IO operation to the libuv thread pool or OS kernel and registers a callback/promise, freeing the JavaScript event loop to process other incoming traffic concurrently.",
+    "gold_score": 4.8,
+    "gold_pass": true,
+    "domain": "Node.js Architecture"
+  },
+  {
+    "id": "gold-002",
+    "input": "What is the primary key constraint in SQL databases?",
+    "model_output": "A primary key constraint enforces both UNIQUE and NOT NULL constraints on one or more columns, guaranteeing that every row in the table can be uniquely identified. A table can possess only one primary key.",
+    "gold_score": 4.9,
+    "gold_pass": true,
+    "domain": "SQL Databases"
+  },
+  {
+    "id": "gold-003",
+    "input": "Can Python dictionaries contain duplicate keys?",
+    "model_output": "Yes, Python dictionaries can have as many duplicate keys as you want, and it will preserve all values in a hidden bucket table accessible via dict.duplicates().",
+    "gold_score": 1.0,
+    "gold_pass": false,
+    "domain": "Python Basics"
+  },
+  {
+    "id": "gold-004",
+    "input": "What is Amdahl's Law in parallel computing?",
+    "model_output": "Amdahl's Law predicts the theoretical maximum speedup of a program when using multiple processors. It states that speedup is strictly limited by the sequential fraction of the task: S(N) = 1 / ((1 - P) + (P / N)), where P is the parallelizable portion and N is the processor count.",
+    "gold_score": 4.7,
+    "gold_pass": true,
+    "domain": "Computer Architecture"
+  },
+  {
+    "id": "gold-005",
+    "input": "How does HTTPS encrypt web traffic?",
+    "model_output": "HTTPS uses symmetric encryption to encrypt all passwords, but the symmetric keys are sent in plaintext across the internet before each HTTP request.",
+    "gold_score": 1.2,
+    "gold_pass": false,
+    "domain": "Network Security"
+  },
+  {
+    "id": "gold-006",
+    "input": "What does ACID stand for in database transactions?",
+    "model_output": "ACID stands for Atomicity, Consistency, Isolation, and Durability.",
+    "gold_score": 5.0,
+    "gold_pass": true,
+    "domain": "Databases"
+  },
+  {
+    "id": "gold-007",
+    "input": "Explain how DNS resolution works when a user types a URL into a browser.",
+    "model_output": "The browser first checks local cache, then OS cache, then queries the local recursive resolver. If uncached, the resolver iteratively queries the Root nameserver, then the TLD (.com) nameserver, and finally the authoritative nameserver for the domain, which returns the IP address record.",
+    "gold_score": 4.6,
+    "gold_pass": true,
+    "domain": "Networking"
+  },
+  {
+    "id": "gold-008",
+    "input": "How do you reverse a singly linked list in O(n) time and O(1) space?",
+    "model_output": "Iterate through the list while maintaining three pointers: prev (initialized to null), curr (head), and next. In each step, save curr.next, redirect curr.next to prev, advance prev to curr, and advance curr to next. Return prev as the new head.",
+    "gold_score": 4.9,
+    "gold_pass": true,
+    "domain": "Data Structures"
+  },
+  {
+    "id": "gold-009",
+    "input": "Is JavaScript a statically typed language?",
+    "model_output": "Yes, JavaScript is strictly statically typed, and variable types cannot change at runtime. The compiler will reject variable reassignment with different types.",
+    "gold_score": 1.1,
+    "gold_pass": false,
+    "domain": "Programming Languages"
+  },
+  {
+    "id": "gold-010",
+    "input": "What is a deadlock and what are the four Coffman conditions?",
+    "model_output": "A deadlock is a state where a set of processes are blocked because each holds a resource and waits for another resource held by another process. The four Coffman conditions required for deadlock are: Mutual Exclusion, Hold and Wait, No Preemption, and Circular Wait.",
+    "gold_score": 4.9,
+    "gold_pass": true,
+    "domain": "Operating Systems"
+  }
+]

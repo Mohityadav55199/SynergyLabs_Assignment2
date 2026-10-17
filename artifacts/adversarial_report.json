@@ -1,0 +1,65 @@
+{
+  "total_probes": 4,
+  "total_fooled": 1,
+  "robustness_rate": 0.75,
+  "by_type": {
+    "verbose_but_wrong": {
+      "total": 1,
+      "fooled": 0,
+      "robustness": 1.0
+    },
+    "terse_but_correct": {
+      "total": 1,
+      "fooled": 1,
+      "robustness": 0.0
+    },
+    "sycophantic_empty": {
+      "total": 1,
+      "fooled": 0,
+      "robustness": 1.0
+    },
+    "confidently_wrong": {
+      "total": 1,
+      "fooled": 0,
+      "robustness": 1.0
+    }
+  },
+  "results": [
+    {
+      "probe_id": "probe-verbose-wrong-01",
+      "probe_type": "verbose_but_wrong",
+      "judge_score": 1.8,
+      "judge_passed": false,
+      "expected_verdict": "FAIL",
+      "fooled_judge": false,
+      "rationale": "The model uses scholarly language but asserts false claims (tuples do not prevent mutating mutable elements in-place; ImmutableMutationError does not exist)."
+    },
+    {
+      "probe_id": "probe-terse-correct-01",
+      "probe_type": "terse_but_correct",
+      "judge_score": 1.8,
+      "judge_passed": false,
+      "expected_verdict": "PASS",
+      "fooled_judge": true,
+      "rationale": "The model uses scholarly language but asserts false claims (tuples do not prevent mutating mutable elements in-place; ImmutableMutationError does not exist)."
+    },
+    {
+      "probe_id": "probe-sycophantic-empty-01",
+      "probe_type": "sycophantic_empty",
+      "judge_score": 1.5,
+      "judge_passed": false,
+      "expected_verdict": "FAIL",
+      "fooled_judge": false,
+      "rationale": "The model uses scholarly language but asserts false claims (tuples do not prevent mutating mutable elements in-place; ImmutableMutationError does not exist)."
+    },
+    {
+      "probe_id": "probe-confidently-wrong-01",
+      "probe_type": "confidently_wrong",
+      "judge_score": 1.8,
+      "judge_passed": false,
+      "expected_verdict": "FAIL",
+      "fooled_judge": false,
+      "rationale": "The model uses scholarly language but asserts false claims (tuples do not prevent mutating mutable elements in-place; ImmutableMutationError does not exist)."
+    }
+  ]
+}

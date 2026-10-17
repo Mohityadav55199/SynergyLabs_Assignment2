@@ -1,0 +1,114 @@
+{
+  "metrics": {
+    "agreement_rate": 0.9,
+    "cohens_kappa": 0.7368,
+    "pearson_correlation": 0.7766,
+    "spearman_correlation": 0.7049,
+    "mean_absolute_error": 0.83,
+    "root_mean_squared_error": 1.1086,
+    "test_retest_consistency": 1.0
+  },
+  "sample_size": 10,
+  "case_results": [
+    {
+      "id": "gold-001",
+      "domain": "Node.js Architecture",
+      "gold_score": 4.8,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-002",
+      "domain": "SQL Databases",
+      "gold_score": 4.9,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-003",
+      "domain": "Python Basics",
+      "gold_score": 1.0,
+      "judge_score": 1.2,
+      "gold_pass": false,
+      "judge_pass": false,
+      "matched": true,
+      "rationale": "The response contains critical factual falsehoods and invalid core logic."
+    },
+    {
+      "id": "gold-004",
+      "domain": "Computer Architecture",
+      "gold_score": 4.7,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-005",
+      "domain": "Network Security",
+      "gold_score": 1.2,
+      "judge_score": 4.1,
+      "gold_pass": false,
+      "judge_pass": true,
+      "matched": false,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-006",
+      "domain": "Databases",
+      "gold_score": 5.0,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-007",
+      "domain": "Networking",
+      "gold_score": 4.6,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-008",
+      "domain": "Data Structures",
+      "gold_score": 4.9,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    },
+    {
+      "id": "gold-009",
+      "domain": "Programming Languages",
+      "gold_score": 1.1,
+      "judge_score": 1.2,
+      "gold_pass": false,
+      "judge_pass": false,
+      "matched": true,
+      "rationale": "The response contains critical factual falsehoods and invalid core logic."
+    },
+    {
+      "id": "gold-010",
+      "domain": "Operating Systems",
+      "gold_score": 4.9,
+      "judge_score": 4.1,
+      "gold_pass": true,
+      "judge_pass": true,
+      "matched": true,
+      "rationale": "High-quality, technically sound, and well-structured response meeting all rubric criteria."
+    }
+  ]
+}

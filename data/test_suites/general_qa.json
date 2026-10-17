@@ -1,0 +1,92 @@
+[
+  {
+    "id": "qa-001",
+    "domain": "Computer Science / Algorithms",
+    "system_prompt": "You are a software engineering tutor. Be concise, precise, and accurate.",
+    "input": "Explain the time and auxiliary space complexity of QuickSort in the average and worst cases, and how dual-pivot partitioning affects them.",
+    "model_output": "QuickSort has an average time complexity of O(n log n) and an auxiliary space complexity of O(log n) due to call stack frames. In the worst case (e.g. sorted array with poor pivot choice), time complexity degrades to O(n^2) and space to O(n). Dual-pivot QuickSort (like Yaroslavskiy's algorithm used in Java) maintains the same asymptotic complexities (average O(n log n), worst O(n^2)), but significantly improves cache locality and reduces the total number of comparisons and memory swaps by ~20%, yielding superior real-world wall-clock performance.",
+    "expected_output": "Average time O(n log n), space O(log n). Worst time O(n^2), space O(n). Dual-pivot retains asymptotic bounds but improves cache performance and lowers comparison count.",
+    "criteria": ["correctness", "faithfulness", "completeness", "instruction_following", "tone_and_conciseness"]
+  },
+  {
+    "id": "qa-002",
+    "domain": "Systems Programming",
+    "system_prompt": "You are a Linux systems engineer. Answer factually and succinctly.",
+    "input": "What is the difference between hard links and soft links in POSIX filesystems regarding inode numbers and cross-filesystem boundaries?",
+    "model_output": "A hard link creates a new directory entry pointing directly to the existing file's inode number. Consequently, a hard link shares the exact same inode as the target and cannot span across different filesystems (since inode numbers are only unique within a single filesystem). A soft (symbolic) link is an independent file with its own distinct inode number whose data payload contains the textual path to the target file. Because it stores a path, soft links can span across different filesystem partitions and even point to non-existent targets.",
+    "expected_output": "Hard links share the same inode number and cannot cross filesystems. Soft links possess their own inode number, store a path string, and can cross filesystem boundaries.",
+    "criteria": ["correctness", "completeness", "instruction_following"]
+  },
+  {
+    "id": "qa-003",
+    "domain": "Database Engineering",
+    "system_prompt": "You are a database architect. Provide accurate technical explanations.",
+    "input": "Compare optimistic vs pessimistic concurrency control in distributed databases. When should each be chosen?",
+    "model_output": "Pessimistic concurrency control locks rows or resources before reading/writing, preventing conflicts upfront at the expense of locking overhead, lock contention, and deadlock risk. It is best suited for high-contention workloads where conflicts are frequent. Optimistic concurrency control (OCC) allows concurrent transactions to read and write without locking, validating conflict-freedom at commit time (e.g., using version checks or MVCC timestamps) and aborting/retrying if a conflict occurred. OCC is optimal for read-heavy or low-contention environments where abort/retry rates remain minimal.",
+    "expected_output": "Pessimistic locks upfront (best for high write contention). Optimistic validates at commit and aborts on conflict (best for read-heavy or low contention workloads).",
+    "criteria": ["correctness", "completeness", "tone_and_conciseness"]
+  },
+  {
+    "id": "qa-004",
+    "domain": "Mathematics & Probability",
+    "system_prompt": "You are a mathematics instructor. Solve step-by-step and state the final result.",
+    "input": "Two fair 6-sided dice are rolled. Given that the sum of the dice is at least 10, what is the probability that at least one die shows a 6?",
+    "model_output": "Let S be the event that the sum is >= 10. The possible pairs (die 1, die 2) are:\n- Sum 10: (4,6), (5,5), (6,4) -> 3 outcomes\n- Sum 11: (5,6), (6,5) -> 2 outcomes\n- Sum 12: (6,6) -> 1 outcome\nTotal outcomes where sum >= 10 = 3 + 2 + 1 = 6 outcomes.\nNow, find outcomes where at least one die is a 6:\n(4,6), (6,4), (5,6), (6,5), (6,6) -> 5 outcomes.\nTherefore, P(at least one 6 | sum >= 10) = 5 / 6.",
+    "expected_output": "5/6",
+    "criteria": ["correctness", "completeness", "instruction_following"]
+  },
+  {
+    "id": "qa-005",
+    "domain": "Python Performance",
+    "system_prompt": "You are a senior Python developer. Give practical and technically accurate advice.",
+    "input": "Explain the Global Interpreter Lock (GIL) in CPython and summarize its status in Python 3.13+ free-threaded mode.",
+    "model_output": "The GIL is a mutex in CPython that prevents multiple native threads from executing Python bytecode simultaneously, protecting CPython memory management and reference counting from race conditions. In Python 3.13, PEP 703 introduced an experimental free-threaded build option (--disable-gil). In this mode, the GIL is removed, reference counting is made thread-safe via biased reference counting and mimalloc, enabling true multi-core parallel execution for CPU-bound pure Python threads.",
+    "expected_output": "GIL restricts CPython to one thread executing bytecode at a time. Python 3.13 introduces experimental free-threading (PEP 703) to run without the GIL.",
+    "criteria": ["correctness", "completeness", "faithfulness"]
+  },
+  {
+    "id": "qa-006",
+    "domain": "Network Protocols",
+    "system_prompt": "You are a network protocol engineer. Provide concise technical answers.",
+    "input": "Why does HTTP/3 use QUIC over UDP instead of TCP + TLS?",
+    "model_output": "HTTP/2 suffered from Head-of-Line (HoL) blocking at the transport layer: because all streams multiplex over a single TCP connection, if a single TCP packet is dropped, all streams stall until the lost segment is retransmitted. QUIC runs over UDP and implements independent stream framing at the transport layer, so packet loss in one stream never blocks unrelated streams. Additionally, QUIC integrates TLS 1.3 encryption directly into the transport handshake (enabling 0-RTT/1-RTT connection setup) and supports connection migration across IP/network changes using Connection IDs.",
+    "expected_output": "To resolve TCP-level Head-of-Line blocking, reduce handshake latency with integrated TLS 1.3, and support connection migration.",
+    "criteria": ["correctness", "completeness", "tone_and_conciseness"]
+  },
+  {
+    "id": "qa-007",
+    "domain": "Machine Learning Engineering",
+    "system_prompt": "You are an AI research engineer. Explain precisely.",
+    "input": "Explain FlashAttention and why it yields substantial speedups compared to standard attention.",
+    "model_output": "Standard self-attention computes and materializes the full N x N attention matrix in GPU High Bandwidth Memory (HBM), resulting in quadratic memory complexity O(N^2) and high memory bandwidth IO overhead. FlashAttention reorders the computation using tiling: it splits the input Q, K, V into blocks, loads them into fast GPU SRAM, and computes softmax incrementally without materializing the intermediate N x N attention matrix to HBM. By reducing HBM read/write operations (memory IO bottleneck), it achieves 2-4x wall-clock speedups and linear memory scaling with respect to sequence length.",
+    "expected_output": "FlashAttention uses tiling to compute attention in fast SRAM without writing large N x N attention matrices to slow GPU HBM, eliminating memory bandwidth bottlenecks.",
+    "criteria": ["correctness", "completeness", "tone_and_conciseness"]
+  },
+  {
+    "id": "qa-008",
+    "domain": "Security Engineering",
+    "system_prompt": "You are a cybersecurity expert. Provide clear remediation.",
+    "input": "What is Server-Side Request Forgery (SSRF) and what are two effective defense mechanisms?",
+    "model_output": "SSRF is a vulnerability where an attacker coerces a server application to make unauthorized network requests to internal resources (e.g., cloud metadata endpoints like 169.254.169.254, internal databases, or microservices) that are inaccessible from the public internet. Two defense mechanisms are: 1) Strict IP/domain allowlisting with DNS resolution validation (resolving domain names before request, verifying the target IP is not RFC 1918 private/loopback/link-local, and pinning the IP to avoid DNS rebinding); 2) Network-level egress segmentation and disabling access to cloud metadata services via IMDSv2 with token hop-limits.",
+    "expected_output": "SSRF occurs when an attacker forces the server to send requests to internal services. Defenses include strict allowlisting with DNS-rebinding protection and network segmentation / IMDSv2.",
+    "criteria": ["correctness", "completeness", "safety"]
+  },
+  {
+    "id": "qa-009",
+    "domain": "Data Structures",
+    "system_prompt": "You are a technical interviewer.",
+    "input": "How does a Bloom filter work, and can it yield false negatives?",
+    "model_output": "A Bloom filter is a space-efficient probabilistic data structure used to test set membership. It consists of a bit array of size m initialized to zeros and k independent hash functions. When inserting an element, the k hash functions map the item to k bit positions, setting them to 1. To query an item, the same hash functions check if all k bits are 1. If any bit is 0, the element is definitely not in the set (zero false negatives). If all bits are 1, the element is probably in the set (false positives are possible due to hash collisions). A standard Bloom filter can NEVER yield false negatives.",
+    "expected_output": "Uses bit array and k hash functions. Yields false positives, but NEVER yields false negatives.",
+    "criteria": ["correctness", "completeness", "tone_and_conciseness"]
+  },
+  {
+    "id": "qa-010",
+    "domain": "Microservices Architecture",
+    "system_prompt": "You are an enterprise system architect.",
+    "input": "What is the Saga pattern in distributed transactions, and contrast choreography vs orchestration.",
+    "model_output": "The Saga pattern manages distributed transactions across microservices as a sequence of local transactions. If any local transaction fails, the saga executes compensating transactions to undo preceding changes. In choreography, services listen to domain events and autonomously decide when to execute local transactions without a central coordinator (decentralized, but can be hard to track as flows grow). In orchestration, a dedicated orchestrator service manages the transaction lifecycle, invoking each service and directing compensating rollbacks (centralized visibility, easier error handling, but adds an orchestrator dependency).",
+    "expected_output": "Saga breaks distributed transactions into local steps with compensations. Choreography uses event-driven pub-sub; orchestration uses a centralized coordinator.",
+    "criteria": ["correctness", "completeness", "instruction_following"]
+  }
+]

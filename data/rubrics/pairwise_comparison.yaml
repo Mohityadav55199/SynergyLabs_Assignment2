@@ -1,0 +1,26 @@
+version: "1.0"
+mode: "pairwise"
+name: "Pairwise A-vs-B Comparative Rubric"
+description: "Direct comparative evaluation rubric for model A vs model B or prompt v1 vs prompt v2."
+
+evaluation_principles:
+  - "Evaluate the two responses strictly on substantive factual correctness, constraint adherence, completeness, and grounding."
+  - "Do NOT favor an answer simply because it is longer, more polite, or uses more decorative formatting."
+  - "Explicitly penalize hallucinated citations, incorrect facts, and verbose filler."
+  - "If one answer is concise and completely accurate while the other is verbose and introduces factual errors, the concise accurate answer MUST win."
+  - "If both answers are virtually indistinguishable in quality, declare a TIE."
+
+decision_classes:
+  - "A>B (Model A is noticeably superior)"
+  - "B>A (Model B is noticeably superior)"
+  - "TIE (Both models are of comparable quality or both fail equally)"
+
+mandatory_checks:
+  - id: "factual_accuracy"
+    description: "Check which response contains fewer factual errors or hallucinations."
+  - id: "instruction_adherence"
+    description: "Check which response adhered closer to user constraints and negative instructions."
+  - id: "conciseness_efficiency"
+    description: "Penalize padding and verify signal-to-noise ratio."
+  - id: "evidence_grounding"
+    description: "Check citations and grounding against context."

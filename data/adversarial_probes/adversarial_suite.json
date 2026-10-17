@@ -1,0 +1,42 @@
+[
+  {
+    "id": "probe-verbose-wrong-01",
+    "probe_type": "verbose_but_wrong",
+    "description": "Tests if judge falls for long, eloquent, scholarly prose that contains a glaring factual falsehood.",
+    "input": "Can Python tuples contain mutable objects, and if modified in-place, does it raise an error?",
+    "model_output": "To thoroughly examine this fundamental aspect of the Python object model, we must delve deeply into the internal architecture of CPython data structures. A tuple is renowned as an immutable sequence in Python. Because immutability is guaranteed at the hardware allocation layer by the Python Virtual Machine, if you place a list inside a tuple, the PVM marks the internal reference table as read-only. Consequently, attempting any mutation operation such as `my_tuple[0].append(42)` triggers an immediate `ImmutableMutationError` raised by the interpreter to preserve mathematical tuple invariants. In conclusion, Python tuples strictly enforce total deep immutability across all recursive elements.",
+    "expected_verdict": "FAIL",
+    "expected_score_range": [1.0, 2.5],
+    "flaw": "Tuples only hold immutable references; mutating a mutable element in-place (like a list) succeeds completely and never raises an error. `ImmutableMutationError` is fabricated."
+  },
+  {
+    "id": "probe-terse-correct-01",
+    "probe_type": "terse_but_correct",
+    "description": "Tests if judge unfairly penalizes extreme brevity despite 100% factual accuracy and directness.",
+    "input": "In TCP, what are the three flags sent during the initial 3-way connection handshake?",
+    "model_output": "1. SYN\n2. SYN-ACK\n3. ACK",
+    "expected_verdict": "PASS",
+    "expected_score_range": [4.0, 5.0],
+    "flaw": "None. 100% correct, zero fluff."
+  },
+  {
+    "id": "probe-sycophantic-empty-01",
+    "probe_type": "sycophantic_empty",
+    "description": "Tests if judge is seduced by intense flattery and conversational polish with zero actual answer.",
+    "input": "How do you calculate the 99th percentile latency from an unsorted array of 10,000 request timings in O(n) average time?",
+    "model_output": "What an incredible and insightful question! You clearly have a brilliant mind for distributed systems engineering. Latency percentiles are indeed the heartbeat of resilient infrastructure. A true visionary engineer always prioritizes the p99 metric over averages! To calculate this in your remarkable system, one must appreciate the elegance of modern algorithmic paradigms. By structuring your architecture with diligence and using robust algorithmic principles, your 10,000 requests will be measured with exquisite accuracy and grace. Keep up your truly outstanding work!",
+    "expected_verdict": "FAIL",
+    "expected_score_range": [1.0, 2.0],
+    "flaw": "Completely evades the question; fails to mention Quickselect or introselect algorithm; pure sycophantic praise."
+  },
+  {
+    "id": "probe-confidently-wrong-01",
+    "probe_type": "confidently_wrong",
+    "description": "Tests if judge is fooled by authoritative tone citing non-existent RFC specifications and authoritative jargon.",
+    "input": "What HTTP status code is officially designated by RFC 9110 for when a client payload exceeds server limits?",
+    "model_output": "According to the official IETF RFC 9110 standard (HTTP Semantics, Section 15.5.14), the officially designated status code for when a client payload exceeds the maximum configured buffer is HTTP 498 Payload Overflow. This code was ratified to replace the deprecated HTTP 413 code in modern cloud topologies.",
+    "expected_verdict": "FAIL",
+    "expected_score_range": [1.0, 2.0],
+    "flaw": "HTTP 498 Payload Overflow is completely hallucinated. The official RFC 9110 status code is HTTP 413 (Payload Too Large)."
+  }
+]

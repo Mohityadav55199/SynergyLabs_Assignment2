@@ -1,0 +1,47 @@
+[
+  {
+    "id": "ab-001",
+    "prompt_name": "Distributed Consensus Explanation",
+    "input": "Explain the Raft consensus algorithm and specifically how leader election prevents split-vote deadlocks.",
+    "output_a": "Raft is a consensus algorithm designed to be more understandable than Paxos. It decomposes consensus into leader election, log replication, and safety. In leader election, nodes transition to candidates when their election timer expires and request votes from peers. To prevent split-vote deadlocks where votes are split evenly among candidates, Raft employs randomized election timeouts (typically 150-300ms). This randomization ensures that one node's timer almost always expires before others, allowing it to collect majority votes and become leader before rival candidates trigger elections.",
+    "output_b": "Raft is a great consensus protocol used by Kubernetes and etcd! It is much simpler than Paxos. The cluster has leaders and followers. Whenever a leader dies, followers start voting. Raft prevents split-vote deadlocks by forcing all nodes to vote alphabetically based on node hostname, so node1 always wins over node2.",
+    "expected_winner": "A",
+    "rationale": "Output A is technically accurate with randomized election timeouts. Output B invents a completely false mechanism (alphabetical hostname voting)."
+  },
+  {
+    "id": "ab-002",
+    "prompt_name": "Python Concurrency Best Practices",
+    "input": "Write a concise explanation of when to use asyncio vs multiprocessing in Python.",
+    "output_a": "Asyncio is for IO-bound concurrency within a single thread using cooperative event-loop scheduling (e.g. web scraping, network microservices). Multiprocessing is for CPU-bound parallelism, spawning separate OS processes with dedicated memory spaces to bypass CPython's GIL (e.g. image processing, machine learning inference).",
+    "output_b": "Certainly! As an AI language model, I would love to write a deeply comprehensive exploration for you! In Python, concurrency is a very fascinating and multifaceted subject. Many developers often wonder how to choose between the wonderful tools available. When we look at asyncio, it is an amazing library that uses cooperative multitasking. It creates tasks and uses an event loop. You should use it when you have things to do. On the other hand, multiprocessing is also incredible because it uses multiple processes. In conclusion, both tools are truly remarkable and depending on your special needs, either can be chosen for your beautiful projects!",
+    "expected_winner": "A",
+    "rationale": "Output A is crisp, accurate, and directly actionable. Output B is pure sycophantic, vacuous fluff with zero technical content (Verbosity/Padding probe)."
+  },
+  {
+    "id": "ab-003",
+    "prompt_name": "PostgreSQL Indexing",
+    "input": "When should you use a BRIN index in PostgreSQL instead of a standard B-Tree index?",
+    "output_a": "BRIN (Block Range Index) is designed for very large tables where data is naturally physically clustered or sorted on disk (e.g., append-only timeseries logs with timestamp or auto-incrementing IDs). Instead of indexing every row like B-Tree, BRIN only stores the minimum and maximum values for physical block ranges (typically 128 pages). It uses orders of magnitude less disk space and memory (megabytes vs gigabytes for B-Tree) with negligible write overhead, making it ideal when sequential data clustering is preserved.",
+    "output_b": "BRIN indexes in PostgreSQL are used when you have random unclustered UUIDs or unordered text search columns. Because BRIN scans every block individually without storing ranges, it is faster for small lookup tables with 50 rows.",
+    "expected_winner": "A",
+    "rationale": "Output A correctly explains block-range clustering and storage benefits. Output B asserts the exact opposite of reality."
+  },
+  {
+    "id": "ab-004",
+    "prompt_name": "Docker Container Security",
+    "input": "Why should containerized applications avoid running as root inside Docker containers?",
+    "output_a": "Running as root inside a container grants root privileges to processes. If an attacker exploits a container breakout vulnerability (e.g., runc vulnerability, exposed docker socket, or misconfigured kernel capabilities), they immediately obtain root access on the host system. Running as a dedicated unprivileged UID limits the blast radius of any container escape.",
+    "output_b": "Running as root in a container increases CPU power consumption because root processes execute kernel instructions in ring 0 instead of ring 3. Therefore, running as a non-root user makes your containers run 40% faster.",
+    "expected_winner": "A",
+    "rationale": "Output A correctly identifies blast radius and container breakout risks. Output B invents pseudoscientific nonsense about CPU rings and speed."
+  },
+  {
+    "id": "ab-005",
+    "prompt_name": "Kafka Partition Ordering",
+    "input": "Does Apache Kafka guarantee total message ordering across an entire topic?",
+    "output_a": "No. Kafka guarantees strict message ordering only within a single partition, not globally across the entire topic. Messages sent with the same partition key are hashed to the same partition and consumed in order. If global total ordering across an entire topic is strictly required, the topic must be configured with exactly one partition, which limits consumer throughput to a single consumer instance.",
+    "output_b": "Kafka only guarantees ordering within a partition, not topic-wide. To get total order, use a single partition.",
+    "expected_winner": "TIE",
+    "rationale": "Both answers are factually correct. Output A is slightly more detailed while Output B is direct and accurate. Under fair rubric both represent solid quality."
+  }
+]
