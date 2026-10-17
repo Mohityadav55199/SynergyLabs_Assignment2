@@ -148,23 +148,131 @@ def cmd_run_all(args):
     )
     console.print(f"[bold green][SUCCESS] Generated Interactive HTML Dashboard: {dashboard_path}[/bold green]")
 
+def cmd_evaluate_case(args):
+    console.print(Panel.fit("[bold cyan]Evaluating Single Model Output[/bold cyan]"))
+    client = get_llm_client(provider=args.provider, model=args.model)
+    judge = PointwiseJudge(llm_client=client, apply_mitigations=not args.disable_mitigations)
+
+    from .schema import TestCase
+    tc = TestCase(
+        id=args.id or "cli-case-001",
+        input=args.input,
+        model_output=args.output,
+        expected_output=args.expected,
+        reference_mode=args.reference_mode or "auto"
+    )
+    verdict = judge.evaluate_case(tc)
+
+    table = Table(title=f"Case Evaluation Verdict: {tc.id}")
+    table.add_column("Criterion / Attribute", style="cyan")
+    table.add_column("Score / Value", style="magenta")
+
+    table.add_row("Overall Score", f"[bold green]{verdict.overall_score:.2f} / 5.0[/bold green]")
+    table.add_row("Verdict", "[green]PASS[/green]" if verdict.passed else "[red]FAIL[/red]")
+    table.add_row("Judge Model", str(verdict.judge_model))
+    table.add_row("Latency", f"{verdict.latency_ms:.1f} ms")
+    table.add_row("Cost", f"${verdict.cost_usd:.6f}")
+    table.add_row("Overall Rationale", verdict.overall_rationale)
+
+    for cv in verdict.criterion_verdicts:
+        quote = f" (Quote: '{cv.evidence_quote[:40]}...')" if cv.evidence_quote else ""
+        table.add_row(f"Criterion: {cv.criterion_id}", f"{cv.score:.1f} - {cv.rationale}{quote}")
+
+    console.print(table)
+    return verdict.model_dump()
+
+def cmd_compare_pair(args):
+    console.print(Panel.fit("[bold cyan]Comparing Pair (Candidate A vs Candidate B)[/bold cyan]"))
+    client = get_llm_client(provider=args.provider, model=args.model)
+    judge = PairwiseJudge(llm_client=client, enable_position_swap=not args.disable_position_swap)
+
+    from .schema import PairwiseTestCase
+    tc = PairwiseTestCase(
+        id=args.id or "cli-pair-001",
+        input=args.input,
+        output_a=args.output_a,
+        output_b=args.output_b
+    )
+    verdict = judge.evaluate_pair(tc)
+
+    table = Table(title="Pairwise Verdict with Position Swap Check")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Value", style="magenta")
+
+    table.add_row("Final Winner", f"[bold green]{verdict.final_winner}[/bold green]")
+    table.add_row("Position Flip Detected", "[bold red]YES[/bold red]" if verdict.flip_detected else "[green]NO (Agreement)[/green]")
+    table.add_row("Average Score A", f"{verdict.average_score_a:.2f}")
+    table.add_row("Average Score B", f"{verdict.average_score_b:.2f}")
+    table.add_row("Forward Order Winner", verdict.forward_eval.winner)
+    if verdict.reverse_eval:
+        table.add_row("Reverse Order Winner", verdict.reverse_eval.winner)
+    table.add_row("Rationale", verdict.synthesis_rationale)
+
+    console.print(table)
+    return verdict.model_dump()
+
+def cmd_check_family(args):
+    from .mitigations.self_enhancement_bias import SelfEnhancementMitigator
+    judge_m = args.judge_model or config.judge_model
+    gen_m = args.generator_model or config.generator_model
+    res = SelfEnhancementMitigator.check_cross_family_compliance(judge_m, gen_m)
+
+    table = Table(title="Model Family Self-Enhancement Check")
+    table.add_column("Property", style="cyan")
+    table.add_column("Value", style="magenta")
+
+    table.add_row("Judge Model", f"{res['judge_model']} (Family: {res['judge_family']})")
+    table.add_row("Generator Model", f"{res['generator_model']} (Family: {res['generator_family']})")
+    table.add_row("Cross-Family Compliant", "[green]YES[/green]" if res['is_cross_family'] else "[bold red]NO[/bold red]")
+    table.add_row("Self-Enhancement Risk", f"[bold {('red' if res['self_enhancement_risk'] == 'HIGH' else 'green')}]{res['self_enhancement_risk']}[/]")
+    table.add_row("Recommendation", res['recommendation'])
+
+    console.print(table)
+    return res
+
 def main():
     parser = argparse.ArgumentParser(description="LLM-as-Judge Evaluation Pipeline")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # evaluate-suite
-    p_eval = subparsers.add_parser("evaluate-suite", help="Run pointwise evaluation on a test suite")
-    p_eval.add_argument("--suite", type=str, help="Path to JSON test suite")
+    p_eval = subparsers.add_parser("evaluate-suite", help="Run pointwise evaluation on a test suite (JSON or YAML)")
+    p_eval.add_argument("--suite", type=str, help="Path to JSON or YAML test suite")
     p_eval.add_argument("--provider", type=str, help="LLM provider: groq, openai, mock")
     p_eval.add_argument("--model", type=str, help="Judge model name")
     p_eval.add_argument("--disable-mitigations", action="store_true", help="Disable bias mitigations")
 
+    # evaluate-case
+    p_case = subparsers.add_parser("evaluate-case", help="Evaluate a single prompt and output")
+    p_case.add_argument("--id", type=str, help="Case ID")
+    p_case.add_argument("--input", type=str, required=True, help="Input prompt")
+    p_case.add_argument("--output", type=str, required=True, help="Model output to evaluate")
+    p_case.add_argument("--expected", type=str, help="Reference / Expected output")
+    p_case.add_argument("--reference-mode", type=str, choices=["auto", "reference_based", "reference_free"], default="auto")
+    p_case.add_argument("--provider", type=str, help="LLM provider: groq, openai, mock")
+    p_case.add_argument("--model", type=str, help="Judge model name")
+    p_case.add_argument("--disable-mitigations", action="store_true", help="Disable bias mitigations")
+
     # compare-ab
-    p_ab = subparsers.add_parser("compare-ab", help="Run pairwise A/B comparison")
-    p_ab.add_argument("--suite", type=str, help="Path to A/B test suite")
+    p_ab = subparsers.add_parser("compare-ab", help="Run pairwise A/B comparison on a test suite (JSON or YAML)")
+    p_ab.add_argument("--suite", type=str, help="Path to A/B test suite (JSON or YAML)")
     p_ab.add_argument("--provider", type=str, help="LLM provider")
     p_ab.add_argument("--model", type=str, help="Judge model name")
     p_ab.add_argument("--disable-position-swap", action="store_true", help="Disable position swap check")
+
+    # compare-pair
+    p_pair = subparsers.add_parser("compare-pair", help="Compare a single pair Candidate A vs Candidate B")
+    p_pair.add_argument("--id", type=str, help="Pair ID")
+    p_pair.add_argument("--input", type=str, required=True, help="Input prompt")
+    p_pair.add_argument("--output-a", type=str, required=True, help="Model Output A")
+    p_pair.add_argument("--output-b", type=str, required=True, help="Model Output B")
+    p_pair.add_argument("--provider", type=str, help="LLM provider")
+    p_pair.add_argument("--model", type=str, help="Judge model name")
+    p_pair.add_argument("--disable-position-swap", action="store_true", help="Disable position swap")
+
+    # check-family
+    p_fam = subparsers.add_parser("check-family", help="Check self-enhancement bias risk between judge and generator")
+    p_fam.add_argument("--judge-model", type=str, help="Judge model name")
+    p_fam.add_argument("--generator-model", type=str, help="Generator model name")
 
     # validate-judge
     p_val = subparsers.add_parser("validate-judge", help="Validate judge against gold benchmark & adversarial probes")
@@ -184,8 +292,14 @@ def main():
 
     if args.command == "evaluate-suite":
         cmd_evaluate_suite(args)
+    elif args.command == "evaluate-case":
+        cmd_evaluate_case(args)
     elif args.command == "compare-ab":
         cmd_compare_ab(args)
+    elif args.command == "compare-pair":
+        cmd_compare_pair(args)
+    elif args.command == "check-family":
+        cmd_check_family(args)
     elif args.command == "validate-judge":
         cmd_validate_judge(args)
     elif args.command == "run-all":

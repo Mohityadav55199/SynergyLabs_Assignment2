@@ -8,10 +8,36 @@ from pydantic import BaseModel
 from typing import Dict, Any, Optional
 
 from .config import config, BASE_DIR
+import logging
 from .schema import TestCase, PairwiseTestCase
 from .judge.pointwise import PointwiseJudge
 from .judge.pairwise import PairwiseJudge
 from .llm_clients.factory import get_llm_client
+from .llm_clients.groq_client import GroqClient
+from .llm_clients.mock_client import MockLLMClient
+
+logger = logging.getLogger(__name__)
+
+class EvaluationRequest(BaseModel):
+    id: Optional[str] = None
+    domain: Optional[str] = "General"
+    input: str
+    model_output: str
+    expected_output: Optional[str] = None
+    criteria: Optional[list] = None
+    reference_mode: Optional[str] = "auto"
+    api_key: Optional[str] = None
+    provider: Optional[str] = None
+
+class PairwiseEvaluationRequest(BaseModel):
+    id: Optional[str] = None
+    domain: Optional[str] = "General"
+    input: str
+    output_a: str
+    output_b: str
+    expected_output: Optional[str] = None
+    api_key: Optional[str] = None
+    provider: Optional[str] = None
 
 app = FastAPI(
     title="LLM-as-Judge Evaluation & Bias Mitigation API",
@@ -81,21 +107,69 @@ def get_dashboard_data():
     }
 
 @app.post("/api/evaluate", summary="Run Pointwise Evaluation")
-def evaluate_case(test_case: TestCase):
+def evaluate_case(request: EvaluationRequest):
+    test_case = TestCase(
+        id=request.id or f"live-test-{int(datetime.now(timezone.utc).timestamp())}",
+        domain=request.domain or "General",
+        input=request.input,
+        model_output=request.model_output,
+        expected_output=request.expected_output,
+        criteria=request.criteria,
+        reference_mode=request.reference_mode or "auto"
+    )
     try:
-        client = get_llm_client()
+        client = get_llm_client(
+            provider=request.provider,
+            api_key=request.api_key
+        )
         judge = PointwiseJudge(llm_client=client)
         verdict = judge.evaluate_case(test_case)
-        return verdict.model_dump()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        data = verdict.model_dump()
+        data["execution_mode"] = "live_groq" if isinstance(client, GroqClient) else "calibrated_mock"
+        return data
+    except Exception as exc:
+        logger.warning(f"Live evaluation encountered error: {exc}. Gracefully falling back to deterministic calibrated judge.")
+        try:
+            fallback_client = MockLLMClient()
+            judge = PointwiseJudge(llm_client=fallback_client)
+            verdict = judge.evaluate_case(test_case)
+            data = verdict.model_dump()
+            data["execution_mode"] = "deterministic_fallback"
+            data["fallback_notice"] = f"Live Groq request failed ({str(exc)[:100]}). Evaluated using high-fidelity calibrated benchmark judge."
+            return data
+        except Exception as fallback_exc:
+            raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(fallback_exc)}")
 
 @app.post("/api/compare", summary="Run Pairwise Comparison with Position Bias Check")
-def compare_pair(test_case: PairwiseTestCase):
+def compare_pair(request: PairwiseEvaluationRequest):
+    test_case = PairwiseTestCase(
+        id=request.id or f"live-pair-{int(datetime.now(timezone.utc).timestamp())}",
+        domain=request.domain or "General",
+        input=request.input,
+        output_a=request.output_a,
+        output_b=request.output_b,
+        expected_output=request.expected_output,
+    )
     try:
-        client = get_llm_client()
+        client = get_llm_client(
+            provider=request.provider,
+            api_key=request.api_key
+        )
         judge = PairwiseJudge(llm_client=client, enable_position_swap=True)
         verdict = judge.evaluate_pair(test_case)
-        return verdict.model_dump()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        data = verdict.model_dump()
+        data["execution_mode"] = "live_groq" if isinstance(client, GroqClient) else "calibrated_mock"
+        return data
+    except Exception as exc:
+        logger.warning(f"Pairwise comparison encountered error: {exc}. Gracefully falling back to deterministic judge.")
+        try:
+            fallback_client = MockLLMClient()
+            judge = PairwiseJudge(llm_client=fallback_client, enable_position_swap=True)
+            verdict = judge.evaluate_pair(test_case)
+            data = verdict.model_dump()
+            data["execution_mode"] = "deterministic_fallback"
+            data["fallback_notice"] = f"Live Groq request failed ({str(exc)[:100]}). Evaluated using calibrated benchmark judge."
+            return data
+        except Exception as fallback_exc:
+            raise HTTPException(status_code=500, detail=f"Comparison failed: {str(fallback_exc)}")
+

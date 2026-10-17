@@ -86,14 +86,16 @@ This project implements an end-to-end evaluation pipeline that takes bias mitiga
 
 ---
 
-## Judging Design: Pointwise vs. Pairwise
+## Judging Design: The Four Core Modes (When Each Fits)
 
-| Attribute | Pointwise Scoring Mode | Pairwise A-vs-B Mode |
-| :--- | :--- | :--- |
-| **Input Schema** | `{ id, input, model_output, expected_output?, criteria? }` | `{ id, input, output_a, output_b, criteria? }` |
-| **Output Metric** | Absolute score (1.0 to 5.0) per criterion + weighted overall | Relative verdict (`A`, `B`, or `TIE`) with margin |
-| **Position Effect** | None (evaluated independently) | **Severe** if unmitigated (order effects) |
-| **Best Used When** | • Absolute quality threshold gating (e.g. "Must score &ge; 4.0")<br>• Regression tracking over time<br>• Isolated unit evaluation | • Fine-grained prompt optimization (Prompt v1 vs v2)<br>• Model selection where differences are subtle<br>• Eliminating subjective scale calibration drift |
+The pipeline provides complete support for all four core evaluation paradigms specified in Problem 2:
+
+| Judging Mode | Input Schema | Core Metric | When It Fits Best |
+| :--- | :--- | :--- | :--- |
+| **Pointwise Scoring** | `{ id, input, model_output, criteria? }` | Absolute calibrated score (1.0–5.0) per criterion & overall | • Quality threshold release gating (e.g., must score &ge; 4.0)<br>• Tracking absolute score drift over CI/CD builds<br>• Isolated single-output audit & regulatory compliance |
+| **Pairwise A-vs-B** | `{ id, input, output_a, output_b }` | Relative verdict (`A`, `B`, or `TIE`) with win margin | • Prompt optimization (Prompt v1 vs Prompt v2)<br>• Model selection when differences are nuanced/subtle<br>• Eliminates human/judge subjective scale calibration bias |
+| **Reference-Based** | `{ id, input, model_output, expected_output }` | Grounding / Faithfulness score against gold text | • Factual QA, closed-domain tasks, textbook questions<br>• RAG context retrieval verification against known ground truth<br>• Objective benchmarks with verified human gold labels |
+| **Reference-Free** | `{ id, input, model_output }` (no gold reference) | Intrinsic soundness, logical rigor, policy compliance | • Open-ended creative, conversational, or exploratory tasks<br>• Real-time online production traffic monitoring where gold answers do not exist<br>• Long-tail domain queries without curated ground truth datasets |
 
 ---
 
@@ -247,10 +249,25 @@ JUDGE_MODEL=llama-3.3-70b-versatile
 pytest -v
 ```
 
-### 4. Execute Full Benchmark
+### 4. Execute Benchmark & CLI Commands
 ```bash
-# Run master benchmark and generate all deliverables
+# Run master benchmark and generate all deliverables & HTML dashboard
 python -m src.cli run-all --provider mock
+
+# Run pointwise evaluation on YAML test suite
+python -m src.cli evaluate-suite --suite data/test_suites/general_qa.yaml --provider mock
+
+# Run pairwise A/B comparison on YAML test suite
+python -m src.cli compare-ab --suite data/test_suites/config_a_vs_b.yaml --provider mock
+
+# Evaluate a single output right from the terminal
+python -m src.cli evaluate-case --input "Explain QuickSort" --output "QuickSort partitions around pivots..." --provider mock
+
+# Compare a candidate pair directly
+python -m src.cli compare-pair --input "Explain TCP" --output-a "TCP is connection-oriented..." --output-b "TCP is an internet protocol..." --provider mock
+
+# Check self-enhancement bias risk between judge and generator models
+python -m src.cli check-family --judge-model llama-3.3-70b-versatile --generator-model gpt-4o
 
 # Or run live with Groq:
 python -m src.cli run-all --provider groq

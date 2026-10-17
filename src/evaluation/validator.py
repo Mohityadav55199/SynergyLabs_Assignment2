@@ -6,6 +6,7 @@ from ..schema import GoldTestCase, ValidationMetrics, TestCase
 from ..judge.pointwise import PointwiseJudge
 from .metrics import StatisticalMetrics
 from ..config import config
+from ..utils import load_suite_data
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +20,7 @@ class JudgeValidator:
         self.judge = judge
 
     def validate_against_gold(self, benchmark_path: Path) -> Dict[str, Any]:
-        with open(benchmark_path, "r", encoding="utf-8") as f:
-            raw_cases = json.load(f)
-
+        raw_cases = load_suite_data(benchmark_path)
         gold_cases = [GoldTestCase.model_validate(c) for c in raw_cases]
 
         judge_scores_run1: List[float] = []

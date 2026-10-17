@@ -1,0 +1,19 @@
+# Pairwise A/B Test Suite in YAML format
+# Config A: High-density, grounded, concise prompt v1
+# Config B: Conversational, ungrounded, verbose prompt v2
+
+- id: "yaml-pair-001"
+  prompt_name: "QuickSort Partitioning"
+  input: "Explain the algorithmic difference between Lomuto and Hoare partitioning schemes in QuickSort."
+  output_a: "Hoare partitioning uses two pointers moving from opposite ends toward the center, doing three times fewer swaps on average than Lomuto. Lomuto uses a single trailing pointer, which is simpler to code but less efficient and degrades quickly with repeated elements."
+  output_b: "Hello there! That is an amazing question about sorting algorithms. Sorting is one of the most foundational concepts in computer science. When looking at Lomuto vs Hoare, both are partitions. Lomuto was popularized by Jon Bentley. Hoare was invented by Tony Hoare who invented QuickSort. In conclusion, both are remarkable methods for arranging data!"
+  expected_winner: "A"
+  rationale: "Candidate A is technical, accurate, and concise. Candidate B is conversational fluff without algorithmic substance."
+
+- id: "yaml-pair-002"
+  prompt_name: "TCP Retransmission"
+  input: "What causes a TCP Fast Retransmit, and how does it differ from a standard retransmission timeout (RTO)?"
+  output_a: "TCP Fast Retransmit is triggered by the receipt of three duplicate ACKs (4 identical ACKs total), indicating a lost segment while subsequent packets arrived. It avoids waiting for the RTO timer to expire, thereby maintaining high throughput without collapsing the congestion window to 1 MSS."
+  output_b: "TCP retransmission occurs whenever packets are dropped over a network connection. Fast retransmit is faster because it happens quickly. A timeout takes longer to expire because it waits for a timer."
+  expected_winner: "A"
+  rationale: "Candidate A specifies the exact 3-duplicate-ACK condition and congestion window impact. Candidate B is tautological and vague."

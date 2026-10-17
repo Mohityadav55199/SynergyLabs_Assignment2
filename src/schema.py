@@ -1,7 +1,8 @@
 from typing import List, Dict, Optional, Any, Literal
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 class TestCase(BaseModel):
+    __test__ = False
     id: str
     domain: Optional[str] = "General"
     system_prompt: Optional[str] = None
@@ -9,6 +10,7 @@ class TestCase(BaseModel):
     model_output: str
     expected_output: Optional[str] = None
     criteria: Optional[List[str]] = None
+    reference_mode: Optional[Literal["auto", "reference_based", "reference_free"]] = "auto"
     metadata: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class RubricCriterion(BaseModel):
@@ -74,14 +76,29 @@ class SuiteReport(BaseModel):
 
 # Pairwise & A/B Comparison Models
 class PairwiseTestCase(BaseModel):
+    __test__ = False
     id: str
+    domain: Optional[str] = "General"
     prompt_name: Optional[str] = None
     input: str
     system_prompt: Optional[str] = None
     output_a: str
     output_b: str
+    candidate_a: Optional[str] = None
+    candidate_b: Optional[str] = None
+    expected_output: Optional[str] = None
     expected_winner: Optional[Literal["A", "B", "TIE"]] = None
     rationale: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def reconcile_candidates(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if "output_a" not in data and "candidate_a" in data:
+                data["output_a"] = data["candidate_a"]
+            if "output_b" not in data and "candidate_b" in data:
+                data["output_b"] = data["candidate_b"]
+        return data
 
 class SinglePairEvaluation(BaseModel):
     winner: Literal["A", "B", "TIE"]
@@ -126,6 +143,7 @@ class ABComparisonReport(BaseModel):
 
 # Judge Validation Models
 class GoldTestCase(BaseModel):
+    __test__ = False
     id: str
     input: str
     model_output: str

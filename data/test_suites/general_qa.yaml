@@ -1,0 +1,37 @@
+# Test Suite: General QA Benchmark in YAML format
+# Demonstrates full YAML test suite support according to Requirement 1
+
+- id: "yaml-qa-001"
+  domain: "Computer Science / Algorithms"
+  system_prompt: "You are a software engineering tutor. Be concise, precise, and accurate."
+  input: "Explain the time and auxiliary space complexity of QuickSort in the average and worst cases, and how dual-pivot partitioning affects them."
+  model_output: "QuickSort has an average time complexity of O(n log n) and an auxiliary space complexity of O(log n) due to call stack frames. In the worst case (e.g. sorted array with poor pivot choice), time complexity degrades to O(n^2) and space to O(n). Dual-pivot QuickSort maintains asymptotic bounds while reducing comparison counts and cache misses."
+  expected_output: "Average time O(n log n), space O(log n). Worst time O(n^2), space O(n). Dual-pivot retains asymptotic bounds but improves cache performance and lowers comparison count."
+  criteria:
+    - "correctness"
+    - "faithfulness"
+    - "completeness"
+    - "instruction_following"
+    - "tone_and_conciseness"
+
+- id: "yaml-qa-002"
+  domain: "Systems Programming"
+  system_prompt: "You are a Linux systems engineer. Answer factually and succinctly."
+  input: "What is the difference between hard links and soft links in POSIX filesystems regarding inode numbers and cross-filesystem boundaries?"
+  model_output: "A hard link shares the exact same inode number as the original file and cannot cross filesystem boundaries. A soft link is an independent file with its own inode whose payload stores the path to the target, allowing it to cross filesystems."
+  expected_output: "Hard links share the same inode number and cannot cross filesystems. Soft links possess their own inode number, store a path string, and can cross filesystem boundaries."
+  criteria:
+    - "correctness"
+    - "completeness"
+    - "instruction_following"
+
+- id: "yaml-qa-003"
+  domain: "Network Protocols"
+  system_prompt: "You are a network protocol engineer. Provide concise technical answers."
+  input: "Why does HTTP/3 use QUIC over UDP instead of TCP + TLS?"
+  model_output: "HTTP/3 uses QUIC over UDP primarily to eliminate TCP head-of-line blocking across multiplexed streams, reduce handshake latency with built-in TLS 1.3, and support connection migration."
+  expected_output: "To resolve TCP-level Head-of-Line blocking, reduce handshake latency with integrated TLS 1.3, and support connection migration."
+  criteria:
+    - "correctness"
+    - "completeness"
+    - "tone_and_conciseness"

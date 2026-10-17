@@ -1,5 +1,6 @@
 import os
 import logging
+from typing import Optional
 from .base import BaseLLMClient
 from .groq_client import GroqClient
 from .mock_client import MockLLMClient

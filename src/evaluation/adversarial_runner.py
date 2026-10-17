@@ -6,6 +6,7 @@ from ..schema import AdversarialProbeCase, AdversarialProbeResult, AdversarialRe
 from ..judge.pointwise import PointwiseJudge
 from ..llm_clients.mock_client import MockLLMClient
 from ..config import config
+from ..utils import load_suite_data
 
 logger = logging.getLogger(__name__)
 
@@ -20,9 +21,7 @@ class AdversarialProbeRunner:
         self.judge = judge
 
     def run_probes(self, probes_path: Path) -> AdversarialReport:
-        with open(probes_path, "r", encoding="utf-8") as f:
-            raw_cases = json.load(f)
-
+        raw_cases = load_suite_data(probes_path)
         probe_cases = [AdversarialProbeCase.model_validate(c) for c in raw_cases]
         results: List[AdversarialProbeResult] = []
         by_type: Dict[str, Dict[str, Any]] = {}

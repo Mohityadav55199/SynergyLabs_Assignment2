@@ -10,13 +10,16 @@ from ..config import config
 from ..logging.auditor import auditor
 from ..mitigations.position_bias import PositionBiasMitigator
 from ..mitigations.verbosity_bias import VerbosityMitigator
+from ..mitigations.self_enhancement_bias import SelfEnhancementMitigator
+from ..utils import load_suite_data
 
 logger = logging.getLogger(__name__)
 
 class PairwiseJudge:
     """
     Evaluates candidate pairs (Model A vs Model B, or Prompt v1 vs Prompt v2).
-    Implements dual-order evaluation (A vs B, B vs A) to measure and eliminate position bias.
+    Implements dual-order evaluation (A vs B, B vs A) to measure and eliminate position bias,
+    controls for verbosity bias, and protects against self-enhancement bias.
     """
 
     def __init__(
@@ -47,6 +50,7 @@ class PairwiseJudge:
 ### Evaluation Instructions & Bias Safeguards
 - Compare the two candidates strictly on technical accuracy, instruction adherence, grounding, and usefulness.
 - ANTI-VERBOSITY RULE: Do NOT favor a candidate simply because it is longer or uses excessive conversational pleasantries. Penalize fluff and superficial padding.
+- CROSS-FAMILY SAFEGUARD: Do NOT favor a candidate based on stylistic similarity to your own model family or training data.
 - If Candidate A is superior, select "A".
 - If Candidate B is superior, select "B".
 - If both are of indistinguishable quality or equally flawed, select "TIE".
@@ -172,9 +176,7 @@ Do NOT output any conversational text outside the JSON block.
         config_a_name: str = "Config A (Prompt v1)",
         config_b_name: str = "Config B (Prompt v2)"
     ) -> ABComparisonReport:
-        with open(suite_path, "r", encoding="utf-8") as f:
-            raw_cases = json.load(f)
-
+        raw_cases = load_suite_data(suite_path)
         test_cases = [PairwiseTestCase.model_validate(c) for c in raw_cases]
         verdicts: List[PairwiseVerdict] = []
 

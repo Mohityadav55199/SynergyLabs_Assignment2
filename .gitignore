@@ -48,3 +48,5 @@ htmlcov/
 # Logs
 *.log
 logs/
+artifacts/audit_logs/*.jsonl
+!artifacts/audit_logs/audit_run_20261017_160649.jsonl

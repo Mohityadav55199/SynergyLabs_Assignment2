@@ -11,13 +11,16 @@ from ..logging.auditor import auditor
 from ..mitigations.verbosity_bias import VerbosityMitigator
 from ..mitigations.sycophancy_bias import SycophancyMitigator
 from ..mitigations.score_calibration import ScoreCalibrator
+from ..mitigations.self_enhancement_bias import SelfEnhancementMitigator
+from ..utils import load_suite_data
 
 logger = logging.getLogger(__name__)
 
 class PointwiseJudge:
     """
     Evaluates individual model outputs against an explicit multi-criteria rubric (Pointwise Mode).
-    Enforces structured scoring, evidence grounding, and anti-bias mitigations.
+    Enforces structured scoring, evidence grounding, anti-bias mitigations, and supports
+    both Reference-Based and Reference-Free evaluation modes.
     """
 
     def __init__(
@@ -36,9 +39,17 @@ class PointwiseJudge:
             data = yaml.safe_load(f)
         return Rubric.model_validate(data)
 
+    def determine_reference_mode(self, test_case: TestCase) -> str:
+        if test_case.reference_mode and test_case.reference_mode != "auto":
+            return test_case.reference_mode
+        if test_case.expected_output and test_case.expected_output.strip():
+            return "reference_based"
+        return "reference_free"
+
     def format_judging_prompt(self, test_case: TestCase) -> str:
         rubric_text = []
         criteria_to_use = test_case.criteria or [c.id for c in self.rubric.criteria]
+        ref_mode = self.determine_reference_mode(test_case)
 
         for cid in criteria_to_use:
             crit = self.rubric.get_criterion(cid)
@@ -53,8 +64,22 @@ class PointwiseJudge:
             mitigation_blocks.append(VerbosityMitigator.ANTI_VERBOSITY_SYSTEM_INSTRUCTION)
             mitigation_blocks.append(SycophancyMitigator.EVIDENCE_GROUNDING_INSTRUCTION)
             mitigation_blocks.append(ScoreCalibrator.get_calibration_prompt())
+            mitigation_blocks.append(SelfEnhancementMitigator.CROSS_FAMILY_INSTRUCTION)
 
         mitigations_str = "\n\n".join(mitigation_blocks)
+
+        if ref_mode == "reference_based":
+            ref_instruction = (
+                f"### Judging Mode: REFERENCE-BASED\n"
+                f"- Ground Truth Reference: \"\"\"{test_case.expected_output}\"\"\"\n"
+                f"- Instruction: Rigorously cross-examine candidate claims against the provided Ground Truth Reference."
+            )
+        else:
+            ref_instruction = (
+                f"### Judging Mode: REFERENCE-FREE (No Gold Reference Provided)\n"
+                f"- Instruction: Evaluate candidate accuracy, logical validity, and constraint satisfaction "
+                f"using objective domain facts and reasoning without relying on a pre-written reference."
+            )
 
         prompt = f"""You are an expert impartial evaluation judge. Your job is to rigorously evaluate the candidate model output using the rubric provided below.
 
@@ -63,7 +88,7 @@ class PointwiseJudge:
 - Domain: {test_case.domain or "General"}
 - Input Prompt: {test_case.input}
 - System Prompt: {test_case.system_prompt or "None"}
-- Reference / Expected Output: {test_case.expected_output or "None provided. Judge based on sound ground truth."}
+{ref_instruction}
 
 ### Candidate Model Output to Evaluate
 \"\"\"{test_case.model_output}\"\"\"
@@ -160,15 +185,17 @@ Do NOT output any markdown commentary outside the JSON block.
             total_tokens=response.total_tokens,
             latency_ms=response.latency_ms,
             cost_usd=cost_usd,
-            metadata={"overall_score": overall_score, "passed": passed}
+            metadata={
+                "overall_score": overall_score,
+                "passed": passed,
+                "reference_mode": self.determine_reference_mode(test_case)
+            }
         )
 
         return verdict
 
     def evaluate_suite(self, suite_path: Path, suite_name: Optional[str] = None) -> SuiteReport:
-        with open(suite_path, "r", encoding="utf-8") as f:
-            cases_raw = json.load(f)
-
+        cases_raw = load_suite_data(suite_path)
         test_cases = [TestCase.model_validate(c) for c in cases_raw]
         verdicts: List[CaseVerdict] = []
 

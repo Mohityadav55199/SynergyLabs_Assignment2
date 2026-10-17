@@ -46,16 +46,60 @@ class RobustJsonParser:
     def repair_syntax_flaws(cls, json_str: str) -> str:
         # Remove trailing commas before closing braces/brackets
         json_str = re.sub(r",\s*([\]}])", r"\1", json_str)
-        # Normalize single quotes to double quotes if purely key-value syntax
-        # (Be careful not to replace apostrophes in words)
         # Fix unquoted true, false, null casing if needed
         json_str = re.sub(r"\bTrue\b", "true", json_str)
         json_str = re.sub(r"\bFalse\b", "false", json_str)
         json_str = re.sub(r"\bNone\b", "null", json_str)
+        # Normalize single-quoted keys and string values e.g. {'score': 4.0}
+        json_str = re.sub(r"'(.*?)'\s*:", r'"\1":', json_str)
+        json_str = re.sub(r":\s*'(.*?)'", r': "\1"', json_str)
         return json_str
 
     @classmethod
+    def repair_truncated_json(cls, text: str) -> str:
+        """
+        Attempts to close truncated JSON strings and brackets when LLM reaches max token limit.
+        """
+        trimmed = text.strip()
+        if not trimmed:
+            return "{}"
+
+        # If odd number of unescaped quotes, close the quote
+        num_quotes = len(re.findall(r'(?<!\\)"', trimmed))
+        if num_quotes % 2 != 0:
+            trimmed += '"'
+
+        # Balance open braces and brackets
+        stack = []
+        in_string = False
+        escape = False
+        for ch in trimmed:
+            if ch == '"' and not escape:
+                in_string = not in_string
+            elif not in_string:
+                if ch in "{[":
+                    stack.append(ch)
+                elif ch == "}" and stack and stack[-1] == "{":
+                    stack.pop()
+                elif ch == "]" and stack and stack[-1] == "[":
+                    stack.pop()
+            escape = (ch == "\\" and not escape)
+
+        # Close in reverse order
+        while stack:
+            open_ch = stack.pop()
+            if open_ch == "{":
+                trimmed += "}"
+            elif open_ch == "[":
+                trimmed += "]"
+
+        return trimmed
+
+    @classmethod
     def parse_to_dict(cls, raw_text: str) -> Dict[str, Any]:
+        if not raw_text or not raw_text.strip():
+            return {"overall_score": 3.0, "overall_rationale": "Empty response received."}
+
         cleaned = cls.clean_markdown_fences(raw_text)
         
         # Strategy 1: Direct JSON parsing
@@ -71,14 +115,30 @@ class RobustJsonParser:
         except json.JSONDecodeError:
             pass
 
-        # Strategy 3: Syntax repairs (trailing commas, Python bools)
+        # Strategy 3: Syntax repairs (trailing commas, Python bools, single quotes)
         repaired = cls.repair_syntax_flaws(bounded)
         try:
             return json.loads(repaired)
         except json.JSONDecodeError:
             pass
 
-        # Strategy 4: Fallback heuristic regex extraction for key-values
+        # Strategy 4: Truncated JSON bracket/quote closure
+        closed = cls.repair_truncated_json(repaired)
+        try:
+            return json.loads(closed)
+        except json.JSONDecodeError:
+            pass
+
+        # Strategy 5: ast.literal_eval for pure Python dict formats
+        try:
+            import ast
+            py_dict = ast.literal_eval(bounded)
+            if isinstance(py_dict, dict):
+                return py_dict
+        except Exception:
+            pass
+
+        # Strategy 6: Fallback heuristic regex extraction for key-values
         logger.warning("Standard JSON parsing failed, attempting heuristic regex extraction.")
         extracted = cls.heuristic_regex_extractor(cleaned)
         if extracted:
