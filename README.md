@@ -1,11 +1,18 @@
 # Autonomous LLM-as-Judge Evaluation Pipeline & Bias Mitigation Engine
 
+[![Render](https://img.shields.io/badge/Render-Live%20Backend%20%26%20UI-46e3b7.svg?logo=render&logoColor=white)](https://synergylabs-assignment2.onrender.com/)
+[![Vercel](https://img.shields.io/badge/Vercel-Live%20Frontend-black.svg?logo=vercel&logoColor=white)](https://synergylabsassignment2.vercel.app/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Evaluation](https://img.shields.io/badge/Evaluation-Pointwise%20%26%20Pairwise-indigo.svg)](#judging-design)
 [![Bias Mitigation](https://img.shields.io/badge/Bias%20Mitigations-Position%20%7C%20Verbosity%20%7C%20Sycophancy-emerald.svg)](#bias-handling--mitigation-matrix)
 
-A production-grade, auditable evaluation framework designed to score, compare, and validate LLM outputs while actively detecting, quantifying, and mitigating the core biases inherent to LLM judges.
+> **Live Deployment Links:**
+> - 🌐 **Render (Backend API & Interactive App):** [https://synergylabs-assignment2.onrender.com/](https://synergylabs-assignment2.onrender.com/)
+> - ⚡ **Vercel (Frontend Client):** [https://synergylabsassignment2.vercel.app/](https://synergylabsassignment2.vercel.app/)
+> - 🩺 **Health Check & Keep-Warm Endpoint:** [https://synergylabs-assignment2.onrender.com/health](https://synergylabs-assignment2.onrender.com/health)
+
+A production-grade, auditable evaluation framework designed to score, compare, and validate LLM outputs while actively detecting, quantifying, and mitigating the core biases inherent to LLM judges. Designed with a clean enterprise White & Blue interface with live Render cold-start status detection.
 
 ---
 

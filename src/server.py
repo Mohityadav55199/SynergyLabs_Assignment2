@@ -48,6 +48,10 @@ def health_check():
 
 @app.get("/", response_class=HTMLResponse, summary="Serve Visual Dashboard")
 def serve_dashboard():
+    index_file = config.BASE_DIR / "index.html"
+    if index_file.exists():
+        with open(index_file, "r", encoding="utf-8") as f:
+            return HTMLResponse(content=f.read())
     dashboard_file = ARTIFACTS_DIR / "evaluation_dashboard.html"
     if dashboard_file.exists():
         with open(dashboard_file, "r", encoding="utf-8") as f:
