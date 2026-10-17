@@ -251,3 +251,64 @@ python -m src.cli run-all --provider groq
 
 ### 5. Inspect Interactive Dashboard
 Open `artifacts/evaluation_dashboard.html` in any web browser to explore interactive visual charts, win rates, and adversarial audit tables.
+
+---
+
+## 🌐 Production Deployment & Keep-Warm Architecture
+
+The application is architected for dual-cloud deployment across **Render (FastAPI backend)** and **Vercel (Interactive Frontend)** with high availability safeguards.
+
+```
+┌─────────────────────────────────┐
+│  Vercel Frontend (index.html)   │
+│  • Interactive Dashboard & Form │
+│  • Cold-Start Warmup Banner     │
+└───────────────┬─────────────────┘
+                │ Polling /api/health & /api/evaluate
+                ▼
+┌─────────────────────────────────┐       Every 10 min       ┌───────────────────────────────┐
+│     Render FastAPI Backend      │ <─────────────────────── │ GitHub Actions Warm-Up Runner │
+│  • Pointwise & Pairwise Scoring │                          │ (.github/workflows/keep-warm) │
+│  • Bias Mitigation Engine       │ <─────────────────────── └───────────────────────────────┘
+└─────────────────────────────────┘       External Ping      ┌───────────────────────────────┐
+                                                             │ Backup Cron (cron-job.org)    │
+                                                             └───────────────────────────────┘
+```
+
+### 1. Render Backend Deployment
+- **Configuration:** [`render.yaml`](render.yaml)
+- **Runtime:** Python 3.11+ / 3.14
+- **Build Command:** `pip install -r requirements.txt`
+- **Start Command:** `uvicorn src.server:app --host 0.0.0.0 --port $PORT`
+- **Health Check Path:** `/health`
+- **Required Environment Variables:**
+  - `LLM_PROVIDER`: `groq`
+  - `GROQ_API_KEY`: your Groq API key
+  - `JUDGE_MODEL`: `llama-3.3-70b-versatile`
+
+### 2. Vercel Frontend Deployment
+- **Configuration:** [`vercel.json`](vercel.json)
+- Deploys the root [`index.html`](index.html) as a responsive, glassmorphism web application.
+- Rewrites all `/api/*` traffic directly to the Render backend URL with secure headers.
+
+### 3. Free-Tier Cold-Start Warmup Banner
+To resolve the Render free-tier spin-down delay (instances sleep after 15 minutes of inactivity):
+- A persistent warmup banner is embedded in [`index.html`](index.html).
+- On initial load or after user inactivity, it polls `/api/health`.
+- While the instance is booting (cold start ~30–50s), the banner displays:
+  > **"🚀 Free-Tier Render Backend is starting up (~30–50s)..."**
+  with a pulsing status badge.
+- As soon as the server returns HTTP 200, the badge turns green (`🟢 Render Server Online`) and smoothly collapses.
+
+### 4. GitHub Actions Keep-Warm Cron Job
+- **Workflow:** [`.github/workflows/keep-warm.yml`](.github/workflows/keep-warm.yml)
+- **Schedule:** Runs every 10 minutes (`cron: '*/10 * * * *'`) via GitHub Actions ubuntu runner.
+- Pings `https://synergylabs-assignment2.onrender.com/health` (or repository secret `RENDER_URL`) with automatic retries, ensuring the free instance stays warm 24/7.
+
+### 5. Backup Cron Job (cron-job.org / UptimeRobot)
+As an external fallback in case GitHub Actions encounters scheduled runner delays:
+1. Create a free monitor at [cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com).
+2. URL: `https://synergylabs-assignment2.onrender.com/health`
+3. Interval: **Every 10 to 12 minutes**.
+4. Expected HTTP Status: **200 OK**.
+

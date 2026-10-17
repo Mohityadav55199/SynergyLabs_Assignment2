@@ -1,0 +1,42 @@
+name: Keep Render Server Warm
+
+on:
+  schedule:
+    # Runs every 10 minutes to prevent Render free tier from sleeping (inactivity timeout is 15 min)
+    - cron: '*/10 * * * *'
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  ping-render:
+    name: Ping Health Endpoint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render Backend
+        run: |
+          # Target URL defaults to the configured repo secret or default Render domain
+          RENDER_URL="${{ secrets.RENDER_URL }}"
+          if [ -z "$RENDER_URL" ]; then
+            RENDER_URL="https://synergylabs-assignment2.onrender.com"
+          fi
+          
+          HEALTH_ENDPOINT="${RENDER_URL}/health"
+          echo "Pinging health endpoint: $HEALTH_ENDPOINT"
+          
+          # Attempt up to 3 retries in case the instance was cold-starting
+          MAX_ATTEMPTS=3
+          for i in $(seq 1 $MAX_ATTEMPTS); do
+            echo "Attempt $i of $MAX_ATTEMPTS..."
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 45 "$HEALTH_ENDPOINT" || echo "000")
+            echo "Received HTTP Status: $HTTP_STATUS"
+            
+            if [ "$HTTP_STATUS" -eq 200 ]; then
+              echo "✅ Render instance is warm and healthy (HTTP 200)!"
+              exit 0
+            fi
+            
+            echo "Instance may be waking up (Status: $HTTP_STATUS). Waiting 15 seconds before retry..."
+            sleep 15
+          done
+          
+          echo "⚠️ Failed to receive HTTP 200 after $MAX_ATTEMPTS attempts, but request was sent to wake server."
+          exit 0
