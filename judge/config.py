@@ -29,7 +29,7 @@ class JudgeConfig:
     api_key: str = field(default_factory=lambda: os.getenv("GROQ_API_KEY", ""))
     base_url: str = field(default_factory=lambda: os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1"))
     judge_temperature: float = field(default_factory=lambda: float(os.getenv("JUDGE_TEMPERATURE", "0")))
-    judge_max_tokens: int = field(default_factory=lambda: int(os.getenv("JUDGE_MAX_TOKENS", "3000")))
+    judge_max_tokens: int = field(default_factory=lambda: int(os.getenv("JUDGE_MAX_TOKENS", "1500")))
     log_path: Path = field(default_factory=lambda: Path(os.getenv("JUDGE_LOG", str(ROOT / "judge" / "logs" / "judge_calls.jsonl"))))
 
     @property

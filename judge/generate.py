@@ -11,14 +11,14 @@ from .config import JudgeConfig
 from .llm import LLMClient
 
 
-def generate_suite(inputs_doc: dict, client: LLMClient, cfg: JudgeConfig, temperature: float = 0.0, max_tokens: int = 1500) -> dict:
+def generate_suite(inputs_doc: dict, client: LLMClient, cfg: JudgeConfig, temperature: float = 0.0, max_tokens: int = 520) -> dict:
     cfgs = inputs_doc["configs"]
     cases, failed = [], []
     for i, q in enumerate(inputs_doc["inputs"], start=1):
         outs = {}
         for key in ("A", "B"):
             msgs = [{"role": "system", "content": cfgs[key]["system_prompt"]}, {"role": "user", "content": q}]
-            res = client.chat(msgs, cfg.generator_model, temperature, max_tokens, tag=f"gen|{key}|q{i:02d}", role="generator")
+            res = client.chat(msgs, cfg.generator_model, temperature, max_tokens, tag=f"gen2|{key}|q{i:02d}", role="generator")
             cut = bool(max_tokens) and res.completion_tokens >= max_tokens   # cut off by the token cap: not a real answer, exclude the case
             outs[key] = None if (res.error or cut or not res.text.strip()) else res.text.strip()
         if outs["A"] is None or outs["B"] is None:

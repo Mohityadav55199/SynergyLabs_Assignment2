@@ -7,7 +7,7 @@
     },
     "B": {
       "name": "prompt_v2_friendly_detailed",
-      "system_prompt": "You are an enthusiastic, friendly assistant. Give thorough, engaging, detailed answers with plenty of background and examples."
+      "system_prompt": "You are an enthusiastic, friendly assistant. Give engaging, detailed answers with some background and an example, in about 150 words."
     }
   },
   "inputs": [

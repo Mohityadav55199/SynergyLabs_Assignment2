@@ -25,17 +25,17 @@ RESULTS = ROOT / "results"
 VARIANTS = ("baseline", "mitigated")
 
 
-def _save(name: str, obj: dict, client: LLMClient, cfg: JudgeConfig) -> dict:
+def _save(name: str, obj: dict, client: LLMClient, cfg: JudgeConfig, suffix: str = "") -> dict:
     obj["meta"] = {"experiment": name, "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"), "judge_model": cfg.judge_model,
                    "generator_model": cfg.generator_model, "family_check": check_cross_family(cfg.judge_model, cfg.generator_model, True),
                    "pass_threshold": PASS_THRESHOLD, "usage_this_process": client.usage_summary()}
     RESULTS.mkdir(parents=True, exist_ok=True)
-    (RESULTS / f"{name}.json").write_text(json.dumps(obj, indent=2, ensure_ascii=False), encoding="utf-8")
+    (RESULTS / f"{name}{suffix}.json").write_text(json.dumps(obj, indent=2, ensure_ascii=False), encoding="utf-8")
     return obj
 
 
 def _cases(file):
-    return load_suite(DATA / file)["cases"]
+    return json.loads((DATA / file).read_text(encoding="utf-8"))["cases"]   # internal datasets have their own schemas
 
 
 # --------------------------------------------------------------------------------------------- judge validation: gold labels (+ score clustering)
@@ -183,11 +183,11 @@ def _flip(v1, v2):
 
 
 def exp_retest(client, cfg):
-    cases = _cases("gold_cases.json")
+    cases = _cases("gold_cases.json")[::2]   # every second gold case (13 of 26): the free-tier rate limit made the full set too slow
     run = lambda temp, tag: [Judge(client, cfg, "mitigated", temperature=temp).judge_case(c, run_tag=tag) for c in cases]
     first_t0, second_t0 = run(0.0, ""), run(0.0, "rerun")
     hot1, hot2 = run(0.7, "hot1"), run(0.7, "hot2")
-    return {"description": "Mitigated judge on the 26 gold cases, repeated. Temperature 0: run vs rerun. Temperature 0.7: two independent runs.",
+    return {"description": "Mitigated judge on 13 of the 26 gold cases (every second one), repeated. Temperature 0: run vs rerun. Temperature 0.7: two independent runs.",
             "temperature_0": _flip(first_t0, second_t0), "temperature_0.7": _flip(hot1, hot2),
             "temperature_0_vs_0.7": _flip(first_t0, hot1)}
 
@@ -196,22 +196,30 @@ EXPERIMENTS = {"gold": exp_gold, "adversarial": exp_adversarial, "position": exp
 
 
 def main(argv=None) -> int:
+    global VARIANTS
     ap = argparse.ArgumentParser()
     ap.add_argument("names", nargs="+", help="experiment names or 'all'")
     ap.add_argument("--force", action="store_true", help="recompute even if the results file exists")
+    ap.add_argument("--judge-model", default=None, help="override JUDGE_MODEL for this run (results are stored with --suffix)")
+    ap.add_argument("--suffix", default="", help="result-file suffix, e.g. _gptoss20b")
+    ap.add_argument("--variants", nargs="+", choices=VARIANTS, default=None, help="restrict the baseline/mitigated comparison (saves calls)")
     a = ap.parse_args(argv)
+    if a.variants:
+        VARIANTS = tuple(a.variants)
     names = list(EXPERIMENTS) if a.names == ["all"] else a.names
     cfg = JudgeConfig()
+    if a.judge_model:
+        cfg.judge_model = a.judge_model
     client = LLMClient(cfg)
     for n in names:
         if n not in EXPERIMENTS:
             print(f"unknown experiment {n!r}; choose from {list(EXPERIMENTS)}", file=sys.stderr)
             return 2
-        if (RESULTS / f"{n}.json").exists() and not a.force:
+        if (RESULTS / f"{n}{a.suffix}.json").exists() and not a.force:
             print(f"[skip] {n}: results exist (use --force)")
             continue
         print(f"[run] {n} ...", flush=True)
-        _save(n, EXPERIMENTS[n](client, cfg), client, cfg)
+        _save(n, EXPERIMENTS[n](client, cfg), client, cfg, a.suffix)
         print(f"[done] {n} | usage so far: {json.dumps(client.usage_summary())}", flush=True)
     return 0
 

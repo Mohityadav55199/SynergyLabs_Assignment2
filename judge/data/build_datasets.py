@@ -202,7 +202,7 @@ AB_INPUTS = [
 ]
 AB_CONFIGS = {
     "A": {"name": "prompt_v1_concise_precise", "system_prompt": "You are a precise technical assistant. Answer accurately and concisely, follow any length or format constraint exactly, and say so if you are unsure."},
-    "B": {"name": "prompt_v2_friendly_detailed", "system_prompt": "You are an enthusiastic, friendly assistant. Give thorough, engaging, detailed answers with plenty of background and examples."},
+    "B": {"name": "prompt_v2_friendly_detailed", "system_prompt": "You are an enthusiastic, friendly assistant. Give engaging, detailed answers with some background and an example, in about 150 words."},
 }
 
 

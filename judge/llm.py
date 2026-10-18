@@ -52,7 +52,7 @@ def _extra_params(model: str) -> dict:
     if model.startswith("openai/gpt-oss"):
         return {"reasoning_effort": "low"}
     if model.startswith("qwen/"):
-        return {"reasoning_format": "hidden"}
+        return {"reasoning_effort": "none"}   # hidden reasoning tokens would eat the small output-token budget
     return {}
 
 
