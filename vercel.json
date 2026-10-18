@@ -1,6 +1,16 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://synergylabs-assignment2.onrender.com/api/:path*"
+    },
+    {
+      "source": "/health",
+      "destination": "https://synergylabs-assignment2.onrender.com/health"
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
