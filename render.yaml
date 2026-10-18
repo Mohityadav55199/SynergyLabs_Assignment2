@@ -9,11 +9,11 @@ services:
     healthCheckPath: /health
     autoDeploy: true
     envVars:
-      - key: LLM_PROVIDER
-        value: groq
       - key: GROQ_API_KEY
         sync: false
       - key: JUDGE_MODEL
-        value: llama-3.3-70b-versatile
+        value: openai/gpt-oss-120b
+      - key: GENERATOR_MODEL
+        value: qwen/qwen3.8-27b
       - key: JUDGE_TEMPERATURE
-        value: 0.0
+        value: "0"

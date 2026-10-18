@@ -2,7 +2,65 @@
 **System:** Autonomous LLM-as-Judge Evaluation & Bias Mitigation Engine  
 **Repository:** [SynergyLabs_Assignment2](https://github.com/Mohityadav55199/SynergyLabs_Assignment2)  
 **Target Audience:** Engineering Leads, Client Stakeholders, DevOps / SRE, and QA Engineers  
-**Status:** Production-Ready & Deployed
+**Status:** Deployed. See the 2026-10-18 addendum (section 0) for current behaviour.
+
+---
+
+## 0. Addendum (2026-10-18) - Problem 2 live judge: current behaviour
+
+> **Read this first.** Sections 1-8 below were written for the first version of the service, which fell back to a built-in mock judge
+> (`src/llm_clients/mock_client.py`) when the live model failed. That behaviour is **gone from the web path**: `src/server.py` now calls the
+> `judge/` package only, and returns HTTP 502 instead of a made-up verdict. Where sections 1-8 mention `ResilientLLMClient`, `MockLLMClient`,
+> `ENABLE_FALLBACK`, `FALLBACK_MODELS`, `llama-3.3-70b-versatile` or `artifacts/`, treat them as describing the legacy code, which is still in
+> the repository but is not used for any reported number (see "Legacy code" below). Nothing below has been deleted from this manual.
+
+### 0.1 What runs where
+| Piece | Location | Notes |
+| :--- | :--- | :--- |
+| Judge pipeline | `judge/` (`run.py` CLI, `core.py`, `rubric.py`, `parsing.py`, `report.py`, `stats.py`, `llm.py`) | Pointwise + both-order pairwise, rubric, audit log |
+| Experiments | `python -m judge.experiments all` -> `judge/results/*.json` | Every number in the README comes from these files |
+| Audit log | `judge/logs/judge_calls.jsonl` (committed) | One JSON line per model call: prompt messages, raw response, tokens, latency, error |
+| Web API | `src/server.py` (`uvicorn src.server:app`) | `/api/evaluate`, `/api/compare`, `/api/reports/dashboard`, `/health` |
+| Web request log | `judge/logs/web_calls.jsonl` (git-ignored, ephemeral on Render) | Live playground calls |
+| Submission document | `python submission/fill_submission.py` | Fills Problems 1 and 2 from result files into one .docx |
+
+### 0.2 Environment variables (names only; never commit values)
+`GROQ_API_KEY` (secret), `JUDGE_MODEL` (default `openai/gpt-oss-120b`), `GENERATOR_MODEL` (default `qwen/qwen3.8-27b`), `JUDGE_TEMPERATURE` (0),
+`JUDGE_MAX_TOKENS` (1500), `JUDGE_PASS_THRESHOLD` (3.5), `JUDGE_LOG` (audit-log path), `JUDGE_WEB_LOG`, `GROQ_BASE_URL`.
+Judge and generator are independent. `python -m judge.run` refuses a judge and generator from the same model family unless `--allow-same-family` is passed
+(the override is recorded in the report).
+
+### 0.3 Render / Vercel actions required after this change (manual, in the dashboards)
+1. Render -> service -> Environment: set `JUDGE_MODEL=openai/gpt-oss-120b` and `GENERATOR_MODEL=qwen/qwen3.8-27b`. A value set in the dashboard overrides `render.yaml`;
+   the old `llama-3.3-70b-versatile` is retired for this key and will 404. `LLM_PROVIDER`, `ENABLE_FALLBACK` and `FALLBACK_MODELS` are no longer read.
+2. Keep `GROQ_API_KEY` as a secret env var on Render. A key pasted into the UI's optional field is used for that request only and is never written to a log.
+3. Vercel serves `public/index.html` (kept identical to the root `index.html`). The correct URL is `https://synergylabs-assignment2.vercel.app/` (with the hyphen).
+
+### 0.4 Rate limits and run time (Groq free tier, measured during development)
+- `openai/gpt-oss-120b`: 8,000 tokens/minute. A full pointwise judge call is ~1.7k tokens, so expect roughly 3-4 judged cases per minute.
+- `qwen/qwen3.8-27b`: **1,000 output tokens/minute** and `max_tokens` counts against it up front, so generation is slow and `max_tokens` must stay below 1,000.
+- The client retries 429/5xx with the server's `retry-after`, up to 7 attempts. The full experiment set (~400 calls) takes on the order of an hour; it is **resumable**,
+  because every successful call is cached from the audit log (a re-run only pays for missing calls).
+- Cut-off answers (completion tokens >= `max_tokens`) are never cached or judged; the generator excludes such cases and lists them in `failed_generations`.
+
+### 0.5 Failure semantics (what the judge does when something goes wrong)
+| Situation | Behaviour |
+| :--- | :--- |
+| Judge output has fences, `<think>`, prose, trailing commas | Tolerant extraction (outermost balanced JSON), then schema validation |
+| Missing/invalid criterion or score outside 1-5 | Rejected; one retry with a corrective message; then status `unparseable`, **no score recorded** |
+| HTTP error / timeout after retries | status `api_error`, no score; web API answers 502 |
+| Pairwise: one order unparseable | pair is `unparseable` and excluded from win rates (counted separately) |
+| Pairwise: orders disagree | final verdict `TIE`, flagged `agree=false` (hard flip if A vs B) |
+
+### 0.6 Re-validation before trusting a new judge model or prompt
+Run `python -m judge.experiments all --force` (new model => new cache keys automatically) and compare `gold.json` (kappa, agreement), `adversarial.json`,
+`position.json`, `retest.json` with the previous commit. Do not promote a judge whose adversarial fool rate rose or whose kappa fell. The sample sizes are small (see README
+"Limitations"); treat differences of a case or two as noise.
+
+### 0.7 Legacy code (decision pending with the repository owner)
+`src/cli.py`, `src/judge/`, `src/mitigations/`, `src/llm_clients/`, `src/evaluation/`, `src/visualization/`, `artifacts/` and `data/test_suites|rubrics|adversarial_probes`
+belong to the first version, whose "judge" was a keyword-driven mock. Its committed artifacts and the numbers once quoted in the README (flip rate 35% -> 0%, kappa 0.737 on 10 cases, ...)
+are **not measurements of an LLM judge** and must not be cited. They are kept only until the owner confirms they can be removed (`git rm -r` on the paths above, plus the `tests/` files that import `src.*`).
 
 ---
 
