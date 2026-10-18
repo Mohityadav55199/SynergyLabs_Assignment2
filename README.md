@@ -1,7 +1,7 @@
 # Autonomous LLM-as-Judge Evaluation Pipeline & Bias Mitigation Engine
 
 [![Render](https://img.shields.io/badge/Render-Live%20Backend%20%26%20UI-46e3b7.svg?logo=render&logoColor=white)](https://synergylabs-assignment2.onrender.com/)
-[![Vercel](https://img.shields.io/badge/Vercel-Live%20Frontend-black.svg?logo=vercel&logoColor=white)](https://synergylabsassignment2.vercel.app/)
+[![Vercel](https://img.shields.io/badge/Vercel-Live%20Frontend-black.svg?logo=vercel&logoColor=white)](https://synergylabs-assignment2.vercel.app/)
 [![Python](https://img.shields.io/badge/Python-3.10%2B%20%7C%203.14-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Evaluation](https://img.shields.io/badge/Evaluation-Pointwise%20%26%20Pairwise-indigo.svg)](#judging-design)
@@ -9,7 +9,7 @@
 
 > **Live Deployment Links & Documentation:**
 > - 🌐 **Render (Backend API & Interactive App):** [https://synergylabs-assignment2.onrender.com/](https://synergylabs-assignment2.onrender.com/)
-> - ⚡ **Vercel (Frontend Client):** [https://synergylabsassignment2.vercel.app/](https://synergylabsassignment2.vercel.app/)
+> - ⚡ **Vercel (Frontend Client):** [https://synergylabs-assignment2.vercel.app/](https://synergylabs-assignment2.vercel.app/)
 > - 🩺 **Health Check & Keep-Warm Endpoint:** [https://synergylabs-assignment2.onrender.com/health](https://synergylabs-assignment2.onrender.com/health)
 > - 📋 **Client Operations & Handover Manual:** [OPERATIONS_HANDOVER.md](OPERATIONS_HANDOVER.md)
 

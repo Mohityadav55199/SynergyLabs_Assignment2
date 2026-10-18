@@ -25,7 +25,8 @@ The system evaluates, compares, and audits Large Language Model (LLM) outputs us
 ```
                                  ┌───────────────────────────────┐
                                  │   Vercel Edge CDN             │
-                                 │   https://synergylabs...      │
+                                 │   https://synergylabs-        │
+                                 │   assignment2.vercel.app      │
                                  │   (Interactive Glassmorphism) │
                                  └───────────────┬───────────────┘
                                                  │
