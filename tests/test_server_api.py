@@ -1,53 +1,70 @@
-import pytest
+import json
+
 from fastapi.testclient import TestClient
-from src.server import app
 
-client = TestClient(app)
+import src.server as server
+from judge.config import JudgeConfig
+from judge.core import Judge
+from judge.llm import ChatResult, LLMClient
+from judge.rubric import CRITERIA_IDS
 
-def test_health_check_endpoint():
-    res = client.get("/health")
-    assert res.status_code == 200
-    data = res.json()
-    assert data["status"] == "healthy"
-    assert "judge_model" in data
+client = TestClient(server.app)
 
-def test_api_health_endpoint():
-    res = client.get("/api/health")
-    assert res.status_code == 200
-    assert res.json()["status"] == "healthy"
 
-def test_dashboard_report_endpoint():
-    res = client.get("/api/reports/dashboard")
-    assert res.status_code == 200
-    data = res.json()
-    assert "suite_report" in data
-    assert "ab_report" in data
+class Scripted(LLMClient):
+    def __init__(self, replies, tmp_path):
+        super().__init__(JudgeConfig(api_key="x"), log_path=tmp_path / "web.jsonl")
+        self.replies = list(replies)
 
-def test_api_evaluate_pointwise():
-    payload = {
-        "input": "Explain the time complexity of binary search.",
-        "model_output": "Binary search has O(log n) time complexity because it halves the search space at each step.",
-        "expected_output": "O(log n)",
-        "provider": "mock"
-    }
-    res = client.post("/api/evaluate", json=payload)
-    assert res.status_code == 200
-    data = res.json()
-    assert "overall_score" in data
-    assert data["overall_score"] >= 1.0
-    assert "criterion_verdicts" in data
+    def chat(self, messages, model, temperature=0.0, max_tokens=3000, tag="", role="judge"):
+        return ChatResult(self.replies.pop(0), 10, 5)
 
-def test_api_compare_pairwise():
-    payload = {
-        "input": "Explain the difference between TCP and UDP.",
-        "output_a": "TCP is connection-oriented and reliable with flow control, while UDP is connectionless and lightweight.",
-        "output_b": "Hello! Both TCP and UDP are internet protocols. They send packets across computers.",
-        "provider": "mock"
-    }
-    res = client.post("/api/compare", json=payload)
-    assert res.status_code == 200
-    data = res.json()
-    assert "final_winner" in data
-    assert data["final_winner"] in ["A", "B", "TIE"]
-    assert "average_score_a" in data
-    assert "average_score_b" in data
+
+def _pw(score, quote="Canberra."):
+    return json.dumps({"criteria": {c: {"score": score, "rationale": "r", "evidence": quote} for c in CRITERIA_IDS}, "overall": {"score": score, "rationale": "r"}})
+
+
+def _install(monkeypatch, tmp_path, replies):
+    monkeypatch.setattr(server, "_judge", lambda api_key: Judge(Scripted(replies, tmp_path), JudgeConfig(api_key="x"), "mitigated"))
+
+
+def test_health():
+    for path in ("/health", "/api/health"):
+        r = client.get(path)
+        assert r.status_code == 200 and r.json()["status"] == "healthy" and "judge_model" in r.json()
+
+
+def test_evaluate_ok(monkeypatch, tmp_path):
+    _install(monkeypatch, tmp_path, [_pw(5)])
+    r = client.post("/api/evaluate", json={"input": "Capital of Australia?", "model_output": "Canberra."})
+    assert r.status_code == 200
+    body = r.json()
+    assert body["passed"] is True and body["overall_score"] == 5.0 and len(body["criterion_verdicts"]) == 6 and body["execution_mode"] == "live"
+
+
+def test_evaluate_unparseable_is_502_not_a_fake_score(monkeypatch, tmp_path):
+    _install(monkeypatch, tmp_path, ["not json", "still not json"])
+    r = client.post("/api/evaluate", json={"input": "q", "model_output": "a"})
+    assert r.status_code == 502 and "No score was invented" in r.json()["detail"]
+
+
+def test_evaluate_validation():
+    assert client.post("/api/evaluate", json={"input": "  ", "model_output": "a"}).status_code == 400
+    assert client.post("/api/evaluate", json={"input": "q"}).status_code == 422
+
+
+def test_compare_runs_both_orders(monkeypatch, tmp_path):
+    _install(monkeypatch, tmp_path, ['{"winner": "A", "confidence": "high", "rationale": "x"}', '{"winner": "B", "confidence": "high", "rationale": "y"}'])
+    r = client.post("/api/compare", json={"input": "q", "output_a": "good", "output_b": "bad"})
+    assert r.status_code == 200 and r.json()["final_winner"] == "A" and r.json()["flip_detected"] is False
+
+
+def test_compare_position_flip_is_reported(monkeypatch, tmp_path):
+    _install(monkeypatch, tmp_path, ['{"winner": "A"}', '{"winner": "A"}'])
+    r = client.post("/api/compare", json={"input": "q", "output_a": "x", "output_b": "y"})
+    assert r.json()["final_winner"] == "TIE" and r.json()["flip_detected"] is True and r.json()["hard_flip"] is True
+
+
+def test_dashboard_endpoint_shape():
+    r = client.get("/api/reports/dashboard")
+    assert r.status_code == 200 and "results" in r.json()

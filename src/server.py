@@ -1,167 +1,127 @@
+"""FastAPI wrapper around the `judge` package (live LLM judge). No verdict is ever fabricated: if the judge model is unreachable
+or returns something unparseable, the endpoint answers HTTP 502 with the reason."""
 import json
-from pathlib import Path
+import logging
+import os
+import time
 from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from typing import Dict, Any, Optional
 
-from .config import config, BASE_DIR
-import logging
-from .schema import TestCase, PairwiseTestCase
-from .judge.pointwise import PointwiseJudge
-from .judge.pairwise import PairwiseJudge
-from .llm_clients.factory import get_llm_client
-from .llm_clients.groq_client import GroqClient
-from .llm_clients.mock_client import MockLLMClient
+from judge.config import JudgeConfig
+from judge.core import Judge
+from judge.llm import LLMClient
 
 logger = logging.getLogger(__name__)
+BASE_DIR = Path(__file__).resolve().parent.parent
+RESULTS_DIR = BASE_DIR / "judge" / "results"
+WEB_LOG = Path(os.getenv("JUDGE_WEB_LOG", str(BASE_DIR / "judge" / "logs" / "web_calls.jsonl")))
+
 
 class EvaluationRequest(BaseModel):
     id: Optional[str] = None
-    domain: Optional[str] = "General"
     input: str
     model_output: str
+    system_prompt: Optional[str] = None
     expected_output: Optional[str] = None
-    criteria: Optional[list] = None
-    reference_mode: Optional[str] = "auto"
+    criteria: Optional[List[str]] = None
     api_key: Optional[str] = None
-    provider: Optional[str] = None
+
 
 class PairwiseEvaluationRequest(BaseModel):
     id: Optional[str] = None
-    domain: Optional[str] = "General"
     input: str
     output_a: str
     output_b: str
-    expected_output: Optional[str] = None
+    system_prompt: Optional[str] = None
     api_key: Optional[str] = None
-    provider: Optional[str] = None
 
-app = FastAPI(
-    title="LLM-as-Judge Evaluation & Bias Mitigation API",
-    description="Production-grade API for automated LLM output quality scoring, pairwise A/B testing, and bias detection.",
-    version="1.0.0"
-)
 
-# Enable CORS for Vercel and local development
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app = FastAPI(title="LLM-as-Judge Evaluation API", version="2.0.0",
+              description="Pointwise and both-order pairwise judging with an explicit rubric. Results of the bias/validation experiments are in /api/reports/dashboard.")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=False, allow_methods=["*"], allow_headers=["*"])
 
-ARTIFACTS_DIR = config.artifacts_dir
 
-@app.get("/health", summary="Health Check")
-@app.get("/api/health", summary="Health Check for Keep-Warm and UI Banner")
+def _judge(api_key: Optional[str]) -> Judge:
+    cfg = JudgeConfig()
+    if api_key:
+        cfg.api_key = api_key.strip()   # per-request key is used for this call only and is never logged
+    return Judge(LLMClient(cfg, log_path=WEB_LOG), cfg, "mitigated")
+
+
+@app.get("/health")
+@app.get("/api/health")
 def health_check():
-    """
-    Used by Render health checks, GitHub Actions keep-warm cron jobs,
-    and the Vercel frontend to detect and recover from cold starts.
-    """
-    return {
-        "status": "healthy",
-        "service": "llm-judge-pipeline",
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "version": "1.0.0",
-        "provider": config.llm_provider,
-        "judge_model": config.judge_model
-    }
+    cfg = JudgeConfig()
+    return {"status": "healthy", "service": "llm-judge-pipeline", "timestamp": datetime.now(timezone.utc).isoformat(), "version": app.version,
+            "provider": "groq", "judge_model": cfg.judge_model, "generator_model": cfg.generator_model, "api_key_configured": bool(cfg.api_key)}
 
-@app.get("/", response_class=HTMLResponse, summary="Serve Visual Dashboard")
-def serve_dashboard():
+
+@app.get("/", response_class=HTMLResponse)
+def serve_ui():
     index_file = BASE_DIR / "index.html"
-    if index_file.exists():
-        with open(index_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    dashboard_file = ARTIFACTS_DIR / "evaluation_dashboard.html"
-    if dashboard_file.exists():
-        with open(dashboard_file, "r", encoding="utf-8") as f:
-            return HTMLResponse(content=f.read())
-    return HTMLResponse(content="<h1>Dashboard generating... Please visit /api/health</h1>")
+    return HTMLResponse(index_file.read_text(encoding="utf-8")) if index_file.exists() else HTMLResponse("<h1>LLM-as-Judge API</h1><p>See /docs</p>")
 
-@app.get("/api/reports/dashboard", summary="Get Full Evaluation Data")
+
+def _strip(obj: Any) -> Any:
+    """Drop bulky per-case arrays so the dashboard payload stays small."""
+    if isinstance(obj, dict):
+        return {k: _strip(v) for k, v in obj.items() if k not in ("verdicts", "pairs", "cases", "rows", "pointwise_concise", "pointwise_padded", "pointwise_a", "pointwise_b", "rubric", "usage_this_process")}
+    return obj
+
+
+@app.get("/api/reports/dashboard", summary="Measured results of the bias / validation experiments (from judge/results/*.json)")
 def get_dashboard_data():
-    """Returns aggregated reports across pointwise, pairwise A/B, and validation suites."""
-    suite_file = ARTIFACTS_DIR / "suite_report.json"
-    ab_file = ARTIFACTS_DIR / "ab_comparison_report.json"
-    val_file = ARTIFACTS_DIR / "judge_validation_report.json"
-    adv_file = ARTIFACTS_DIR / "adversarial_report.json"
+    out: Dict[str, Any] = {}
+    if RESULTS_DIR.exists():
+        for f in sorted(RESULTS_DIR.glob("*.json")):
+            try:
+                out[f.stem] = _strip(json.loads(f.read_text(encoding="utf-8")))
+            except (OSError, json.JSONDecodeError):
+                continue
+    return {"results": out, "timestamp": datetime.now(timezone.utc).isoformat()}
 
-    def read_json_safe(path: Path) -> Dict[str, Any]:
-        if path.exists():
-            with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        return {}
 
-    return {
-        "suite_report": read_json_safe(suite_file),
-        "ab_report": read_json_safe(ab_file),
-        "validation_report": read_json_safe(val_file),
-        "adversarial_report": read_json_safe(adv_file),
-        "timestamp": datetime.now(timezone.utc).isoformat()
-    }
+def _require_text(**fields):
+    for name, value in fields.items():
+        if not value or not value.strip():
+            raise HTTPException(status_code=400, detail=f"Field '{name}' cannot be empty or whitespace.")
 
-@app.post("/api/evaluate", summary="Run Pointwise Evaluation")
+
+@app.post("/api/evaluate", summary="Pointwise evaluation (reference-based when expected_output is given, else reference-free)")
 def evaluate_case(request: EvaluationRequest):
-    if not request.input or not request.input.strip():
-        raise HTTPException(status_code=400, detail="Field 'input' cannot be empty or whitespace.")
-    if not request.model_output or not request.model_output.strip():
-        raise HTTPException(status_code=400, detail="Field 'model_output' cannot be empty or whitespace.")
+    _require_text(input=request.input, model_output=request.model_output)
+    judge = _judge(request.api_key)
+    case = {"id": request.id or f"live-{int(time.time())}", "input": request.input.strip(), "system_prompt": request.system_prompt,
+            "model_output": request.model_output.strip(), "expected_output": (request.expected_output or "").strip() or None, "criteria": request.criteria}
+    t0 = time.perf_counter()
+    v = judge.judge_case(case, run_tag=str(time.time_ns()))   # unique tag: live requests must never be answered from the cache
+    if v["status"] != "ok":
+        raise HTTPException(status_code=502, detail=f"Judge produced no usable verdict (status={v['status']}: {v['error']}). No score was invented.")
+    return {"test_case_id": case["id"], "overall_score": v["overall"], "passed": v["passed"], "mode": v["mode"],
+            "criterion_scores": {k: c["score"] for k, c in v["criteria"].items()},
+            "criterion_verdicts": [{"criterion_id": k, "score": c["score"], "rationale": c["rationale"], "evidence_quote": c["evidence"], "grounded": c["grounded"]} for k, c in v["criteria"].items()],
+            "overall_rationale": v["overall_rationale"], "judge_model": judge.config.judge_model, "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
+            "total_tokens": v["tokens"], "execution_mode": "live", "fallback_notice": None, "ungrounded_capped": v["ungrounded_capped"]}
 
-    test_case = TestCase(
-        id=request.id or f"live-test-{int(datetime.now(timezone.utc).timestamp())}",
-        domain=request.domain or "General",
-        input=request.input.strip(),
-        model_output=request.model_output.strip(),
-        expected_output=request.expected_output.strip() if request.expected_output else None,
-        criteria=request.criteria,
-        reference_mode=request.reference_mode or "auto"
-    )
-    try:
-        client = get_llm_client(
-            provider=request.provider,
-            api_key=request.api_key,
-            enable_fallback=True
-        )
-        judge = PointwiseJudge(llm_client=client)
-        verdict = judge.evaluate_case(test_case)
-        return verdict.model_dump()
-    except Exception as exc:
-        logger.error(f"Evaluation failed: {exc}")
-        raise HTTPException(status_code=500, detail=f"Evaluation failed: {str(exc)}")
 
-@app.post("/api/compare", summary="Run Pairwise Comparison with Position Bias Check")
+@app.post("/api/compare", summary="Pairwise A-vs-B in BOTH orders (position-bias check)")
 def compare_pair(request: PairwiseEvaluationRequest):
-    if not request.input or not request.input.strip():
-        raise HTTPException(status_code=400, detail="Field 'input' cannot be empty or whitespace.")
-    if not request.output_a or not request.output_a.strip():
-        raise HTTPException(status_code=400, detail="Field 'output_a' cannot be empty or whitespace.")
-    if not request.output_b or not request.output_b.strip():
-        raise HTTPException(status_code=400, detail="Field 'output_b' cannot be empty or whitespace.")
-
-    test_case = PairwiseTestCase(
-        id=request.id or f"live-pair-{int(datetime.now(timezone.utc).timestamp())}",
-        domain=request.domain or "General",
-        input=request.input.strip(),
-        output_a=request.output_a.strip(),
-        output_b=request.output_b.strip(),
-        expected_output=request.expected_output.strip() if request.expected_output else None,
-    )
-    try:
-        client = get_llm_client(
-            provider=request.provider,
-            api_key=request.api_key,
-            enable_fallback=True
-        )
-        judge = PairwiseJudge(llm_client=client, enable_position_swap=True)
-        verdict = judge.evaluate_pair(test_case)
-        return verdict.model_dump()
-    except Exception as exc:
-        logger.error(f"Comparison failed: {exc}")
-        raise HTTPException(status_code=500, detail=f"Comparison failed: {str(exc)}")
-
+    _require_text(input=request.input, output_a=request.output_a, output_b=request.output_b)
+    judge = _judge(request.api_key)
+    case = {"id": request.id or f"live-pair-{int(time.time())}", "input": request.input.strip(), "system_prompt": request.system_prompt,
+            "output_a": request.output_a.strip(), "output_b": request.output_b.strip()}
+    r = judge.judge_pair(case, run_tag=str(time.time_ns()))
+    if r["status"] != "ok":
+        errs = "; ".join(f"{o}: {r['orders'][o].get('error')}" for o in ("AB", "BA") if r["orders"][o]["status"] != "ok")
+        raise HTTPException(status_code=502, detail=f"Judge produced no usable verdict ({errs}). No winner was invented.")
+    ab, ba = r["orders"]["AB"], r["orders"]["BA"]
+    return {"test_case_id": case["id"], "final_winner": r["final"], "flip_detected": not r["agree"], "hard_flip": r["hard_flip"], "single_order_winner": r["single_order"],
+            "forward_evaluation": {"winner": ab["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ab.get("rationale")},
+            "reverse_evaluation": {"winner": ba["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ba.get("rationale")},
+            "overall_rationale": ab.get("rationale"), "total_tokens": r["tokens"], "execution_mode": "live"}
