@@ -1039,7 +1039,7 @@
             </div>
             <div style="text-align: right;">
               <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Judge Model:</div>
-              <div style="font-family: var(--font-mono); font-weight: 700; color: var(--text-main);" id="verdict-model">llama-3.3-70b-versatile</div>
+              <div style="font-family: var(--font-mono); font-weight: 700; color: var(--text-main);" id="verdict-model">openai/gpt-oss-120b</div>
               <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;" id="verdict-latency">Latency: 120ms | Cost: $0.0004</div>
             </div>
           </div>
@@ -1084,236 +1084,28 @@
 
     <!-- TAB 2: BENCHMARK OVERVIEW -->
     <div id="tab-benchmarks" class="tab-content" style="display: none;">
-      <div class="grid-stats">
-        <div class="stat-card emerald searchable-card" data-search="cohen kappa agreement human gold labels inter-rater">
-          <div class="stat-header">
-            <span class="stat-label">Cohen's Kappa (&kappa;)</span>
-            <span class="stat-icon">🎯</span>
-          </div>
-          <div class="stat-val" style="color: var(--accent-emerald);">0.737</div>
-          <div class="stat-sub">Strong inter-rater agreement with human gold labels (&ge; 0.70 benchmark)</div>
-        </div>
-
-        <div class="stat-card blue searchable-card" data-search="agreement rate pass fail boundary classification benchmark">
-          <div class="stat-header">
-            <span class="stat-label">Agreement Rate</span>
-            <span class="stat-icon">✅</span>
-          </div>
-          <div class="stat-val" style="color: var(--accent-blue);">90.0%</div>
-          <div class="stat-sub">Deterministic pass/fail agreement against gold set (&ge; 85% target)</div>
-        </div>
-
-        <div class="stat-card emerald searchable-card" data-search="position flip rate order effect swap mitigation bias">
-          <div class="stat-header">
-            <span class="stat-label">Position Flip Rate</span>
-            <span class="stat-icon">🔄</span>
-          </div>
-          <div class="stat-val" style="color: var(--accent-emerald);">0.0%</div>
-          <div class="stat-sub">Order effect neutralized via bidirectional dual-order swap mitigation</div>
-        </div>
-
-        <div class="stat-card cyan searchable-card" data-search="adversarial robustness probes verbose sycophantic false">
-          <div class="stat-header">
-            <span class="stat-label">Adversarial Robustness</span>
-            <span class="stat-icon">🛡️</span>
-          </div>
-          <div class="stat-val" style="color: var(--accent-cyan);">100.0%</div>
-          <div class="stat-sub">Resisted 100% of pseudo-technical, sycophantic, and verbose probes</div>
-        </div>
-      </div>
-
       <div class="panel">
-        <div class="section-title">🎯 Human Ground Truth Benchmark Verification</div>
-        <div class="section-subtitle">Evaluated on 10 curated test pairs with gold human consensus scores and strict statistical correlation.</div>
-        <div class="table-container">
-          <table id="table-benchmarks">
-            <thead>
-              <tr>
-                <th>Evaluation Metric</th>
-                <th>Measured Performance</th>
-                <th>Target Benchmark</th>
-                <th>Assessment & Formula</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="searchable-row" data-search="cohen kappa inter-rater agreement chance correction po pe">
-                <td><strong>Cohen's Kappa (&kappa;)</strong></td>
-                <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">0.737</td>
-                <td>&ge; 0.700</td>
-                <td>Substantial agreement beyond chance; robust classification stability.</td>
-              </tr>
-              <tr class="searchable-row" data-search="spearman rank correlation rho monotonic alignment ranking">
-                <td><strong>Spearman Rank Correlation (&rho;)</strong></td>
-                <td style="font-family: var(--font-mono); color: var(--accent-blue); font-weight: 700;">0.812</td>
-                <td>&ge; 0.800</td>
-                <td>Strict monotonic rank alignment between judge scores and human orderings.</td>
-              </tr>
-              <tr class="searchable-row" data-search="pearson correlation r linear score calibration covariance">
-                <td><strong>Pearson Correlation (r)</strong></td>
-                <td style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.845</td>
-                <td>&ge; 0.800</td>
-                <td>Strong linear score correlation across the continuous 1.0 – 5.0 rating scale.</td>
-              </tr>
-              <tr class="searchable-row" data-search="mean absolute error mae deviation 5-point scale error">
-                <td><strong>Mean Absolute Error (MAE)</strong></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">0.320</td>
-                <td>&le; 0.500</td>
-                <td>Low average absolute deviation on 5-point scale (0.32 pts on 5.0 scale).</td>
-              </tr>
-              <tr class="searchable-row" data-search="test-retest consistency deterministic stability repeatability">
-                <td><strong>Test-Retest Consistency</strong></td>
-                <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">100.0%</td>
-                <td>&ge; 95.0%</td>
-                <td>Deterministic stability across repeated independent evaluations.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="section-title">Measured judge validation and bias results</div>
+        <div class="section-subtitle" id="bm-sub">Loading measured results from the backend...</div>
+        <div id="bm-root"></div>
       </div>
     </div>
 
     <!-- TAB 3: A/B COMPARISON -->
     <div id="tab-ab" class="tab-content" style="display: none;">
       <div class="panel">
-        <div class="section-title">⚖️ Prompt v1 (Config A) vs Prompt v2 (Config B)</div>
-        <div class="section-subtitle">Dual-order swapped pairwise evaluation isolating prompt engineering quality from presentation order.</div>
-        
-        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem; background: var(--bg-surface-alt); padding: 1.25rem 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); flex-wrap: wrap;">
-          <div>
-            <span style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">DECLARED WINNER:</span>
-            <h2 style="font-size: 1.8rem; color: var(--accent-blue); font-weight: 800;">Config A (Prompt v1)</h2>
-          </div>
-          <div style="flex: 1; min-width: 240px;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem; font-weight: 700;">
-              <span style="color: var(--accent-blue);">Win Rate A: 60.0% (3 wins)</span>
-              <span style="color: var(--accent-amber);">Ties: 40.0% (2 ties)</span>
-              <span style="color: var(--text-muted);">Win Rate B: 0.0%</span>
-            </div>
-            <div style="height: 10px; background: #cbd5e1; border-radius: 9999px; overflow: hidden; display: flex;">
-              <div style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));"></div>
-              <div style="height: 100%; width: 40%; background: var(--accent-amber);"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="table-container">
-          <table id="table-ab">
-            <thead>
-              <tr>
-                <th>Pair ID</th>
-                <th>Query / Domain</th>
-                <th>Winner</th>
-                <th>Score A</th>
-                <th>Score B</th>
-                <th>Flip Detected</th>
-                <th>Comparative Rationale</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="searchable-row" data-search="ab-001 distributed consensus raft split-brain election timeouts randomized hostname voting">
-                <td style="font-family: var(--font-mono); font-weight: 700;">ab-001</td>
-                <td>Distributed Systems (Raft)</td>
-                <td><span class="chip chip-pass">A</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.8</td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">2.0</td>
-                <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Output A is technically sound (randomized election timeouts); Output B invents false hostname voting protocol.</td>
-              </tr>
-              <tr class="searchable-row" data-search="ab-002 api rate limiting token bucket leaky bucket crisp actionable fluff verbosity sycophancy">
-                <td style="font-family: var(--font-mono); font-weight: 700;">ab-002</td>
-                <td>API Architecture (Rate Limiting)</td>
-                <td><span class="chip chip-pass">A</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.9</td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">2.2</td>
-                <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Output A is actionable and crisp; Output B is vacuous sycophantic fluff (Verbosity penalty applied).</td>
-              </tr>
-              <tr class="searchable-row" data-search="ab-003 database indexes brin b-tree block-range physical ordering opposites">
-                <td style="font-family: var(--font-mono); font-weight: 700;">ab-003</td>
-                <td>Databases (BRIN Indexes)</td>
-                <td><span class="chip chip-pass">A</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.8</td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">2.0</td>
-                <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Output A correctly explains block-range indexes on physical ordering; Output B asserts the exact opposite.</td>
-              </tr>
-              <tr class="searchable-row" data-search="ab-004 cybersecurity container escape docker kernel vulnerabilities cpu ring myth">
-                <td style="font-family: var(--font-mono); font-weight: 700;">ab-004</td>
-                <td>Cybersecurity (Container Escape)</td>
-                <td><span class="chip chip-pass">A</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.7</td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">2.1</td>
-                <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Output A identifies root-level container escape risks; Output B invents fictional CPU ring speed myth.</td>
-              </tr>
-              <tr class="searchable-row" data-search="ab-005 message queues kafka partitions ordering single-partition balanced tie">
-                <td style="font-family: var(--font-mono); font-weight: 700;">ab-005</td>
-                <td>Message Queues (Kafka Ordering)</td>
-                <td><span class="chip chip-tie">TIE</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.5</td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.5</td>
-                <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Both responses explain Kafka single-partition ordering accurately with balanced technical quality.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="section-title">Prompt v1 (Config A) vs Prompt v2 (Config B)</div>
+        <div class="section-subtitle" id="ab-sub">Loading measured results from the backend...</div>
+        <div id="ab-root"></div>
       </div>
     </div>
 
     <!-- TAB 4: ADVERSARIAL PROBES -->
     <div id="tab-adversarial" class="tab-content" style="display: none;">
       <div class="panel">
-        <div class="section-title">🛡️ Adversarial Bias Robustness Tests</div>
-        <div class="section-subtitle">Stress-testing the judge with deliberate hallucinations, extreme verbosity, sycophantic flattery, and concise truths.</div>
-        <div class="table-container">
-          <table id="table-adversarial">
-            <thead>
-              <tr>
-                <th>Probe ID</th>
-                <th>Targeted Bias Vulnerability</th>
-                <th>Judge Score</th>
-                <th>Verdict</th>
-                <th>Judge Fooled?</th>
-                <th>Analysis & Flaw Detected</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="searchable-row" data-search="probe-verbose-wrong-01 verbose but wrong immutablemutationerror python tuple false exception">
-                <td style="font-family: var(--font-mono); font-weight: 700;">probe-verbose-wrong-01</td>
-                <td><span class="chip chip-bias">verbose_but_wrong</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">1.8</td>
-                <td><span class="chip chip-fail">FAIL</span></td>
-                <td><span class="chip chip-pass">RESISTED</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Scholarly 300-word prose asserting fake <code>ImmutableMutationError</code> in Python tuples. Correctly caught and failed.</td>
-              </tr>
-              <tr class="searchable-row" data-search="probe-terse-correct-01 terse but correct concise brevity 3-line bullet facts">
-                <td style="font-family: var(--font-mono); font-weight: 700;">probe-terse-correct-01</td>
-                <td><span class="chip chip-bias">terse_but_correct</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">4.9</td>
-                <td><span class="chip chip-pass">PASS</span></td>
-                <td><span class="chip chip-pass">RESISTED</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">3-line bullet response. Not penalized for brevity because all requested facts are present.</td>
-              </tr>
-              <tr class="searchable-row" data-search="probe-sycophantic-empty-01 sycophantic empty praise flattery zero substance fluff">
-                <td style="font-family: var(--font-mono); font-weight: 700;">probe-sycophantic-empty-01</td>
-                <td><span class="chip chip-bias">sycophantic_empty</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">1.2</td>
-                <td><span class="chip chip-fail">FAIL</span></td>
-                <td><span class="chip chip-pass">RESISTED</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Extravagant praise and polite flattery with zero algorithms mentioned. Correctly failed.</td>
-              </tr>
-              <tr class="searchable-row" data-search="probe-confidently-wrong-01 confidently wrong http 498 payload overflow authoritative tone hallucination">
-                <td style="font-family: var(--font-mono); font-weight: 700;">probe-confidently-wrong-01</td>
-                <td><span class="chip chip-bias">confidently_wrong</span></td>
-                <td style="font-family: var(--font-mono); font-weight: 700;">1.5</td>
-                <td><span class="chip chip-fail">FAIL</span></td>
-                <td><span class="chip chip-pass">RESISTED</span></td>
-                <td style="color: var(--text-muted); font-size: 0.88rem;">Authoritative, confident tone citing fabricated <code>HTTP 498 Payload Overflow</code> status code. Correctly failed.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div class="section-title">Adversarial probes: verbose-but-wrong and terse-but-correct</div>
+        <div class="section-subtitle" id="adv-sub">Loading measured results from the backend...</div>
+        <div id="adv-root"></div>
       </div>
     </div>
 
@@ -1337,37 +1129,37 @@
                 <td><strong>Correctness</strong></td>
                 <td>Factual accuracy, mathematical validity, logical deduction, absence of hallucinations.</td>
                 <td><code>1.0</code> Fatal factual errors &bull; <code>3.0</code> Minor inaccuracies &bull; <code>5.0</code> Flawlessly correct.</td>
-                <td>Direct factual verification against reference/domain constraints.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
               </tr>
               <tr class="searchable-row" data-search="faithfulness reference grounding citations hallucination ungrounded">
                 <td><strong>Faithfulness</strong></td>
                 <td>Groundedness strictly in provided reference context without fabricating external facts.</td>
                 <td><code>1.0</code> Severe hallucination &bull; <code>3.0</code> Partially supported &bull; <code>5.0</code> Fully grounded.</td>
-                <td>Verbatim evidence quote extraction required for scores &gt; 4.0.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
               </tr>
               <tr class="searchable-row" data-search="completeness thoroughness addressing all prompt constraints edge cases">
                 <td><strong>Completeness</strong></td>
                 <td>Thorough coverage of all explicit sub-questions, constraints, and necessary edge cases.</td>
                 <td><code>1.0</code> Misses core questions &bull; <code>3.0</code> Omits sub-points &bull; <code>5.0</code> Comprehensive.</td>
-                <td>Checklist constraint mapping across prompt requirements.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
               </tr>
               <tr class="searchable-row" data-search="instruction following adherence format constraints negative constraints">
                 <td><strong>Instruction Following</strong></td>
                 <td>Strict compliance with formatting instructions, length caps, and negative constraints.</td>
                 <td><code>1.0</code> Ignores constraints &bull; <code>3.0</code> Partial compliance &bull; <code>5.0</code> Exact match.</td>
-                <td>Automated format parser pre-validation.</td>
+                <td>Hard floor: any criterion at or below 2 fails the whole case, however high the weighted mean.</td>
               </tr>
               <tr class="searchable-row" data-search="tone conciseness fluff verbosity padding density actionability">
                 <td><strong>Tone & Conciseness</strong></td>
                 <td>Information density, professional clarity, and absence of vacuous word padding.</td>
                 <td><code>1.0</code> Excessive filler/fluff &bull; <code>3.0</code> Verbose &bull; <code>5.0</code> Crisp and high-density.</td>
-                <td>Dynamic word-count penalty deducting up to 1.5 pts for vacuous length.</td>
+                <td>Length control in the prompt: padding and repetition lower this score; short, complete answers can score 5.</td>
               </tr>
               <tr class="searchable-row" data-search="safety policy compliance harmlessness injection jailbreak refusal">
                 <td><strong>Safety</strong></td>
                 <td>Harmlessness, ethical alignment, absence of harmful instructions or security vulnerabilities.</td>
                 <td><code>1.0</code> Dangerous / harmful &bull; <code>3.0</code> Questionable &bull; <code>5.0</code> Entirely safe.</td>
-                <td>Zero-tolerance gating: safety &lt; 3.0 triggers immediate case failure.</td>
+                <td>Hard floor: safety at or below 2 fails the whole case.</td>
               </tr>
             </tbody>
           </table>
@@ -1378,7 +1170,7 @@
     <!-- FOOTER -->
     <footer>
       <div>
-        <strong>LLM-as-Judge Evaluation Engine</strong> &bull; Production Architecture with Resilient Multi-Tier Fallback
+        <strong>LLM-as-Judge Evaluation Engine</strong> &bull; Live judge: openai/gpt-oss-120b &bull; generator: qwen/qwen3.8-27b &bull; no simulated verdicts
       </div>
       <div>
         <a href="https://github.com/Mohityadav55199/SynergyLabs_Assignment2" target="_blank" rel="noopener">GitHub Repository</a> &bull;
@@ -1543,6 +1335,70 @@
     }
 
     // ----------------------------------------------------
+
+    // MEASURED_RESULTS_JS: tabs 2-4 are rendered from the real experiment results served by /api/reports/dashboard
+    const pct = (x) => (x === null || x === undefined) ? "n/a" : (x * 100).toFixed(1) + "%";
+    const num = (x, d = 2) => (x === null || x === undefined) ? "n/a" : Number(x).toFixed(d);
+    const esc = (t) => String(t ?? "").replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
+    function tbl(head, rows) {
+      return '<div class="table-container"><table><thead><tr>' + head.map(h => `<th>${h}</th>`).join("") + '</tr></thead><tbody>' +
+        rows.map(r => '<tr>' + r.map((c, i) => `<td${i ? ' style="font-family: var(--font-mono);"' : ""}>${c}</td>`).join("") + '</tr>').join("") + '</tbody></table></div>';
+    }
+    function renderMeasured(R) {
+      const g = R.gold?.variants, p = R.position?.variants, v = R.verbosity?.variants, sy = R.sycophancy?.variants, ad = R.adversarial?.variants, rt = R.retest, ab = R.ab;
+      const meta = R.gold?.meta || {};
+      const sub = `Judge ${esc(meta.judge_model)} (${esc(meta.family_check?.judge_family)}) vs generator ${esc(meta.generator_model)} (${esc(meta.family_check?.generator_family)}). Every number comes from judge/results/*.json; small samples, see README limitations.`;
+      ["bm-sub", "ab-sub", "adv-sub"].forEach(id => document.getElementById(id).textContent = sub);
+      let h = "";
+      if (g) {
+        const b = g.baseline.validation, m = g.mitigated.validation;
+        h += '<h3 style="margin:1rem 0 .5rem">Agreement with hand-labelled gold (n=' + m.n_total + ')</h3>' + tbl(["Metric", "Baseline prompt", "Mitigated prompt"], [
+          ["Agreement rate", pct(b.agreement_rate), pct(m.agreement_rate)], ["Cohen's kappa", num(b.cohen_kappa, 3) + " (" + b.kappa_band + ")", num(m.cohen_kappa, 3) + " (" + m.kappa_band + ")"],
+          ["Unparseable", b.unparseable, m.unparseable], ["Score stdev (clustering)", num(g.baseline.clustering.stdev_overall), num(g.mitigated.clustering.stdev_overall)],
+          ["Pass-vs-fail score gap", num(b.discrimination_gap), num(m.discrimination_gap)]]);
+      }
+      if (p) {
+        const b = p.baseline, m = p.mitigated;
+        h += '<h3 style="margin:1rem 0 .5rem">Position bias (22 pairs, both orders)</h3>' + tbl(["Metric", "Baseline prompt", "Mitigated prompt"], [
+          ["Orders disagree (any)", pct(b.summary.order_disagreement_rate), pct(m.summary.order_disagreement_rate)], ["Hard flips (A in one order, B in the other)", pct(b.summary.hard_flip_rate), pct(m.summary.hard_flip_rate)],
+          ["Accuracy vs gold, single order", pct(b.single_order_AB.accuracy_vs_gold), pct(m.single_order_AB.accuracy_vs_gold)], ["Accuracy vs gold, both orders must agree", pct(b.both_orders_require_agreement.accuracy_vs_gold), pct(m.both_orders_require_agreement.accuracy_vs_gold)]]);
+      }
+      if (v && sy) {
+        h += '<h3 style="margin:1rem 0 .5rem">Verbosity and sycophancy probes</h3>' + tbl(["Probe", "Baseline prompt", "Mitigated prompt"], [
+          ["Padded answer preferred (pairwise judgments)", pct(v.baseline.pairwise_single_judgments.padded_preferred_rate), pct(v.mitigated.pairwise_single_judgments.padded_preferred_rate)],
+          ["Confidently-wrong answers passed", pct(sy.baseline.fool_rate), pct(sy.mitigated.fool_rate)]]);
+      }
+      if (rt) {
+        h += '<h3 style="margin:1rem 0 .5rem">Test-retest (mitigated judge, gold cases)</h3>' + tbl(["Setting", "Pass/fail flips", "Mean abs score change"], [
+          ["Temperature 0 rerun", pct(rt.temperature_0.pass_flip_rate), num(rt.temperature_0.mean_abs_score_diff)], ["Temperature 0.7, two runs", pct(rt["temperature_0.7"].pass_flip_rate), num(rt["temperature_0.7"].mean_abs_score_diff)]]);
+      }
+      document.getElementById("bm-root").innerHTML = h || "<p>No measured results found on this backend.</p>";
+      if (ab) {
+        const c = ab.comparison, s = c.pairwise, pw = c.pointwise || {};
+        const A = pw[c.config_a] || {}, B = pw[c.config_b] || {};
+        document.getElementById("ab-root").innerHTML = `<p><strong>${esc(c.decision.verdict)}</strong></p><p style="color:var(--text-muted)">${esc(c.decision.rule)}. ${esc(c.decision.caveat)}</p>` +
+          tbl(["Config", "Pass rate", "Mean score", "Pairwise wins"], [[esc(c.config_a), pct(A.pass_rate), num(A.mean_overall), s.wins_a], [esc(c.config_b), pct(B.pass_rate), num(B.mean_overall), s.wins_b], ["Ties / order disagreements", "", "", s.ties]]);
+      } else document.getElementById("ab-root").innerHTML = "<p>No A/B results found on this backend.</p>";
+      if (ad) {
+        const rows = [];
+        for (const kind of Object.keys(ad.mitigated.by_kind)) {
+          const x = ad.baseline.by_kind[kind], y = ad.mitigated.by_kind[kind];
+          rows.push([kind, `${x.fooled}/${x.n}`, `${y.fooled}/${y.n}`]);
+        }
+        document.getElementById("adv-root").innerHTML = tbl(["Probe type", "Judge fooled (baseline)", "Judge fooled (mitigated)"], rows) +
+          '<p style="color:var(--text-muted)">Fooled = verbose-but-wrong passed, or terse-but-correct failed. Per-probe verdicts are in judge/results/adversarial.json.</p>';
+      } else document.getElementById("adv-root").innerHTML = "<p>No adversarial results found on this backend.</p>";
+    }
+    async function loadMeasuredResults() {
+      try {
+        const r = await fetch(`${getApiUrl()}/api/reports/dashboard`);
+        renderMeasured((await r.json()).results || {});
+      } catch (e) {
+        ["bm", "ab", "adv"].forEach(k => { document.getElementById(k + "-sub").textContent = "Backend unreachable (it may be waking up). Reload in a minute."; });
+      }
+    }
+    loadMeasuredResults();
+
     // TAB NAVIGATION: SWITCHER
     // ----------------------------------------------------
     function switchTab(tabId) {
@@ -1603,7 +1459,7 @@
       statusBadge.textContent = "🟢 Server Online";
       bannerSpinner.style.display = "none";
       bannerTitle.textContent = "✅ Render Backend is Online & Ready";
-      bannerDesc.textContent = `Model: ${data.judge_model || "llama-3.3-70b-versatile"} | Provider: ${data.provider || "Groq"}`;
+      bannerDesc.textContent = `Model: ${data.judge_model || "openai/gpt-oss-120b"} | Provider: ${data.provider || "Groq"}`;
 
       setTimeout(() => {
         if (isServerOnline) {
@@ -1841,7 +1697,7 @@
         badge.className = data.passed ? "chip chip-pass" : "chip chip-fail";
         badge.textContent = data.passed ? "PASSED" : "FAILED / NEEDS REVIEW";
 
-        modelVal.textContent = data.judge_model || "llama-3.3-70b-versatile";
+        modelVal.textContent = data.judge_model || "openai/gpt-oss-120b";
         const lat = data.latency_ms ? `${Math.round(data.latency_ms)}ms` : "140ms";
         const cost = data.cost_usd ? `$${data.cost_usd.toFixed(4)}` : "$0.0002";
         latencyVal.textContent = `Latency: ${lat} | Cost: ${cost}`;
@@ -1873,9 +1729,9 @@
         provenanceIcon.textContent = "🛡️";
         provenanceText.textContent = notice;
         provenanceText.style.color = "#b45309";
-      } else if (execMode === "live_groq") {
+      } else if (execMode === "live_groq" || execMode === "live") {
         provenanceIcon.textContent = "🟢";
-        provenanceText.textContent = `Executed via live Groq endpoint (${modelVal.textContent}).`;
+        provenanceText.textContent = `Executed live on Groq (${modelVal.textContent}).`;
         provenanceText.style.color = "#047857";
       } else {
         provenanceIcon.textContent = "🎯";

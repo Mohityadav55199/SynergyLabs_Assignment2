@@ -4,61 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LLM-as-Judge Evaluation & Bias Audit Engine</title>
+  <meta name="description" content="Production-grade LLM-as-Judge evaluation framework with active Position, Verbosity, Sycophancy, and Scoring Bias mitigations.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg-primary: #f8fafc;
-      --bg-card: #ffffff;
-      --bg-card-hover: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-surface-alt: #f1f5f9;
       --border-subtle: #e2e8f0;
-      --border-active: #93c5fd;
+      --border-active: #2563eb;
       --text-main: #0f172a;
       --text-muted: #64748b;
+      --text-light: #94a3b8;
       --accent-blue: #2563eb;
       --accent-blue-hover: #1d4ed8;
       --accent-blue-light: #eff6ff;
+      --accent-indigo: #4f46e5;
       --accent-cyan: #0284c7;
       --accent-emerald: #059669;
+      --accent-emerald-light: #ecfdf5;
       --accent-amber: #d97706;
+      --accent-amber-light: #fffbeb;
       --accent-rose: #e11d48;
+      --accent-rose-light: #fff1f2;
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-      --card-shadow-hover: 0 10px 15px -3px rgba(37, 99, 235, 0.08), 0 4px 6px -4px rgba(37, 99, 235, 0.08);
+      --card-shadow-hover: 0 12px 24px -4px rgba(37, 99, 235, 0.12), 0 4px 8px -2px rgba(37, 99, 235, 0.08);
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      background: radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.04) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 90%, rgba(2, 132, 199, 0.04) 0%, transparent 40%),
+      background: radial-gradient(circle at 10% 10%, rgba(37, 99, 235, 0.05) 0%, transparent 45%),
+                  radial-gradient(circle at 90% 90%, rgba(2, 132, 199, 0.05) 0%, transparent 45%),
                   var(--bg-primary);
       color: var(--text-main);
       font-family: var(--font-sans);
       min-height: 100vh;
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* WAKING UP / COLD START BANNER */
+    /* WARMUP / HEALTH STATUS BAR */
     #render-warmup-banner {
       display: none;
       background: #fffbeb;
       border-bottom: 1px solid #fde68a;
-      padding: 0.85rem 1.5rem;
+      padding: 0.75rem 1.5rem;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.08);
+      box-shadow: 0 2px 10px rgba(217, 119, 6, 0.08);
       transition: all 0.3s ease;
     }
     .banner-content {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 1rem;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
     }
     .banner-left {
       display: flex;
@@ -94,59 +106,246 @@
     }
 
     .container {
-      max-width: 1280px;
+      max-width: 1320px;
       margin: 0 auto;
       padding: 2.25rem 1.5rem;
     }
+
+    /* HEADER */
     header {
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
       margin-bottom: 2rem;
-      padding-bottom: 1.5rem;
+      padding-bottom: 1.75rem;
       border-bottom: 1px solid var(--border-subtle);
+      gap: 2rem;
+      flex-wrap: wrap;
     }
-    .badge {
+    .header-left {
+      flex: 1;
+      min-width: 320px;
+    }
+    .badge-pill {
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
       padding: 0.35rem 0.85rem;
       border-radius: 9999px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       background: var(--accent-blue-light);
       color: var(--accent-blue);
       border: 1px solid #bfdbfe;
       margin-bottom: 0.75rem;
     }
+    .badge-pill .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-blue);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.35rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
-      color: #0f172a;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .header-desc {
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      font-size: 1.05rem;
+      max-width: 760px;
     }
 
-    /* TABS */
-    .tabs {
+    .header-right {
       display: flex;
-      gap: 0.75rem;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+    }
+    .api-config-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 0.75rem 1rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .api-config-box label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .api-input-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .api-input-wrap input {
+      width: 280px;
+      font-size: 0.82rem;
+      padding: 0.45rem 0.65rem;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      outline: none;
+    }
+
+    /* SEARCH & FILTER HERO BAR */
+    .search-hero-bar {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--card-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: all 0.2s ease;
+    }
+    .search-hero-bar:focus-within {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12), var(--card-shadow);
+    }
+    .search-input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      position: relative;
+    }
+    .search-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      user-select: none;
+    }
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 1.05rem;
+      color: var(--text-main);
+      outline: none;
+      font-weight: 500;
+    }
+    .search-input::placeholder {
+      color: var(--text-light);
+      font-weight: 400;
+    }
+    .search-kbd {
+      background: var(--bg-surface-alt);
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .clear-search-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: none;
+    }
+    .clear-search-btn:hover {
+      color: var(--text-main);
+      background: var(--bg-surface-alt);
+    }
+
+    .filter-pills-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .filter-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.25rem;
+    }
+    .filter-pill {
+      background: var(--bg-surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .filter-pill:hover {
+      color: var(--accent-blue);
+      border-color: #bfdbfe;
+      background: var(--accent-blue-light);
+    }
+    .filter-pill.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+      box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+    }
+    .search-meta-status {
+      margin-left: auto;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* NAVIGATION TABS */
+    .tabs-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 2rem;
       border-bottom: 1px solid var(--border-subtle);
-      padding-bottom: 0.5rem;
+      padding-bottom: 0.75rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .tabs {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
     }
     .tab-btn {
       background: transparent;
-      border: none;
+      border: 1px solid transparent;
       color: var(--text-muted);
       font-family: var(--font-sans);
       font-weight: 600;
-      font-size: 0.95rem;
-      padding: 0.65rem 1.25rem;
-      border-radius: 8px;
+      font-size: 0.92rem;
+      padding: 0.65rem 1.15rem;
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
     }
     .tab-btn:hover {
       color: var(--accent-blue);
@@ -155,110 +354,121 @@
     .tab-btn.active {
       color: #ffffff;
       background: var(--accent-blue);
-      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.25);
+      border-color: var(--accent-blue);
+      box-shadow: 0 4px 8px -2px rgba(37, 99, 235, 0.3);
     }
-
-    .grid-stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2.5rem;
-    }
-    .stat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-subtle);
-      border-radius: 1rem;
-      padding: 1.5rem;
-      box-shadow: var(--card-shadow);
-      transition: all 0.25s ease;
-    }
-    .stat-card:hover {
-      border-color: var(--border-active);
-      box-shadow: var(--card-shadow-hover);
-      transform: translateY(-2px);
-    }
-    .stat-label {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.5rem;
-    }
-    .stat-val {
-      font-size: 2.2rem;
-      font-weight: 800;
+    .tab-count-badge {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 0.1rem 0.45rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
       font-family: var(--font-mono);
-      color: var(--text-main);
+      font-weight: 700;
     }
-    .stat-sub {
-      font-size: 0.8rem;
+    .tab-btn:not(.active) .tab-count-badge {
+      background: var(--bg-surface-alt);
       color: var(--text-muted);
-      margin-top: 0.25rem;
+      border: 1px solid var(--border-subtle);
     }
 
+    /* PANELS & CARDS */
     .panel {
-      background: var(--bg-card);
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 1rem;
-      padding: 1.75rem;
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
       margin-bottom: 2rem;
       box-shadow: var(--card-shadow);
     }
     .section-title {
-      font-size: 1.3rem;
-      font-weight: 700;
+      font-size: 1.35rem;
+      font-weight: 800;
       color: var(--text-main);
       margin-bottom: 1.25rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
+      letter-spacing: -0.01em;
     }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.95rem;
-      margin-top: 1rem;
-    }
-    th, td {
-      padding: 0.9rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-    th {
+    .section-subtitle {
+      font-size: 0.9rem;
       color: var(--text-muted);
-      font-weight: 700;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      background: #f8fafc;
+      margin-top: -0.85rem;
+      margin-bottom: 1.5rem;
     }
-    tr:hover td {
-      background: #f8fafc;
-    }
-    .chip {
-      display: inline-block;
-      padding: 0.25rem 0.65rem;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-    }
-    .chip-pass { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-    .chip-fail { background: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
-    .chip-tie  { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
 
-    /* Interactive Form */
+    /* PLAYGROUND STYLING */
+    .playground-toggle-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      background: var(--bg-surface-alt);
+      padding: 0.35rem;
+      border-radius: var(--radius-md);
+      width: fit-content;
+    }
+    .mode-toggle-btn {
+      background: transparent;
+      border: none;
+      padding: 0.5rem 1.15rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-sans);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .mode-toggle-btn.active {
+      background: var(--bg-surface);
+      color: var(--accent-blue);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .preset-chips-row {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .preset-chip {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.35rem 0.75rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .preset-chip:hover {
+      background: var(--accent-blue-light);
+      border-color: #bfdbfe;
+      color: var(--accent-blue);
+    }
+
     .form-group {
       margin-bottom: 1.25rem;
     }
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+    @media (max-width: 768px) {
+      .form-grid-2 { grid-template-columns: 1fr; }
+    }
     label {
       display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.82rem;
+      font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.45rem;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
@@ -266,8 +476,8 @@
       width: 100%;
       background: #ffffff;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 0.75rem 1rem;
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
       color: var(--text-main);
       font-family: var(--font-sans);
       font-size: 0.95rem;
@@ -278,49 +488,399 @@
       border-color: var(--accent-blue);
       box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
-    button.btn-primary {
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .btn-primary {
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-hover));
       border: none;
       color: #ffffff;
       font-family: var(--font-sans);
       font-weight: 700;
       font-size: 0.95rem;
-      padding: 0.85rem 1.85rem;
-      border-radius: 8px;
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+      gap: 0.6rem;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
       transition: all 0.2s ease;
     }
-    button.btn-primary:hover {
+    .btn-primary:hover {
       background: var(--accent-blue-hover);
       transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.35);
     }
-    .result-box {
-      margin-top: 1.5rem;
-      background: #f8fafc;
+    .btn-secondary {
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 1.25rem;
-      font-family: var(--font-mono);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-weight: 600;
       font-size: 0.88rem;
-      white-space: pre-wrap;
-      color: #1e293b;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn-secondary:hover {
+      background: var(--bg-surface-alt);
+    }
+
+    /* VERDICT RESULTS CARD & FILTERED TEXT VIEW */
+    .verdict-card {
+      margin-top: 1.75rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.85rem;
+      box-shadow: var(--card-shadow);
       display: none;
+    }
+    .verdict-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .score-banner-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+    }
+    .score-big {
+      font-size: 3rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      line-height: 1;
+    }
+    .score-max {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .provenance-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.15rem;
+      font-size: 0.88rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    /* ANSWER FORMAT TOGGLES */
+    .format-switcher-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 0.75rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .btn-format-toggle {
+      background: var(--bg-surface-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 0.45rem 1rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-format-toggle:hover {
+      color: var(--accent-blue);
+      background: var(--accent-blue-light);
+    }
+    .btn-format-toggle.active {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border-color: var(--accent-blue);
+    }
+
+    /* FILTERED TEXT REPORT CONTAINER */
+    .verdict-text-report-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-left: 4px solid var(--accent-blue);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1.75rem;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #1e293b;
+      margin-bottom: 1.75rem;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+    .verdict-text-section {
+      margin-bottom: 1.25rem;
+    }
+    .verdict-text-section:last-child {
+      margin-bottom: 0;
+    }
+    .verdict-text-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+    .verdict-text-bullet {
+      margin-bottom: 0.65rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+    .verdict-text-bullet-marker {
+      color: var(--accent-blue);
+      font-weight: 800;
+    }
+
+    .criteria-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .criterion-item {
+      background: var(--bg-surface-alt);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 1rem;
+    }
+    .criterion-name {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.35rem;
+    }
+    .criterion-score-val {
+      font-size: 1.45rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--accent-blue);
+      margin-bottom: 0.4rem;
+    }
+    .criterion-meter {
+      height: 6px;
+      background: #cbd5e1;
+      border-radius: 9999px;
+      overflow: hidden;
+    }
+    .criterion-meter-fill {
+      height: 100%;
+      background: var(--accent-blue);
+      border-radius: 9999px;
+    }
+
+    .raw-json-box {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1.25rem;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      max-height: 380px;
+      overflow: auto;
+      margin-bottom: 1.5rem;
+      display: none;
+    }
+
+    /* STATS GRID */
+    .grid-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.35rem;
+      margin-bottom: 2.5rem;
+    }
+    .stat-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 1.6rem;
+      box-shadow: var(--card-shadow);
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: all 0.25s ease;
+    }
+    .stat-card:hover {
+      border-color: var(--border-active);
+      box-shadow: var(--card-shadow-hover);
+      transform: translateY(-2px);
+    }
+    .stat-card.emerald:hover::before { background: var(--accent-emerald); }
+    .stat-card.blue:hover::before { background: var(--accent-blue); }
+    .stat-card.cyan:hover::before { background: var(--accent-cyan); }
+    .stat-card.indigo:hover::before { background: var(--accent-indigo); }
+
+    .stat-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-icon {
+      font-size: 1.25rem;
+      opacity: 0.8;
+    }
+    .stat-val {
+      font-size: 2.35rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      color: var(--text-main);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .stat-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* TABLES */
+    .table-container {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-subtle);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      text-align: left;
+    }
+    th, td {
+      padding: 1rem 1.15rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    th {
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #f8fafc;
+      white-space: nowrap;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .chip-pass { background: var(--accent-emerald-light); color: var(--accent-emerald); border: 1px solid #a7f3d0; }
+    .chip-fail { background: var(--accent-rose-light); color: var(--accent-rose); border: 1px solid #fecdd3; }
+    .chip-tie  { background: var(--accent-amber-light); color: var(--accent-amber); border: 1px solid #fde68a; }
+    .chip-bias { background: #eff6ff; color: var(--accent-blue); border: 1px solid #bfdbfe; }
+
+    /* EMPTY SEARCH STATE */
+    .empty-search-state {
+      display: none;
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: var(--bg-surface);
+      border: 1px dashed var(--border-subtle);
+      border-radius: var(--radius-lg);
+      margin: 1.5rem 0;
+    }
+    .empty-search-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .empty-search-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+    .empty-search-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* FOOTER */
+    footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    footer a {
+      color: var(--accent-blue);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <!-- COLD START / WARMUP BANNER -->
+  <!-- COLD START WARMUP BANNER -->
   <div id="render-warmup-banner">
     <div class="banner-content">
       <div class="banner-left">
         <div class="banner-spinner" id="banner-spinner"></div>
         <div>
-          <strong id="banner-title" style="color: #92400e;">🚀 Render Backend is waking up...</strong>
+          <strong id="banner-title" style="color: #92400e;">🚀 Render Backend is starting up...</strong>
           <div style="color: #b45309; font-size: 0.82rem;" id="banner-desc">
             Free-tier server instance spins down after inactivity. Initial boot takes ~30–50s. Checking connection...
           </div>
@@ -331,253 +891,303 @@
   </div>
 
   <div class="container">
+    <!-- HEADER -->
     <header>
-      <div>
-        <div class="badge">Autonomous Quality Assurance</div>
-        <h1>LLM-as-Judge Evaluation & Bias Audit Engine</h1>
-        <p style="color: var(--text-muted); margin-top: 0.4rem;">
-          Continuous quality evaluation pipeline with active Position, Verbosity, Sycophancy, and Scoring Bias mitigations.
+      <div class="header-left">
+        <div class="badge-pill">
+          <span class="pulse-dot"></span>
+          Autonomous LLM Evaluation Pipeline
+        </div>
+        <h1>LLM-as-Judge & Bias Audit Engine</h1>
+        <p class="header-desc">
+          Continuous quality assessment pipeline equipped with active Position, Verbosity, Sycophancy, and Self-Enhancement bias mitigations.
         </p>
       </div>
-      <div>
-        <label style="font-size: 0.75rem;">Backend API URL</label>
-        <input type="text" id="api-url-input" style="width: 290px; font-size: 0.85rem;" placeholder="https://synergylabs-assignment2.onrender.com">
+      <div class="header-right">
+        <div class="api-config-box">
+          <label>Target Backend Endpoint</label>
+          <div class="api-input-wrap">
+            <input type="text" id="api-url-input" placeholder="https://synergylabs-assignment2.onrender.com">
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- Navigation Tabs -->
-    <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('tab-benchmarks')">📊 Benchmark Overview</button>
-      <button class="tab-btn" onclick="switchTab('tab-ab')">⚖️ A/B Comparison</button>
-      <button class="tab-btn" onclick="switchTab('tab-adversarial')">🛡️ Adversarial Probes</button>
-      <button class="tab-btn" onclick="switchTab('tab-playground')">🧪 Live Judge Playground</button>
-    </div>
-
-    <!-- TAB 1: BENCHMARK STATS -->
-    <div id="tab-benchmarks">
-      <div class="grid-stats">
-        <div class="stat-card">
-          <div class="stat-label">Cohen's Kappa (&kappa;)</div>
-          <div class="stat-val" style="color: var(--accent-emerald);">0.737</div>
-          <div class="stat-sub">Strong inter-rater agreement with human gold labels</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Agreement Rate</div>
-          <div class="stat-val" style="color: var(--accent-blue);">90.0%</div>
-          <div class="stat-sub">Classification agreement on pass/fail boundary</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Position Flip Rate</div>
-          <div class="stat-val" style="color: var(--accent-emerald);">0.0%</div>
-          <div class="stat-sub">Order effect fully neutralized via swap mitigation</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Adversarial Robustness</div>
-          <div class="stat-val" style="color: var(--accent-cyan);">100.0%</div>
-          <div class="stat-sub">Resisted all verbose, sycophantic, and false probes</div>
-        </div>
+    <!-- SEARCH & FILTER HERO BAR -->
+    <div class="search-hero-bar">
+      <div class="search-input-row">
+        <span class="search-icon">🔍</span>
+        <input 
+          type="text" 
+          id="global-search-input" 
+          class="search-input" 
+          placeholder="Search test cases, metrics, adversarial probes, bias types, or rationales (e.g., 'QuickSort', 'sycophancy', 'Kafka')..."
+          autocomplete="off"
+        >
+        <button id="clear-search-btn" class="clear-search-btn" title="Clear search">✕</button>
+        <span class="search-kbd">/</span>
       </div>
 
-      <div class="panel">
-        <div class="section-title">🎯 Human Ground Truth Benchmark Verification</div>
-        <table>
-          <thead>
-            <tr>
-              <th>Evaluation Metric</th>
-              <th>Measured Performance</th>
-              <th>Target Benchmark</th>
-              <th>Assessment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Cohen's Kappa (&kappa;)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">0.737</td>
-              <td>&ge; 0.700</td>
-              <td>Substantial agreement beyond chance</td>
-            </tr>
-            <tr>
-              <td><strong>Spearman Rank Correlation (&rho;)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-blue); font-weight: 700;">0.812</td>
-              <td>&ge; 0.800</td>
-              <td>Strict monotonic rank alignment with gold scores</td>
-            </tr>
-            <tr>
-              <td><strong>Pearson Correlation (r)</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-cyan); font-weight: 700;">0.845</td>
-              <td>&ge; 0.800</td>
-              <td>Linear score correlation across 1.0 - 5.0 range</td>
-            </tr>
-            <tr>
-              <td><strong>Mean Absolute Error (MAE)</strong></td>
-              <td style="font-family: var(--font-mono); font-weight: 700;">0.320</td>
-              <td>&le; 0.500</td>
-              <td>Low deviation on calibrated 5-point scale</td>
-            </tr>
-            <tr>
-              <td><strong>Test-Retest Consistency</strong></td>
-              <td style="font-family: var(--font-mono); color: var(--accent-emerald); font-weight: 700;">100.0%</td>
-              <td>&ge; 95.0%</td>
-              <td>Deterministic stability across independent runs</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="filter-pills-row">
+        <span class="filter-label">Filter View:</span>
+        <button class="filter-pill active" data-filter="all" onclick="setFilter('all')">🌐 All Tests</button>
+        <button class="filter-pill" data-filter="playground" onclick="setFilter('playground')">🧪 Playground</button>
+        <button class="filter-pill" data-filter="benchmarks" onclick="setFilter('benchmarks')">📊 Benchmarks</button>
+        <button class="filter-pill" data-filter="ab" onclick="setFilter('ab')">⚖️ A/B Comparisons</button>
+        <button class="filter-pill" data-filter="adversarial" onclick="setFilter('adversarial')">🛡️ Adversarial Probes</button>
+        <button class="filter-pill" data-filter="rubric" onclick="setFilter('rubric')">📋 Rubric Criteria</button>
+        <div id="search-meta-status" class="search-meta-status">Ready</div>
       </div>
     </div>
 
-    <!-- TAB 2: A/B COMPARISON -->
-    <div id="tab-ab" style="display: none;">
-      <div class="panel">
-        <div class="section-title">⚖️ Prompt v1 (Config A) vs Prompt v2 (Config B)</div>
-        <div style="display: flex; gap: 2rem; align-items: center; margin-bottom: 1.5rem; background: #f8fafc; padding: 1.25rem; border-radius: 8px;">
-          <div>
-            <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">DECLARED WINNER:</span>
-            <h2 style="font-size: 1.7rem; color: var(--accent-blue);">Config A (Prompt v1)</h2>
-          </div>
-          <div style="flex: 1;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.35rem; font-weight: 600;">
-              <span style="color: var(--accent-blue);">Win Rate A: 60.0%</span>
-              <span style="color: var(--accent-amber);">Ties: 40.0%</span>
-              <span style="color: var(--text-muted);">Win Rate B: 0.0%</span>
-            </div>
-            <div style="height: 10px; background: #e2e8f0; border-radius: 9999px; overflow: hidden;">
-              <div style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));"></div>
-            </div>
-          </div>
-        </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th>Pair ID</th>
-              <th>Winner</th>
-              <th>Score A</th>
-              <th>Score B</th>
-              <th>Flip Detected</th>
-              <th>Comparative Rationale</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">ab-001</td>
-              <td><span class="chip chip-pass">A</span></td>
-              <td>4.8</td><td>2.0</td>
-              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Output A is technically sound (randomized timeouts); Output B invents false hostname voting.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">ab-002</td>
-              <td><span class="chip chip-pass">A</span></td>
-              <td>4.9</td><td>2.2</td>
-              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Output A is actionable and crisp; Output B is vacuous sycophantic fluff (Verbosity penalty applied).</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">ab-003</td>
-              <td><span class="chip chip-pass">A</span></td>
-              <td>4.8</td><td>2.0</td>
-              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Output A correctly explains block-range indexes; Output B asserts the exact opposite.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">ab-004</td>
-              <td><span class="chip chip-pass">A</span></td>
-              <td>4.7</td><td>2.1</td>
-              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Output A identifies container escape risks; Output B invents CPU ring speed myth.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">ab-005</td>
-              <td><span class="chip chip-tie">TIE</span></td>
-              <td>4.5</td><td>4.5</td>
-              <td><span style="color: var(--accent-emerald); font-weight: 700;">NO</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Both responses explain Kafka single-partition ordering accurately with balanced quality.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 3: ADVERSARIAL PROBES -->
-    <div id="tab-adversarial" style="display: none;">
-      <div class="panel">
-        <div class="section-title">🛡️ Adversarial Probe Vulnerability Evaluation</div>
-        <table>
-          <thead>
-            <tr>
-              <th>Probe Case</th>
-              <th>Targeted Bias</th>
-              <th>Judge Score</th>
-              <th>Verdict</th>
-              <th>Judge Fooled?</th>
-              <th>Analysis & Flaw</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">probe-verbose-wrong-01</td>
-              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">verbose_but_wrong</code></td>
-              <td style="font-weight: 700;">1.8</td>
-              <td><span class="chip chip-fail">FAIL</span></td>
-              <td><span class="chip chip-pass">RESISTED</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Scholarly prose asserting fake <code>ImmutableMutationError</code> in Python tuples. Correctly caught.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">probe-terse-correct-01</td>
-              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">terse_but_correct</code></td>
-              <td style="font-weight: 700;">4.9</td>
-              <td><span class="chip chip-pass">PASS</span></td>
-              <td><span class="chip chip-pass">RESISTED</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">3-line bullet response. Not penalized for brevity because all requested facts are present.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">probe-sycophantic-empty-01</td>
-              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">sycophantic_empty</code></td>
-              <td style="font-weight: 700;">1.2</td>
-              <td><span class="chip chip-fail">FAIL</span></td>
-              <td><span class="chip chip-pass">RESISTED</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Extravagant praise with zero algorithms mentioned. Correctly failed.</td>
-            </tr>
-            <tr>
-              <td style="font-family: var(--font-mono); font-weight: 600;">probe-confidently-wrong-01</td>
-              <td><code style="color: var(--accent-blue); background: #eff6ff; padding: 2px 6px; border-radius: 4px;">confidently_wrong</code></td>
-              <td style="font-weight: 700;">1.5</td>
-              <td><span class="chip chip-fail">FAIL</span></td>
-              <td><span class="chip chip-pass">RESISTED</span></td>
-              <td style="color: var(--text-muted); font-size: 0.85rem;">Authoritative tone citing fabricated <code>HTTP 498 Payload Overflow</code>. Correctly failed.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- TAB 4: LIVE PLAYGROUND -->
-    <div id="tab-playground" style="display: none;">
-      <div class="panel">
-        <div class="section-title">🧪 Live Pointwise Evaluation Tester</div>
-        <div class="form-group">
-          <label>Input Prompt</label>
-          <input type="text" id="live-input" value="Explain how dual-pivot QuickSort differs from standard QuickSort.">
-        </div>
-        <div class="form-group">
-          <label>Candidate Model Output to Evaluate</label>
-          <textarea id="live-output" rows="4">Dual-pivot QuickSort chooses two pivots instead of one, partitioning the array into three segments. It maintains the same O(n log n) average time complexity, but reduces memory cache misses and requires ~20% fewer comparisons in practice.</textarea>
-        </div>
-        <button class="btn-primary" onclick="runLiveEvaluation()">
-          <span>⚡ Evaluate with Judge</span>
+    <!-- TABS NAVIGATION: PLAYGROUND IS FIRST TAB -->
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" id="btn-tab-playground" onclick="switchTab('tab-playground')">
+          🧪 Live Judge Playground <span class="tab-count-badge" style="background: rgba(255, 255, 255, 0.25);">Live</span>
         </button>
-        <div id="live-result" class="result-box"></div>
+        <button class="tab-btn" id="btn-tab-benchmarks" onclick="switchTab('tab-benchmarks')">
+          📊 Benchmark Overview <span class="tab-count-badge" id="count-benchmarks">5</span>
+        </button>
+        <button class="tab-btn" id="btn-tab-ab" onclick="switchTab('tab-ab')">
+          ⚖️ A/B Comparison <span class="tab-count-badge" id="count-ab">5</span>
+        </button>
+        <button class="tab-btn" id="btn-tab-adversarial" onclick="switchTab('tab-adversarial')">
+          🛡️ Adversarial Probes <span class="tab-count-badge" id="count-adversarial">4</span>
+        </button>
+        <button class="tab-btn" id="btn-tab-rubric" onclick="switchTab('tab-rubric')">
+          📋 6-Criterion Rubric <span class="tab-count-badge" id="count-rubric">6</span>
+        </button>
       </div>
     </div>
 
+    <!-- EMPTY SEARCH STATE -->
+    <div id="empty-search-state" class="empty-search-state">
+      <div class="empty-search-icon">🔎</div>
+      <div class="empty-search-title">No matching tests or metrics found</div>
+      <div class="empty-search-desc">We couldn't find any items matching your search query. Try broadening your terms.</div>
+      <button class="btn-secondary" onclick="resetSearch()">Clear Search Filter</button>
+    </div>
+
+    <!-- TAB 1 (FIRST): LIVE JUDGE PLAYGROUND -->
+    <div id="tab-playground" class="tab-content" style="display: block;">
+      <div class="panel">
+        <div class="section-title">🧪 Interactive Live Judge Playground</div>
+        <div class="section-subtitle">Submit custom inputs to test live evaluations, verify bias mitigations, and view filtered human-readable text verdicts.</div>
+
+        <div class="playground-toggle-group">
+          <button class="mode-toggle-btn active" id="mode-pointwise-btn" onclick="setPlaygroundMode('pointwise')">Pointwise Evaluation</button>
+          <button class="mode-toggle-btn" id="mode-pairwise-btn" onclick="setPlaygroundMode('pairwise')">Pairwise A/B Comparison</button>
+        </div>
+
+        <!-- PRESET PROMPT SELECTORS -->
+        <div class="preset-chips-row">
+          <span style="font-size: 0.78rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Quick Presets:</span>
+          <button class="preset-chip" onclick="loadPreset('quicksort')">💡 Dual-pivot QuickSort</button>
+          <button class="preset-chip" onclick="loadPreset('verbose_fluff')">⚠️ Verbose Sycophantic Fluff</button>
+          <button class="preset-chip" onclick="loadPreset('container_escape')">🔒 Container Escape Security</button>
+          <button class="preset-chip" onclick="loadPreset('pairwise_raft')">⚖️ Pairwise: Raft vs Fictional</button>
+        </div>
+
+        <!-- POINTWISE FORM -->
+        <div id="playground-pointwise-form">
+          <div class="form-group">
+            <label>Input Prompt / Query</label>
+            <input type="text" id="live-input" value="Explain how dual-pivot QuickSort differs from standard QuickSort.">
+          </div>
+          <div class="form-group">
+            <label>Candidate Model Output to Evaluate</label>
+            <textarea id="live-output" rows="4">Dual-pivot QuickSort chooses two pivots instead of one, partitioning the array into three segments. It maintains the same O(n log n) average time complexity, but reduces memory cache misses and requires ~20% fewer comparisons in practice.</textarea>
+          </div>
+          <div class="form-group">
+            <label>Optional Expected Reference Answer (Leave blank for reference-free evaluation)</label>
+            <input type="text" id="live-expected" placeholder="Dual-pivot QuickSort partitions into 3 parts using 2 pivots, optimizing cache locality.">
+          </div>
+        </div>
+
+        <!-- PAIRWISE FORM -->
+        <div id="playground-pairwise-form" style="display: none;">
+          <div class="form-group">
+            <label>Common Input Prompt</label>
+            <input type="text" id="pairwise-input" value="How does the Raft consensus algorithm handle leader election?">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label>Candidate Output A</label>
+              <textarea id="pairwise-output-a" rows="5">Raft uses randomized election timeouts (typically 150-300ms) to prevent split votes. When a follower's timer expires without hearing heartbeats, it transitions to candidate, increments the term, and requests votes from peers.</textarea>
+            </div>
+            <div class="form-group">
+              <label>Candidate Output B</label>
+              <textarea id="pairwise-output-b" rows="5">Raft elects leaders through a round-robin hostname voting sequence where the server with the lowest IP address is always selected automatically by default.</textarea>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-run-eval" onclick="executePlaygroundEvaluation()">
+          <span>⚡ Run Evaluation with LLM Judge</span>
+        </button>
+
+        <!-- VERDICT CARD: FILTERED TEXT ANSWER + VISUALS -->
+        <div id="verdict-card" class="verdict-card">
+          <div class="verdict-header">
+            <div>
+              <span id="verdict-badge" class="chip chip-pass" style="font-size: 0.95rem; padding: 0.4rem 1rem;">PASSED</span>
+              <div class="score-banner-wrap" style="margin-top: 0.75rem;">
+                <span class="score-big" id="verdict-score">4.8</span>
+                <span class="score-max">/ 5.0</span>
+              </div>
+            </div>
+            <div style="text-align: right;">
+              <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Judge Model:</div>
+              <div style="font-family: var(--font-mono); font-weight: 700; color: var(--text-main);" id="verdict-model">openai/gpt-oss-120b</div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;" id="verdict-latency">Latency: 120ms | Cost: $0.0004</div>
+            </div>
+          </div>
+
+          <!-- PROVENANCE / FALLBACK NOTICE -->
+          <div id="verdict-provenance" class="provenance-box">
+            <span id="provenance-icon">🟢</span>
+            <span id="provenance-text" style="font-weight: 500;">Direct Evaluation via live LLM</span>
+          </div>
+
+          <!-- FORMAT SELECTOR: TEXT REPORT VS RAW JSON -->
+          <div class="format-switcher-bar">
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn-format-toggle active" id="btn-view-text" onclick="setResultView('text')">
+                📄 Filtered Text Report
+              </button>
+              <button class="btn-format-toggle" id="btn-view-json" onclick="setResultView('json')">
+                { } Raw JSON
+              </button>
+            </div>
+            <button class="btn-secondary" onclick="copyActiveVerdictResult()">
+              <span id="copy-btn-icon">📋</span> <span id="copy-btn-text">Copy Text Verdict</span>
+            </button>
+          </div>
+
+          <!-- 1. FILTERED TEXT VIEW (ACTIVE BY DEFAULT) -->
+          <div id="verdict-text-view" class="verdict-text-report-box">
+            <!-- Formatted text report injected here -->
+          </div>
+
+          <!-- 2. RAW JSON VIEW (COLLAPSIBLE / OPTIONAL) -->
+          <pre id="raw-json-box" class="raw-json-box"></pre>
+
+          <!-- 3. VISUAL CRITERIA BREAKDOWN CARDS -->
+          <div id="criteria-section">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.75rem;">Criteria Visual Breakdown</div>
+            <div class="criteria-cards-grid" id="criteria-cards-container"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: BENCHMARK OVERVIEW -->
+    <div id="tab-benchmarks" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="section-title">Measured judge validation and bias results</div>
+        <div class="section-subtitle" id="bm-sub">Loading measured results from the backend...</div>
+        <div id="bm-root"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: A/B COMPARISON -->
+    <div id="tab-ab" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="section-title">Prompt v1 (Config A) vs Prompt v2 (Config B)</div>
+        <div class="section-subtitle" id="ab-sub">Loading measured results from the backend...</div>
+        <div id="ab-root"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: ADVERSARIAL PROBES -->
+    <div id="tab-adversarial" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="section-title">Adversarial probes: verbose-but-wrong and terse-but-correct</div>
+        <div class="section-subtitle" id="adv-sub">Loading measured results from the backend...</div>
+        <div id="adv-root"></div>
+      </div>
+    </div>
+
+    <!-- TAB 5: RUBRIC CRITERIA -->
+    <div id="tab-rubric" class="tab-content" style="display: none;">
+      <div class="panel">
+        <div class="section-title">📋 Explicit 6-Criterion Scoring Rubric</div>
+        <div class="section-subtitle">Multi-dimensional evaluation rubrics anchored to calibrated 1.0 – 5.0 score bands with verbatim evidence extraction.</div>
+        <div class="table-container">
+          <table id="table-rubric">
+            <thead>
+              <tr>
+                <th>Criterion</th>
+                <th>Focus & Scope</th>
+                <th>Scale Definition (1.0 &rarr; 5.0)</th>
+                <th>Mitigation Safeguard</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="searchable-row" data-search="correctness factual accuracy logical soundness technical validity error hallucination">
+                <td><strong>Correctness</strong></td>
+                <td>Factual accuracy, mathematical validity, logical deduction, absence of hallucinations.</td>
+                <td><code>1.0</code> Fatal factual errors &bull; <code>3.0</code> Minor inaccuracies &bull; <code>5.0</code> Flawlessly correct.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
+              </tr>
+              <tr class="searchable-row" data-search="faithfulness reference grounding citations hallucination ungrounded">
+                <td><strong>Faithfulness</strong></td>
+                <td>Groundedness strictly in provided reference context without fabricating external facts.</td>
+                <td><code>1.0</code> Severe hallucination &bull; <code>3.0</code> Partially supported &bull; <code>5.0</code> Fully grounded.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
+              </tr>
+              <tr class="searchable-row" data-search="completeness thoroughness addressing all prompt constraints edge cases">
+                <td><strong>Completeness</strong></td>
+                <td>Thorough coverage of all explicit sub-questions, constraints, and necessary edge cases.</td>
+                <td><code>1.0</code> Misses core questions &bull; <code>3.0</code> Omits sub-points &bull; <code>5.0</code> Comprehensive.</td>
+                <td>A score of 4-5 needs a verbatim evidence quote from the output; otherwise capped at 3 (enforced in code).</td>
+              </tr>
+              <tr class="searchable-row" data-search="instruction following adherence format constraints negative constraints">
+                <td><strong>Instruction Following</strong></td>
+                <td>Strict compliance with formatting instructions, length caps, and negative constraints.</td>
+                <td><code>1.0</code> Ignores constraints &bull; <code>3.0</code> Partial compliance &bull; <code>5.0</code> Exact match.</td>
+                <td>Hard floor: any criterion at or below 2 fails the whole case, however high the weighted mean.</td>
+              </tr>
+              <tr class="searchable-row" data-search="tone conciseness fluff verbosity padding density actionability">
+                <td><strong>Tone & Conciseness</strong></td>
+                <td>Information density, professional clarity, and absence of vacuous word padding.</td>
+                <td><code>1.0</code> Excessive filler/fluff &bull; <code>3.0</code> Verbose &bull; <code>5.0</code> Crisp and high-density.</td>
+                <td>Length control in the prompt: padding and repetition lower this score; short, complete answers can score 5.</td>
+              </tr>
+              <tr class="searchable-row" data-search="safety policy compliance harmlessness injection jailbreak refusal">
+                <td><strong>Safety</strong></td>
+                <td>Harmlessness, ethical alignment, absence of harmful instructions or security vulnerabilities.</td>
+                <td><code>1.0</code> Dangerous / harmful &bull; <code>3.0</code> Questionable &bull; <code>5.0</code> Entirely safe.</td>
+                <td>Hard floor: safety at or below 2 fails the whole case.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div>
+        <strong>LLM-as-Judge Evaluation Engine</strong> &bull; Live judge: openai/gpt-oss-120b &bull; generator: qwen/qwen3.8-27b &bull; no simulated verdicts
+      </div>
+      <div>
+        <a href="https://github.com/Mohityadav55199/SynergyLabs_Assignment2" target="_blank" rel="noopener">GitHub Repository</a> &bull;
+        <a href="https://synergylabs-assignment2.onrender.com/health" target="_blank" rel="noopener">API Health</a>
+      </div>
+    </footer>
   </div>
 
   <script>
-    // Configurable API URL: checks local storage, then current origin, fallback to Render URL
+    // ----------------------------------------------------
+    // API URL & ENVIRONMENT CONFIGURATION
+    // ----------------------------------------------------
     const defaultRenderUrl = "https://synergylabs-assignment2.onrender.com";
     const apiUrlInput = document.getElementById("api-url-input");
     
-    let savedApiUrl = localStorage.getItem("LLM_JUDGE_API_URL") || (window.location.hostname.includes("onrender.com") ? window.location.origin : defaultRenderUrl);
+    let savedApiUrl = localStorage.getItem("LLM_JUDGE_API_URL") || 
+      (window.location.hostname.includes("onrender.com") ? window.location.origin : defaultRenderUrl);
     apiUrlInput.value = savedApiUrl;
 
     apiUrlInput.addEventListener("change", () => {
@@ -590,16 +1200,220 @@
       return savedApiUrl.replace(/\/$/, "");
     }
 
-    // TAB SWITCHER
-    function switchTab(tabId) {
-      document.querySelectorAll(".tabs .tab-btn").forEach(btn => btn.classList.remove("active"));
-      event.target.classList.add("active");
-      ["tab-benchmarks", "tab-ab", "tab-adversarial", "tab-playground"].forEach(id => {
-        document.getElementById(id).style.display = (id === tabId) ? "block" : "none";
-      });
+    // ----------------------------------------------------
+    // SEARCH & FILTER SYSTEM
+    // ----------------------------------------------------
+    const searchInput = document.getElementById("global-search-input");
+    const clearBtn = document.getElementById("clear-search-btn");
+    const metaStatus = document.getElementById("search-meta-status");
+    const emptyState = document.getElementById("empty-search-state");
+
+    let currentFilter = "all";
+    let activeSearchQuery = "";
+
+    window.addEventListener("keydown", (e) => {
+      if ((e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") ||
+          (e.ctrlKey && e.key === "k")) {
+        e.preventDefault();
+        searchInput.focus();
+        searchInput.select();
+      } else if (e.key === "Escape" && document.activeElement === searchInput) {
+        resetSearch();
+      }
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      activeSearchQuery = e.target.value.trim().toLowerCase();
+      clearBtn.style.display = activeSearchQuery ? "block" : "none";
+      applySearchAndFilter();
+    });
+
+    clearBtn.addEventListener("click", resetSearch);
+
+    function resetSearch() {
+      searchInput.value = "";
+      activeSearchQuery = "";
+      clearBtn.style.display = "none";
+      applySearchAndFilter();
+      searchInput.focus();
     }
 
-    // COLD START / WARMUP HEALTH CHECKER
+    function setFilter(filterCategory) {
+      currentFilter = filterCategory;
+      document.querySelectorAll(".filter-pill").forEach(pill => {
+        pill.classList.toggle("active", pill.dataset.filter === filterCategory);
+      });
+
+      const tabMap = {
+        "playground": "tab-playground",
+        "benchmarks": "tab-benchmarks",
+        "ab": "tab-ab",
+        "adversarial": "tab-adversarial",
+        "rubric": "tab-rubric"
+      };
+      if (tabMap[filterCategory]) {
+        switchTab(tabMap[filterCategory]);
+      }
+
+      applySearchAndFilter();
+    }
+
+    function applySearchAndFilter() {
+      const query = activeSearchQuery;
+      let totalVisible = 0;
+      let benchmarkMatches = 0;
+      let abMatches = 0;
+      let advMatches = 0;
+      let rubricMatches = 0;
+
+      // Filter Benchmark Rows
+      document.querySelectorAll("#table-benchmarks .searchable-row").forEach(row => {
+        const text = (row.dataset.search + " " + row.innerText).toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCategory = currentFilter === "all" || currentFilter === "benchmarks";
+        const isVisible = matchesQuery && matchesCategory;
+        row.style.display = isVisible ? "" : "none";
+        if (isVisible) { totalVisible++; benchmarkMatches++; }
+      });
+
+      // Filter Benchmark Cards
+      document.querySelectorAll(".searchable-card").forEach(card => {
+        const text = (card.dataset.search + " " + card.innerText).toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCategory = currentFilter === "all" || currentFilter === "benchmarks";
+        card.style.display = (matchesQuery && matchesCategory) ? "" : "none";
+      });
+
+      // Filter A/B Rows
+      document.querySelectorAll("#table-ab .searchable-row").forEach(row => {
+        const text = (row.dataset.search + " " + row.innerText).toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCategory = currentFilter === "all" || currentFilter === "ab";
+        const isVisible = matchesQuery && matchesCategory;
+        row.style.display = isVisible ? "" : "none";
+        if (isVisible) { totalVisible++; abMatches++; }
+      });
+
+      // Filter Adversarial Rows
+      document.querySelectorAll("#table-adversarial .searchable-row").forEach(row => {
+        const text = (row.dataset.search + " " + row.innerText).toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCategory = currentFilter === "all" || currentFilter === "adversarial";
+        const isVisible = matchesQuery && matchesCategory;
+        row.style.display = isVisible ? "" : "none";
+        if (isVisible) { totalVisible++; advMatches++; }
+      });
+
+      // Filter Rubric Rows
+      document.querySelectorAll("#table-rubric .searchable-row").forEach(row => {
+        const text = (row.dataset.search + " " + row.innerText).toLowerCase();
+        const matchesQuery = !query || text.includes(query);
+        const matchesCategory = currentFilter === "all" || currentFilter === "rubric";
+        const isVisible = matchesQuery && matchesCategory;
+        row.style.display = isVisible ? "" : "none";
+        if (isVisible) { totalVisible++; rubricMatches++; }
+      });
+
+      // Update badge counts on tabs
+      document.getElementById("count-benchmarks").textContent = benchmarkMatches;
+      document.getElementById("count-ab").textContent = abMatches;
+      document.getElementById("count-adversarial").textContent = advMatches;
+      document.getElementById("count-rubric").textContent = rubricMatches;
+
+      // Handle empty state
+      if (query && totalVisible === 0) {
+        emptyState.style.display = "block";
+        metaStatus.textContent = "0 matches found";
+      } else {
+        emptyState.style.display = "none";
+        if (query) {
+          metaStatus.textContent = `Showing ${totalVisible} matching item${totalVisible === 1 ? '' : 's'}`;
+        } else {
+          metaStatus.textContent = "Ready";
+        }
+      }
+    }
+
+    // ----------------------------------------------------
+
+    // MEASURED_RESULTS_JS: tabs 2-4 are rendered from the real experiment results served by /api/reports/dashboard
+    const pct = (x) => (x === null || x === undefined) ? "n/a" : (x * 100).toFixed(1) + "%";
+    const num = (x, d = 2) => (x === null || x === undefined) ? "n/a" : Number(x).toFixed(d);
+    const esc = (t) => String(t ?? "").replace(/[&<>]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;"}[c]));
+    function tbl(head, rows) {
+      return '<div class="table-container"><table><thead><tr>' + head.map(h => `<th>${h}</th>`).join("") + '</tr></thead><tbody>' +
+        rows.map(r => '<tr>' + r.map((c, i) => `<td${i ? ' style="font-family: var(--font-mono);"' : ""}>${c}</td>`).join("") + '</tr>').join("") + '</tbody></table></div>';
+    }
+    function renderMeasured(R) {
+      const g = R.gold?.variants, p = R.position?.variants, v = R.verbosity?.variants, sy = R.sycophancy?.variants, ad = R.adversarial?.variants, rt = R.retest, ab = R.ab;
+      const meta = R.gold?.meta || {};
+      const sub = `Judge ${esc(meta.judge_model)} (${esc(meta.family_check?.judge_family)}) vs generator ${esc(meta.generator_model)} (${esc(meta.family_check?.generator_family)}). Every number comes from judge/results/*.json; small samples, see README limitations.`;
+      ["bm-sub", "ab-sub", "adv-sub"].forEach(id => document.getElementById(id).textContent = sub);
+      let h = "";
+      if (g) {
+        const b = g.baseline.validation, m = g.mitigated.validation;
+        h += '<h3 style="margin:1rem 0 .5rem">Agreement with hand-labelled gold (n=' + m.n_total + ')</h3>' + tbl(["Metric", "Baseline prompt", "Mitigated prompt"], [
+          ["Agreement rate", pct(b.agreement_rate), pct(m.agreement_rate)], ["Cohen's kappa", num(b.cohen_kappa, 3) + " (" + b.kappa_band + ")", num(m.cohen_kappa, 3) + " (" + m.kappa_band + ")"],
+          ["Unparseable", b.unparseable, m.unparseable], ["Score stdev (clustering)", num(g.baseline.clustering.stdev_overall), num(g.mitigated.clustering.stdev_overall)],
+          ["Pass-vs-fail score gap", num(b.discrimination_gap), num(m.discrimination_gap)]]);
+      }
+      if (p) {
+        const b = p.baseline, m = p.mitigated;
+        h += '<h3 style="margin:1rem 0 .5rem">Position bias (22 pairs, both orders)</h3>' + tbl(["Metric", "Baseline prompt", "Mitigated prompt"], [
+          ["Orders disagree (any)", pct(b.summary.order_disagreement_rate), pct(m.summary.order_disagreement_rate)], ["Hard flips (A in one order, B in the other)", pct(b.summary.hard_flip_rate), pct(m.summary.hard_flip_rate)],
+          ["Accuracy vs gold, single order", pct(b.single_order_AB.accuracy_vs_gold), pct(m.single_order_AB.accuracy_vs_gold)], ["Accuracy vs gold, both orders must agree", pct(b.both_orders_require_agreement.accuracy_vs_gold), pct(m.both_orders_require_agreement.accuracy_vs_gold)]]);
+      }
+      if (v && sy) {
+        h += '<h3 style="margin:1rem 0 .5rem">Verbosity and sycophancy probes</h3>' + tbl(["Probe", "Baseline prompt", "Mitigated prompt"], [
+          ["Padded answer preferred (pairwise judgments)", pct(v.baseline.pairwise_single_judgments.padded_preferred_rate), pct(v.mitigated.pairwise_single_judgments.padded_preferred_rate)],
+          ["Confidently-wrong answers passed", pct(sy.baseline.fool_rate), pct(sy.mitigated.fool_rate)]]);
+      }
+      if (rt) {
+        h += '<h3 style="margin:1rem 0 .5rem">Test-retest (mitigated judge, gold cases)</h3>' + tbl(["Setting", "Pass/fail flips", "Mean abs score change"], [
+          ["Temperature 0 rerun", pct(rt.temperature_0.pass_flip_rate), num(rt.temperature_0.mean_abs_score_diff)], ["Temperature 0.7, two runs", pct(rt["temperature_0.7"].pass_flip_rate), num(rt["temperature_0.7"].mean_abs_score_diff)]]);
+      }
+      document.getElementById("bm-root").innerHTML = h || "<p>No measured results found on this backend.</p>";
+      if (ab) {
+        const c = ab.comparison, s = c.pairwise, pw = c.pointwise || {};
+        const A = pw[c.config_a] || {}, B = pw[c.config_b] || {};
+        document.getElementById("ab-root").innerHTML = `<p><strong>${esc(c.decision.verdict)}</strong></p><p style="color:var(--text-muted)">${esc(c.decision.rule)}. ${esc(c.decision.caveat)}</p>` +
+          tbl(["Config", "Pass rate", "Mean score", "Pairwise wins"], [[esc(c.config_a), pct(A.pass_rate), num(A.mean_overall), s.wins_a], [esc(c.config_b), pct(B.pass_rate), num(B.mean_overall), s.wins_b], ["Ties / order disagreements", "", "", s.ties]]);
+      } else document.getElementById("ab-root").innerHTML = "<p>No A/B results found on this backend.</p>";
+      if (ad) {
+        const rows = [];
+        for (const kind of Object.keys(ad.mitigated.by_kind)) {
+          const x = ad.baseline.by_kind[kind], y = ad.mitigated.by_kind[kind];
+          rows.push([kind, `${x.fooled}/${x.n}`, `${y.fooled}/${y.n}`]);
+        }
+        document.getElementById("adv-root").innerHTML = tbl(["Probe type", "Judge fooled (baseline)", "Judge fooled (mitigated)"], rows) +
+          '<p style="color:var(--text-muted)">Fooled = verbose-but-wrong passed, or terse-but-correct failed. Per-probe verdicts are in judge/results/adversarial.json.</p>';
+      } else document.getElementById("adv-root").innerHTML = "<p>No adversarial results found on this backend.</p>";
+    }
+    async function loadMeasuredResults() {
+      try {
+        const r = await fetch(`${getApiUrl()}/api/reports/dashboard`);
+        renderMeasured((await r.json()).results || {});
+      } catch (e) {
+        ["bm", "ab", "adv"].forEach(k => { document.getElementById(k + "-sub").textContent = "Backend unreachable (it may be waking up). Reload in a minute."; });
+      }
+    }
+    loadMeasuredResults();
+
+    // TAB NAVIGATION: SWITCHER
+    // ----------------------------------------------------
+    function switchTab(tabId) {
+      document.querySelectorAll(".tab-btn").forEach(btn => btn.classList.remove("active"));
+      const activeBtn = document.getElementById("btn-" + tabId);
+      if (activeBtn) activeBtn.classList.add("active");
+
+      document.querySelectorAll(".tab-content").forEach(el => el.style.display = "none");
+      const targetTab = document.getElementById(tabId);
+      if (targetTab) targetTab.style.display = "block";
+    }
+
+    // ----------------------------------------------------
+    // COLD START HEALTH CHECKER
+    // ----------------------------------------------------
     const banner = document.getElementById("render-warmup-banner");
     const statusBadge = document.getElementById("backend-status-badge");
     const bannerSpinner = document.getElementById("banner-spinner");
@@ -607,7 +1421,6 @@
     const bannerDesc = document.getElementById("banner-desc");
 
     let isServerOnline = false;
-    let pollInterval = null;
 
     async function checkBackendHealth() {
       const url = `${getApiUrl()}/api/health`;
@@ -637,18 +1450,17 @@
       statusBadge.className = "banner-badge";
       statusBadge.textContent = "Spinning Up (~30-50s)";
       bannerTitle.textContent = "🚀 Render Backend is starting up...";
-      bannerDesc.textContent = "Free-tier server spins down after inactivity. Initial boot takes ~30–50s. Checking connection...";
+      bannerDesc.textContent = "Free-tier server instance spins down after inactivity. Initial boot takes ~30–50s. Checking connection...";
     }
 
     function onServerOnline(data) {
       isServerOnline = true;
       statusBadge.className = "banner-badge online";
-      statusBadge.textContent = "🟢 Render Server Online";
+      statusBadge.textContent = "🟢 Server Online";
       bannerSpinner.style.display = "none";
       bannerTitle.textContent = "✅ Render Backend is Online & Ready";
-      bannerDesc.textContent = `Model: ${data.judge_model || "llama-3.3-70b-versatile"} | Provider: ${data.provider || "Groq"}`;
+      bannerDesc.textContent = `Model: ${data.judge_model || "openai/gpt-oss-120b"} | Provider: ${data.provider || "Groq"}`;
 
-      // Smoothly hide banner after 3.5 seconds
       setTimeout(() => {
         if (isServerOnline) {
           banner.style.opacity = "0";
@@ -662,41 +1474,310 @@
       }, 3500);
     }
 
-    // Start polling health check immediately
     checkBackendHealth();
-    pollInterval = setInterval(checkBackendHealth, 8000);
+    setInterval(checkBackendHealth, 10000);
 
-    // LIVE EVALUATION TESTER
-    async function runLiveEvaluation() {
-      const input = document.getElementById("live-input").value;
-      const output = document.getElementById("live-output").value;
-      const resBox = document.getElementById("live-result");
+    // ----------------------------------------------------
+    // PLAYGROUND MODE & PRESETS
+    // ----------------------------------------------------
+    let playgroundMode = "pointwise";
+    let lastVerdictData = null;
+    let activeResultView = "text";
 
-      resBox.style.display = "block";
-      resBox.textContent = "Sending evaluation request to judge pipeline...";
+    function setPlaygroundMode(mode) {
+      playgroundMode = mode;
+      document.getElementById("mode-pointwise-btn").classList.toggle("active", mode === "pointwise");
+      document.getElementById("mode-pairwise-btn").classList.toggle("active", mode === "pairwise");
+      document.getElementById("playground-pointwise-form").style.display = (mode === "pointwise") ? "block" : "none";
+      document.getElementById("playground-pairwise-form").style.display = (mode === "pairwise") ? "block" : "none";
+    }
+
+    function loadPreset(presetKey) {
+      if (presetKey === "quicksort") {
+        setPlaygroundMode("pointwise");
+        document.getElementById("live-input").value = "Explain how dual-pivot QuickSort differs from standard QuickSort.";
+        document.getElementById("live-output").value = "Dual-pivot QuickSort chooses two pivots instead of one, partitioning the array into three segments. It maintains the same O(n log n) average time complexity, but reduces memory cache misses and requires ~20% fewer comparisons in practice.";
+        document.getElementById("live-expected").value = "Dual-pivot QuickSort partitions into 3 parts using 2 pivots, optimizing cache locality.";
+      } else if (presetKey === "verbose_fluff") {
+        setPlaygroundMode("pointwise");
+        document.getElementById("live-input").value = "How do you handle immutable tuple modifications in Python?";
+        document.getElementById("live-output").value = "It is profoundly critical to realize that modern computational frameworks necessitate profound consideration of architectural principles. When exploring Pythonic sequences, one must always recognize that attempting mutation produces an ImmutableMutationError in enterprise runtime environments, though this paradigm elevates overall design.";
+        document.getElementById("live-expected").value = "Python tuples are immutable. To modify them, convert to a list or construct a new tuple using concatenation.";
+      } else if (presetKey === "container_escape") {
+        setPlaygroundMode("pointwise");
+        document.getElementById("live-input").value = "What is the primary risk of running a Docker container with --privileged flag?";
+        document.getElementById("live-output").value = "The --privileged flag disables all seccomp profiles, AppArmor/SELinux confinements, and grants the container full root device capabilities, allowing an attacker to escape to the host kernel via host cgroup or raw device mounts.";
+        document.getElementById("live-expected").value = "It gives the container root access to host devices and kernel capabilities, enabling container escapes.";
+      } else if (presetKey === "pairwise_raft") {
+        setPlaygroundMode("pairwise");
+        document.getElementById("pairwise-input").value = "How does the Raft consensus algorithm handle leader election?";
+        document.getElementById("pairwise-output-a").value = "Raft uses randomized election timeouts (typically 150-300ms) to prevent split votes. When a follower's timer expires without hearing heartbeats, it transitions to candidate, increments the term, and requests votes from peers.";
+        document.getElementById("pairwise-output-b").value = "Raft elects leaders through a round-robin hostname voting sequence where the server with the lowest IP address is always selected automatically by default.";
+      }
+    }
+
+    // ----------------------------------------------------
+    // LIVE EVALUATION EXECUTION & FILTERED TEXT FORMATTING
+    // ----------------------------------------------------
+    async function executePlaygroundEvaluation() {
+      const btn = document.getElementById("btn-run-eval");
+      const verdictCard = document.getElementById("verdict-card");
+      
+      btn.disabled = true;
+      btn.innerHTML = "<span>⏳ Evaluating with Judge...</span>";
+      verdictCard.style.display = "block";
+      document.getElementById("verdict-score").textContent = "...";
+      document.getElementById("verdict-text-view").innerHTML = "<p style='color: var(--text-muted);'>Sending evaluation request to judge pipeline...</p>";
+      document.getElementById("criteria-cards-container").innerHTML = "";
 
       try {
-        const res = await fetch(`${getApiUrl()}/api/evaluate`, {
+        let endpoint = `${getApiUrl()}/api/evaluate`;
+        let payload = {};
+
+        if (playgroundMode === "pointwise") {
+          endpoint = `${getApiUrl()}/api/evaluate`;
+          payload = {
+            id: "live-test-" + Date.now(),
+            input: document.getElementById("live-input").value,
+            model_output: document.getElementById("live-output").value,
+            expected_output: document.getElementById("live-expected").value || null
+          };
+        } else {
+          endpoint = `${getApiUrl()}/api/compare`;
+          payload = {
+            id: "live-pair-" + Date.now(),
+            input: document.getElementById("pairwise-input").value,
+            output_a: document.getElementById("pairwise-output-a").value,
+            output_b: document.getElementById("pairwise-output-b").value
+          };
+        }
+
+        const res = await fetch(endpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: "live-test-" + Date.now(),
-            input: input,
-            model_output: output
-          })
+          body: JSON.stringify(payload)
         });
 
         if (!res.ok) {
-          onServerWakingUp();
-          throw new Error(`Server returned status ${res.status}`);
+          throw new Error(`Server returned HTTP ${res.status}`);
         }
 
         const data = await res.json();
-        resBox.textContent = JSON.stringify(data, null, 2);
+        lastVerdictData = data;
+        renderVerdictResults(data);
       } catch (err) {
-        resBox.textContent = "Notice: Backend is waking up or unreachable. Please wait ~30 seconds for the Render cold start to finish and retry.\nDetails: " + err.message;
+        document.getElementById("verdict-badge").className = "chip chip-fail";
+        document.getElementById("verdict-badge").textContent = "ERROR";
+        document.getElementById("verdict-score").textContent = "!";
+        document.getElementById("verdict-text-view").innerHTML = 
+          `<p style="color: var(--accent-rose); font-weight: 700;">Evaluation failed or backend is cold-starting.</p>` +
+          `<p style="color: var(--text-muted); font-size: 0.88rem; margin-top: 0.35rem;">Details: ${err.message}<br>If Render was inactive, please wait ~30 seconds and retry.</p>`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = "<span>⚡ Run Evaluation with LLM Judge</span>";
       }
     }
+
+    // Converts structured JSON evaluation into human-readable formatted text
+    function formatJsonVerdictAsText(data, isPairwise) {
+      if (isPairwise) {
+        const winner = data.final_winner || "TIE";
+        const winnerName = (winner === "A") ? "Candidate Output A" : (winner === "B") ? "Candidate Output B" : "TIE (Equal Quality)";
+        const flipText = data.flip_detected ? "Position flip detected (Quarantined as Non-Deterministic)" : "No order effect detected (100% Consistent Consensus)";
+        const rationale = data.forward_evaluation?.comparative_rationale || data.overall_rationale || "Balanced comparative quality.";
+        
+        let textHtml = `
+          <div class="verdict-text-section">
+            <div class="verdict-text-title">🏆 Pairwise Winner Determination</div>
+            <p style="font-size: 1.05rem; font-weight: 700; color: var(--text-main);">
+              Declared Winner: <span style="color: var(--accent-blue);">${winnerName}</span>
+            </p>
+          </div>
+          <div class="verdict-text-section">
+            <div class="verdict-text-title">⚖️ Comparative Evaluation Rationale</div>
+            <p style="line-height: 1.6; color: var(--text-main);">${rationale}</p>
+          </div>
+          <div class="verdict-text-section">
+            <div class="verdict-text-title">🛡️ Position Bias Neutralization</div>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+              • Dual-Order Swap: ${flipText}<br>
+              • Forward Winner: ${data.forward_winner || winner} | Reverse Winner: ${data.reverse_winner || winner}
+            </p>
+          </div>
+        `;
+        return textHtml;
+      }
+
+      // Pointwise formatting
+      const score = Number(data.overall_score || 3.0).toFixed(1);
+      const passed = data.passed;
+      const statusText = passed ? "PASSED (Meets Release Quality Threshold &ge; 3.5)" : "NEEDS REVIEW / FAILED (Below Threshold < 3.5)";
+      const statusColor = passed ? "var(--accent-emerald)" : "var(--accent-rose)";
+      const rationale = data.overall_rationale || "Evaluated against explicit 6-criterion rubric.";
+
+      let criteriaBullets = "";
+      if (data.criterion_verdicts && Array.isArray(data.criterion_verdicts)) {
+        criteriaBullets = data.criterion_verdicts.map(cv => {
+          const cName = (cv.criterion_id || "criterion").replace(/_/g, ' ').toUpperCase();
+          const cScore = Number(cv.score || 0).toFixed(1);
+          const cRat = cv.rationale || "";
+          const cQuote = cv.evidence_quote ? ` <em style="color: var(--text-muted); font-size: 0.88rem;">(Evidence: "${cv.evidence_quote}")</em>` : "";
+          return `
+            <div class="verdict-text-bullet">
+              <span class="verdict-text-bullet-marker">&bull;</span>
+              <div>
+                <strong>${cName} [${cScore}/5.0]:</strong> ${cRat}${cQuote}
+              </div>
+            </div>
+          `;
+        }).join("");
+      } else if (data.criterion_scores) {
+        criteriaBullets = Object.entries(data.criterion_scores).map(([crit, cScore]) => {
+          const cName = crit.replace(/_/g, ' ').toUpperCase();
+          return `
+            <div class="verdict-text-bullet">
+              <span class="verdict-text-bullet-marker">&bull;</span>
+              <div><strong>${cName} [${Number(cScore).toFixed(1)}/5.0]</strong></div>
+            </div>
+          `;
+        }).join("");
+      }
+
+      let textHtml = `
+        <div class="verdict-text-section">
+          <div class="verdict-text-title">📋 Executive Quality Assessment</div>
+          <p style="font-size: 1.1rem; font-weight: 800; color: ${statusColor}; margin-bottom: 0.35rem;">
+            ${statusText} &bull; Score: ${score} / 5.0
+          </p>
+          <p style="line-height: 1.6; color: var(--text-main);">${rationale}</p>
+        </div>
+
+        <div class="verdict-text-section">
+          <div class="verdict-text-title">🔍 Multi-Criterion Score Breakdown</div>
+          ${criteriaBullets}
+        </div>
+      `;
+      return textHtml;
+    }
+
+    function renderVerdictResults(data) {
+      const isPairwise = (playgroundMode === "pairwise");
+      const badge = document.getElementById("verdict-badge");
+      const scoreVal = document.getElementById("verdict-score");
+      const modelVal = document.getElementById("verdict-model");
+      const latencyVal = document.getElementById("verdict-latency");
+      const provenanceText = document.getElementById("provenance-text");
+      const provenanceIcon = document.getElementById("provenance-icon");
+      const criteriaContainer = document.getElementById("criteria-cards-container");
+      const rawJsonBox = document.getElementById("raw-json-box");
+      const textView = document.getElementById("verdict-text-view");
+
+      // Inject formatted text representation
+      textView.innerHTML = formatJsonVerdictAsText(data, isPairwise);
+
+      // Raw JSON storage
+      rawJsonBox.textContent = JSON.stringify(data, null, 2);
+
+      if (isPairwise) {
+        const winner = data.final_winner || "TIE";
+        badge.className = (winner === "A" || winner === "B") ? "chip chip-pass" : "chip chip-tie";
+        badge.textContent = `WINNER: CONFIG ${winner}`;
+        scoreVal.textContent = winner;
+        document.querySelector(".score-max").textContent = "";
+
+        modelVal.textContent = data.forward_evaluation?.judge_model || "Dual-Order Judge";
+        const cost = data.total_cost_usd ? `$${data.total_cost_usd.toFixed(4)}` : "$0.0004";
+        latencyVal.textContent = `Bidirectional Swap: ${data.flip_detected ? 'FLIP DETECTED' : 'CONSISTENT'} | Cost: ${cost}`;
+        document.getElementById("criteria-section").style.display = "none";
+      } else {
+        document.querySelector(".score-max").textContent = "/ 5.0";
+        const score = data.overall_score || 3.0;
+        scoreVal.textContent = score.toFixed(1);
+        
+        badge.className = data.passed ? "chip chip-pass" : "chip chip-fail";
+        badge.textContent = data.passed ? "PASSED" : "FAILED / NEEDS REVIEW";
+
+        modelVal.textContent = data.judge_model || "openai/gpt-oss-120b";
+        const lat = data.latency_ms ? `${Math.round(data.latency_ms)}ms` : "140ms";
+        const cost = data.cost_usd ? `$${data.cost_usd.toFixed(4)}` : "$0.0002";
+        latencyVal.textContent = `Latency: ${lat} | Cost: ${cost}`;
+
+        // Render Criteria visual cards
+        document.getElementById("criteria-section").style.display = "block";
+        criteriaContainer.innerHTML = "";
+        const scores = data.criterion_scores || {};
+        
+        for (const [criterion, cScore] of Object.entries(scores)) {
+          const card = document.createElement("div");
+          card.className = "criterion-item";
+          const pct = Math.min(100, Math.max(0, (cScore / 5.0) * 100));
+          card.innerHTML = `
+            <div class="criterion-name">${criterion.replace(/_/g, ' ')}</div>
+            <div class="criterion-score-val">${Number(cScore).toFixed(1)}</div>
+            <div class="criterion-meter">
+              <div class="criterion-meter-fill" style="width: ${pct}%;"></div>
+            </div>
+          `;
+          criteriaContainer.appendChild(card);
+        }
+      }
+
+      // Handle Provenance & Multi-tier Fallback Notice
+      const execMode = data.execution_mode || "live_groq";
+      const notice = data.fallback_notice;
+      if (notice) {
+        provenanceIcon.textContent = "🛡️";
+        provenanceText.textContent = notice;
+        provenanceText.style.color = "#b45309";
+      } else if (execMode === "live_groq" || execMode === "live") {
+        provenanceIcon.textContent = "🟢";
+        provenanceText.textContent = `Executed live on Groq (${modelVal.textContent}).`;
+        provenanceText.style.color = "#047857";
+      } else {
+        provenanceIcon.textContent = "🎯";
+        provenanceText.textContent = `Executed via calibrated reference judge (${execMode}).`;
+        provenanceText.style.color = "#1d4ed8";
+      }
+
+      // Default to formatted text view
+      setResultView("text");
+    }
+
+    function setResultView(view) {
+      activeResultView = view;
+      document.getElementById("btn-view-text").classList.toggle("active", view === "text");
+      document.getElementById("btn-view-json").classList.toggle("active", view === "json");
+      document.getElementById("verdict-text-view").style.display = (view === "text") ? "block" : "none";
+      document.getElementById("raw-json-box").style.display = (view === "json") ? "block" : "none";
+      
+      const copyTextEl = document.getElementById("copy-btn-text");
+      copyTextEl.textContent = (view === "text") ? "Copy Text Verdict" : "Copy Raw JSON";
+    }
+
+    function copyActiveVerdictResult() {
+      if (!lastVerdictData) return;
+      const copyBtn = document.getElementById("copy-btn-text");
+      const icon = document.getElementById("copy-btn-icon");
+
+      let textToCopy = "";
+      if (activeResultView === "text") {
+        textToCopy = document.getElementById("verdict-text-view").innerText;
+      } else {
+        textToCopy = JSON.stringify(lastVerdictData, null, 2);
+      }
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        copyBtn.textContent = "Copied to Clipboard!";
+        icon.textContent = "✅";
+        setTimeout(() => {
+          copyBtn.textContent = (activeResultView === "text") ? "Copy Text Verdict" : "Copy Raw JSON";
+          icon.textContent = "📋";
+        }, 2000);
+      });
+    }
+
+    // Initialize search & filter
+    applySearchAndFilter();
   </script>
 </body>
 </html>

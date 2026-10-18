@@ -50,3 +50,7 @@ htmlcov/
 logs/
 artifacts/audit_logs/*.jsonl
 !artifacts/audit_logs/audit_run_20261017_160649.jsonl
+
+# Judge audit log is evidence and is committed; the live-web request log is not
+!judge/logs/
+judge/logs/web_calls.jsonl
