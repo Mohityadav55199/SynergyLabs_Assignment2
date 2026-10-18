@@ -61,7 +61,7 @@ def set_after_label(idx, text):
 rows = T[0].rows
 for i, v in enumerate(["Mohit Yadav", "mohityadav55199@gmail.com", "2026-10-18",
                        "Problem 1: https://github.com/Mohityadav55199/SynergyLabs_Assignment · Problem 2: https://github.com/Mohityadav55199/SynergyLabs_Assignment2",
-                       "[ candidate: enter the combined total for Problems 1 + 2 — Problem 1 alone was ~8 hours ]", "LanceDB (primary), embedded Qdrant benchmarked as a second store",
+                       "~10 hours (Problems 1 and 2 together)", "LanceDB (primary), embedded Qdrant benchmarked as a second store",
                        P2_MODELS_TEXT], start=1):
     set_cell(rows[i].cells[1], v)
 

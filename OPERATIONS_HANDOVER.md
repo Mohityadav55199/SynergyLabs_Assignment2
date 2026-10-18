@@ -31,8 +31,9 @@ Judge and generator are independent. `python -m judge.run` refuses a judge and g
 (the override is recorded in the report).
 
 ### 0.3 Render / Vercel actions required after this change (manual, in the dashboards)
-1. Render -> service -> Environment: set `JUDGE_MODEL=openai/gpt-oss-120b` and `GENERATOR_MODEL=qwen/qwen3.8-27b`. A value set in the dashboard overrides `render.yaml`;
-   the old `llama-3.3-70b-versatile` is retired for this key and will 404. `LLM_PROVIDER`, `ENABLE_FALLBACK` and `FALLBACK_MODELS` are no longer read.
+1. Render -> service -> Environment: only `GROQ_API_KEY` is needed. Models and the live fallback chain are code defaults (`judge/config.py`); `render.yaml` no longer sets them.
+   Delete any stale `JUDGE_MODEL` / `GENERATOR_MODEL` left in the dashboard (it overrides the code defaults; the old `llama-3.3-70b-versatile` is retired and would 404 every request before the fallback answers).
+   `LLM_PROVIDER`, `ENABLE_FALLBACK` and `FALLBACK_MODELS` are no longer read; `JUDGE_FALLBACK_MODELS` is.
 2. Keep `GROQ_API_KEY` as a secret env var on Render. A key pasted into the UI's optional field is used for that request only and is never written to a log.
 3. Vercel serves `public/index.html` (kept identical to the root `index.html`). The correct URL is `https://synergylabs-assignment2.vercel.app/` (with the hyphen).
 
@@ -48,7 +49,8 @@ Judge and generator are independent. `python -m judge.run` refuses a judge and g
 | :--- | :--- |
 | Judge output has fences, `<think>`, prose, trailing commas | Tolerant extraction (outermost balanced JSON), then schema validation |
 | Missing/invalid criterion or score outside 1-5 | Rejected; one retry with a corrective message; then status `unparseable`, **no score recorded** |
-| HTTP error / timeout after retries | status `api_error`, no score; web API answers 502 |
+| Primary judge errors / quota exhausted (429 with long retry-after, 404, 5xx) | Next **live** model in the chain answers (`JUDGE_FALLBACK_MODELS`, default gpt-oss-120b then gpt-oss-20b); the verdict reports `judge_model`, `execution_mode: live_fallback_model` and a `fallback_notice`. Never a mock |
+| Every model in the chain failed | status `api_error`, no score; web API answers 502 |
 | Pairwise: one order unparseable | pair is `unparseable` and excluded from win rates (counted separately) |
 | Pairwise: orders disagree | final verdict `TIE`, flagged `agree=false` (hard flip if A vs B) |
 
@@ -57,10 +59,10 @@ Run `python -m judge.experiments all --force` (new model => new cache keys autom
 `position.json`, `retest.json` with the previous commit. Do not promote a judge whose adversarial fool rate rose or whose kappa fell. The sample sizes are small (see README
 "Limitations"); treat differences of a case or two as noise.
 
-### 0.7 Legacy code (decision pending with the repository owner)
+### 0.7 Legacy code (kept by decision of the repository owner)
 `src/cli.py`, `src/judge/`, `src/mitigations/`, `src/llm_clients/`, `src/evaluation/`, `src/visualization/`, `artifacts/` and `data/test_suites|rubrics|adversarial_probes`
 belong to the first version, whose "judge" was a keyword-driven mock. Its committed artifacts and the numbers once quoted in the README (flip rate 35% -> 0%, kappa 0.737 on 10 cases, ...)
-are **not measurements of an LLM judge** and must not be cited. They are kept only until the owner confirms they can be removed (`git rm -r` on the paths above, plus the `tests/` files that import `src.*`).
+are **not measurements of an LLM judge** and must not be cited. The owner chose to keep them; they are not part of the Problem 2 deliverable.
 
 ---
 

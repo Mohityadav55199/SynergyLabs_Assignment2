@@ -161,7 +161,7 @@ git clone https://github.com/Mohityadav55199/SynergyLabs_Assignment2.git && cd S
 python -m venv venv && source venv/bin/activate        # Windows: .\venv\Scripts\activate
 pip install -r requirements-dev.txt
 cp .env.example .env                                   # set GROQ_API_KEY
-python -m pytest tests                                 # 67 tests, offline
+python -m pytest tests                                 # 71 tests, offline
 
 python -m judge.run --suite judge/data/gold_cases.json --out judge/results/gold_report.json            # pointwise suite
 python -m judge.run --suite judge/data/ab_suite.json --out judge/results/ab_report.json --pointwise     # A/B, both orders
@@ -187,7 +187,8 @@ All on the Groq free tier, so the marginal cost was $0. The client retried on 42
 
 ## Deployment
 
-- **Render** (FastAPI): [`render.yaml`](render.yaml), start `uvicorn src.server:app --host 0.0.0.0 --port $PORT`, health `/health`. Required env: `GROQ_API_KEY`, `JUDGE_MODEL=openai/gpt-oss-120b`, `GENERATOR_MODEL=qwen/qwen3.8-27b`. A value set in the Render dashboard overrides `render.yaml`.
+- **Render** (FastAPI): [`render.yaml`](render.yaml), start `uvicorn src.server:app --host 0.0.0.0 --port $PORT`, health `/health`. The only required env var is the secret `GROQ_API_KEY`; models and the fallback chain are defaults **in code** ([`judge/config.py`](judge/config.py)). Any `JUDGE_MODEL` / `GENERATOR_MODEL` / `JUDGE_FALLBACK_MODELS` set in the Render dashboard overrides them, so delete stale ones (e.g. `llama-3.3-70b-versatile`).
+- **Live-model fallback (in code):** the judge chain is the configured judge, then `JUDGE_FALLBACK_MODELS` (default gpt-oss-120b, gpt-oss-20b), skipping any model from the generator's family. If a model errors or its quota is exhausted (web requests fail fast on a long `retry-after`), the next live model answers, and the verdict says so (`judge_model`, `execution_mode: live_fallback_model`, `fallback_notice`). A reachable-but-unparseable reply is never shopped around, and there is **no mock fallback**. Fallback verdicts are not covered by the primary judge's validation.
 - **Vercel** serves `public/index.html` (identical to the root `index.html`) and rewrites `/api/*` to Render ([`vercel.json`](vercel.json)).
 - `/api/evaluate` and `/api/compare` call the real judge. If the judge is unreachable or unparseable they return **HTTP 502**, never an invented verdict. The Benchmarks / A-B / Adversarial tabs load their numbers from `/api/reports/dashboard`, i.e. from `judge/results/`.
 - [`keep-warm.yml`](.github/workflows/keep-warm.yml) pings `/health` every 10 minutes to avoid the free-tier cold start.
@@ -195,4 +196,4 @@ All on the Groq free tier, so the marginal cost was $0. The client retried on 42
 ## Legacy code
 
 `src/cli.py`, `src/judge/`, `src/mitigations/`, `src/llm_clients/`, `src/evaluation/`, `src/visualization/`, `artifacts/` and `data/test_suites|rubrics|adversarial_probes` belong to the first version, whose judge was a keyword-driven mock
-(`src/llm_clients/mock_client.py`). **None of its output is a measurement of an LLM judge and none is used anywhere above.** It is kept only so the existing tests keep running until the repository owner decides to delete it.
+(`src/llm_clients/mock_client.py`). **None of its output is a measurement of an LLM judge and none is used anywhere above.** The repository owner decided to keep it; it is retained for reference and its own tests, and is not part of the Problem 2 deliverable.
