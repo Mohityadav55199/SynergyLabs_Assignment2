@@ -29,7 +29,7 @@ class ResilientLLMClient(BaseLLMClient):
         simulate_verbosity_bias: bool = False,
     ):
         self.primary_client = primary_client
-        self.api_key = api_key
+        self.api_key = api_key or getattr(primary_client, "api_key", None)
         self.fallback_models = fallback_models or [
             "llama-3.1-70b-versatile",
             "llama-3.1-8b-instant",

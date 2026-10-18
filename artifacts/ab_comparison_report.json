@@ -22,22 +22,26 @@
         "score_a": 4.5,
         "score_b": 4.5,
         "rationale": "Both responses provide accurate technical explanations with comparable quality.",
-        "latency_ms": 15.3,
+        "latency_ms": 15.66,
         "prompt_tokens": 390,
         "completion_tokens": 36,
         "total_tokens": 426,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "reverse_eval": {
         "winner": "TIE",
         "score_a": 4.5,
         "score_b": 4.5,
         "rationale": "Both responses provide accurate technical explanations with comparable quality.",
-        "latency_ms": 15.06,
+        "latency_ms": 15.1,
         "prompt_tokens": 390,
         "completion_tokens": 36,
         "total_tokens": 426,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "position_agreement": true,
       "flip_detected": false,
@@ -45,7 +49,9 @@
       "average_score_b": 4.5,
       "synthesis_rationale": "Averaged scores across both presentation orders are within margin (4.5 vs 4.5). Declared TIE.",
       "total_tokens": 852,
-      "total_cost_usd": 0.0
+      "total_cost_usd": 0.0,
+      "execution_mode": "direct",
+      "fallback_notice": null
     },
     {
       "test_case_id": "ab-002",
@@ -55,22 +61,26 @@
         "score_a": 4.9,
         "score_b": 2.2,
         "rationale": "Model A gives substantive technical answers, whereas Model B is unhelpful sycophantic padding.",
-        "latency_ms": 15.05,
+        "latency_ms": 15.15,
         "prompt_tokens": 402,
         "completion_tokens": 40,
         "total_tokens": 442,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "reverse_eval": {
         "winner": "B",
         "score_a": 2.2,
         "score_b": 4.9,
         "rationale": "Model B gives substantive technical answers, whereas Model A is unhelpful sycophantic padding.",
-        "latency_ms": 15.1,
+        "latency_ms": 15.12,
         "prompt_tokens": 402,
         "completion_tokens": 40,
         "total_tokens": 442,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "position_agreement": true,
       "flip_detected": false,
@@ -78,7 +88,9 @@
       "average_score_b": 2.2,
       "synthesis_rationale": "Across both presentation orders, Candidate A achieved higher averaged score (4.9 vs 2.2).",
       "total_tokens": 884,
-      "total_cost_usd": 0.0
+      "total_cost_usd": 0.0,
+      "execution_mode": "direct",
+      "fallback_notice": null
     },
     {
       "test_case_id": "ab-003",
@@ -88,22 +100,26 @@
         "score_a": 4.8,
         "score_b": 2.0,
         "rationale": "Model A is factually sound while Model B invents incorrect technical mechanisms.",
-        "latency_ms": 15.04,
+        "latency_ms": 15.09,
         "prompt_tokens": 373,
         "completion_tokens": 39,
         "total_tokens": 412,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "reverse_eval": {
         "winner": "B",
         "score_a": 2.0,
         "score_b": 4.8,
         "rationale": "Model B is factually sound while Model A invents incorrect technical mechanisms.",
-        "latency_ms": 15.1,
+        "latency_ms": 15.18,
         "prompt_tokens": 373,
         "completion_tokens": 39,
         "total_tokens": 412,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "position_agreement": true,
       "flip_detected": false,
@@ -111,7 +127,9 @@
       "average_score_b": 2.0,
       "synthesis_rationale": "Across both presentation orders, Candidate A achieved higher averaged score (4.8 vs 2.0).",
       "total_tokens": 824,
-      "total_cost_usd": 0.0
+      "total_cost_usd": 0.0,
+      "execution_mode": "direct",
+      "fallback_notice": null
     },
     {
       "test_case_id": "ab-004",
@@ -121,22 +139,26 @@
         "score_a": 4.8,
         "score_b": 2.0,
         "rationale": "Model A is factually sound while Model B invents incorrect technical mechanisms.",
-        "latency_ms": 15.04,
+        "latency_ms": 15.17,
         "prompt_tokens": 341,
         "completion_tokens": 39,
         "total_tokens": 380,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "reverse_eval": {
         "winner": "B",
         "score_a": 2.0,
         "score_b": 4.8,
         "rationale": "Model B is factually sound while Model A invents incorrect technical mechanisms.",
-        "latency_ms": 15.05,
+        "latency_ms": 15.08,
         "prompt_tokens": 341,
         "completion_tokens": 39,
         "total_tokens": 380,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "position_agreement": true,
       "flip_detected": false,
@@ -144,7 +166,9 @@
       "average_score_b": 2.0,
       "synthesis_rationale": "Across both presentation orders, Candidate A achieved higher averaged score (4.8 vs 2.0).",
       "total_tokens": 760,
-      "total_cost_usd": 0.0
+      "total_cost_usd": 0.0,
+      "execution_mode": "direct",
+      "fallback_notice": null
     },
     {
       "test_case_id": "ab-005",
@@ -154,22 +178,26 @@
         "score_a": 4.5,
         "score_b": 4.5,
         "rationale": "Both responses provide accurate technical explanations with comparable quality.",
-        "latency_ms": 15.04,
+        "latency_ms": 15.08,
         "prompt_tokens": 334,
         "completion_tokens": 36,
         "total_tokens": 370,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "reverse_eval": {
         "winner": "TIE",
         "score_a": 4.5,
         "score_b": 4.5,
         "rationale": "Both responses provide accurate technical explanations with comparable quality.",
-        "latency_ms": 15.03,
+        "latency_ms": 15.11,
         "prompt_tokens": 334,
         "completion_tokens": 36,
         "total_tokens": 370,
-        "cost_usd": 0.0
+        "cost_usd": 0.0,
+        "execution_mode": "direct",
+        "fallback_notice": null
       },
       "position_agreement": true,
       "flip_detected": false,
@@ -177,7 +205,9 @@
       "average_score_b": 4.5,
       "synthesis_rationale": "Averaged scores across both presentation orders are within margin (4.5 vs 4.5). Declared TIE.",
       "total_tokens": 740,
-      "total_cost_usd": 0.0
+      "total_cost_usd": 0.0,
+      "execution_mode": "direct",
+      "fallback_notice": null
     }
   ]
 }

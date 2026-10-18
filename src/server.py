@@ -108,12 +108,17 @@ def get_dashboard_data():
 
 @app.post("/api/evaluate", summary="Run Pointwise Evaluation")
 def evaluate_case(request: EvaluationRequest):
+    if not request.input or not request.input.strip():
+        raise HTTPException(status_code=400, detail="Field 'input' cannot be empty or whitespace.")
+    if not request.model_output or not request.model_output.strip():
+        raise HTTPException(status_code=400, detail="Field 'model_output' cannot be empty or whitespace.")
+
     test_case = TestCase(
         id=request.id or f"live-test-{int(datetime.now(timezone.utc).timestamp())}",
         domain=request.domain or "General",
-        input=request.input,
-        model_output=request.model_output,
-        expected_output=request.expected_output,
+        input=request.input.strip(),
+        model_output=request.model_output.strip(),
+        expected_output=request.expected_output.strip() if request.expected_output else None,
         criteria=request.criteria,
         reference_mode=request.reference_mode or "auto"
     )
@@ -132,13 +137,20 @@ def evaluate_case(request: EvaluationRequest):
 
 @app.post("/api/compare", summary="Run Pairwise Comparison with Position Bias Check")
 def compare_pair(request: PairwiseEvaluationRequest):
+    if not request.input or not request.input.strip():
+        raise HTTPException(status_code=400, detail="Field 'input' cannot be empty or whitespace.")
+    if not request.output_a or not request.output_a.strip():
+        raise HTTPException(status_code=400, detail="Field 'output_a' cannot be empty or whitespace.")
+    if not request.output_b or not request.output_b.strip():
+        raise HTTPException(status_code=400, detail="Field 'output_b' cannot be empty or whitespace.")
+
     test_case = PairwiseTestCase(
         id=request.id or f"live-pair-{int(datetime.now(timezone.utc).timestamp())}",
         domain=request.domain or "General",
-        input=request.input,
-        output_a=request.output_a,
-        output_b=request.output_b,
-        expected_output=request.expected_output,
+        input=request.input.strip(),
+        output_a=request.output_a.strip(),
+        output_b=request.output_b.strip(),
+        expected_output=request.expected_output.strip() if request.expected_output else None,
     )
     try:
         client = get_llm_client(

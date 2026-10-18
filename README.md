@@ -7,10 +7,11 @@
 [![Evaluation](https://img.shields.io/badge/Evaluation-Pointwise%20%26%20Pairwise-indigo.svg)](#judging-design)
 [![Bias Mitigation](https://img.shields.io/badge/Bias%20Mitigations-Position%20%7C%20Verbosity%20%7C%20Sycophancy-emerald.svg)](#bias-handling--mitigation-matrix)
 
-> **Live Deployment Links:**
+> **Live Deployment Links & Documentation:**
 > - 🌐 **Render (Backend API & Interactive App):** [https://synergylabs-assignment2.onrender.com/](https://synergylabs-assignment2.onrender.com/)
 > - ⚡ **Vercel (Frontend Client):** [https://synergylabsassignment2.vercel.app/](https://synergylabsassignment2.vercel.app/)
 > - 🩺 **Health Check & Keep-Warm Endpoint:** [https://synergylabs-assignment2.onrender.com/health](https://synergylabs-assignment2.onrender.com/health)
+> - 📋 **Client Operations & Handover Manual:** [OPERATIONS_HANDOVER.md](OPERATIONS_HANDOVER.md)
 
 A production-grade, auditable evaluation framework designed to score, compare, and validate LLM outputs while actively detecting, quantifying, and mitigating the core biases inherent to LLM judges. Designed with a clean enterprise White & Blue interface with live Render cold-start status detection.
 
@@ -18,6 +19,7 @@ A production-grade, auditable evaluation framework designed to score, compare, a
 
 ## 📑 Table of Contents
 - [Executive Overview](#executive-overview)
+- [Client Handover & Operations Guide](#client-handover--operations-guide)
 - [Architecture & Pipeline Flow](#architecture--pipeline-flow)
 - [Judging Design: Pointwise vs. Pairwise](#judging-design-pointwise-vs-pairwise)
 - [Explicit Multi-Criteria Rubric](#explicit-multi-criteria-rubric)
@@ -40,6 +42,24 @@ Human review fails to scale with continuous model updates, prompt iterations, an
 5. **Score Compression:** Clustering all pointwise scores into a narrow band (e.g. 3.8 – 4.2).
 
 This project implements an end-to-end evaluation pipeline that takes bias mitigation seriously: **every bias is explicitly identified, counteracted in code, and verified with quantitative benchmark metrics.**
+
+---
+
+## 📋 Client Handover & Operations Guide
+
+For comprehensive production maintenance, service ownership, and disaster recovery runbooks, refer to [`OPERATIONS_HANDOVER.md`](OPERATIONS_HANDOVER.md).
+
+### Quick Handover Summary:
+- **Service Ownership:**
+  - **Inference Provider (Groq / OpenAI):** Client API Administrator owns API key quotas, billing, and model limits.
+  - **Backend Hosting (Render):** SysAdmin/DevOps owns container runtime, environment secrets, and auto-deploys from `main`.
+  - **Frontend Edge CDN (Vercel):** Frontend team owns DNS, caching headers, and client routes.
+  - **Uptime / Keep-Warm (GitHub Actions):** Pings `/health` every 10 min to prevent free-tier instance sleep.
+- **Incident Runbook ("What to do if something breaks"):**
+  - **Render Cold Start / Delay:** Waking banner auto-detects status; keep-warm cron auto-pings every 10 min.
+  - **Provider 404 / 429 Rate Limit:** [`ResilientLLMClient`](src/llm_clients/resilient_client.py) automatically cascades to secondary models (`llama-3.1-70b-versatile`, `llama-3.1-8b-instant`) or calibrated deterministic judge with full audit provenance.
+  - **Malformed LLM Output:** [`RobustJsonParser`](src/parser.py) runs 6-tier automatic syntax repair.
+- **Full Operational Details:** See [OPERATIONS_HANDOVER.md](OPERATIONS_HANDOVER.md).
 
 ---
 
