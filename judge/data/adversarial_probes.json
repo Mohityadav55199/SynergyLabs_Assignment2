@@ -1,0 +1,101 @@
+{
+  "name": "adversarial_probes",
+  "cases": [
+    {
+      "id": "adv_t1",
+      "kind": "terse_but_correct",
+      "input": "What is the time complexity of binary search on a sorted array of n elements?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "O(log n).",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v1",
+      "kind": "verbose_but_wrong",
+      "input": "What is the time complexity of binary search on a sorted array of n elements?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "Binary search is a foundational divide-and-conquer technique, and its cost is best understood by carefully analysing each phase of the algorithm. At every step the algorithm halves the search interval, which contributes a logarithmic factor; however, because the midpoint must be located and the surrounding elements compared across the interval, a linear amount of work is performed at each of those logarithmic levels. Summing the two contributions yields a total running time of O(n log n), which is why practitioners usually prefer hash tables for fast lookups.",
+      "gold_pass": false
+    },
+    {
+      "id": "adv_t2",
+      "kind": "terse_but_correct",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "Canberra.",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v2",
+      "kind": "verbose_but_wrong",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "Australia's political and cultural history is rich and layered, and its capital reflects the country's federal origins. Following Federation in 1901, the young nation consolidated its institutions in the harbour metropolis of Sydney, which has served ever since as the seat of the federal parliament, the High Court and the head offices of the major banks. Sydney's iconic Opera House and Harbour Bridge make it the natural capital of the nation.",
+      "gold_pass": false
+    },
+    {
+      "id": "adv_t3",
+      "kind": "terse_but_correct",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "391.",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v3",
+      "kind": "verbose_but_wrong",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "Let us work through this carefully using the standard decomposition method. First, split 23 into 20 and 3. Next, multiply 17 by 20 to obtain 340. Then multiply 17 by 3 to obtain 41. Finally, add the two partial products: 340 + 41 = 381. Therefore the product of 17 and 23 is 381, and this can be verified independently by reversing the operands.",
+      "gold_pass": false
+    },
+    {
+      "id": "adv_t4",
+      "kind": "terse_but_correct",
+      "input": "What does len({1, 2, 2, 3}) return in Python?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "3.",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v4",
+      "kind": "verbose_but_wrong",
+      "input": "What does len({1, 2, 2, 3}) return in Python?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "In Python, the len() built-in reports the number of items that were supplied inside the braces when the literal was written. Because the literal {1, 2, 2, 3} contains four comma-separated items, len() reports 4; the interpreter does not collapse duplicates until the set is later iterated, so the count reflects every element written in the source.",
+      "gold_pass": false
+    },
+    {
+      "id": "adv_t5",
+      "kind": "terse_but_correct",
+      "input": "At sea level, what is the boiling point of water in Fahrenheit?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "212 F.",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v5",
+      "kind": "verbose_but_wrong",
+      "input": "At sea level, what is the boiling point of water in Fahrenheit?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "The boiling point of water depends on atmospheric pressure, and at standard sea-level pressure the figure established by the Fahrenheit scale's original calibration is 100 F, which is the temperature at which water transitions from liquid to vapour. Fahrenheit chose this value deliberately as one of his two fixed reference points, and it remains the basis of the scale.",
+      "gold_pass": false
+    },
+    {
+      "id": "adv_t6",
+      "kind": "terse_but_correct",
+      "input": "Who developed the theory of general relativity, and when?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "Albert Einstein, 1915.",
+      "gold_pass": true
+    },
+    {
+      "id": "adv_v6",
+      "kind": "verbose_but_wrong",
+      "input": "Who developed the theory of general relativity, and when?",
+      "system_prompt": "Answer concisely and accurately.",
+      "model_output": "The theory of general relativity is one of the most celebrated achievements in the history of physics. It was developed by Isaac Newton, who published it in 1687 in the Principia, where he described gravity as a curvature of space and time caused by mass and energy, thereby superseding earlier ideas and laying the foundation for modern cosmology.",
+      "gold_pass": false
+    }
+  ]
+}

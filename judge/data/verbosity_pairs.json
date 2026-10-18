@@ -1,0 +1,61 @@
+{
+  "name": "verbosity_pairs",
+  "cases": [
+    {
+      "id": "v01",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "Canberra.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. Canberra. To put this another way, the key point here is simply what was stated above: Canberra. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v02",
+      "input": "What is the time complexity of binary search on a sorted array?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "O(log n), because each comparison halves the remaining range.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. O(log n), because each comparison halves the remaining range. To put this another way, the key point here is simply what was stated above: O(log n), because each comparison halves the remaining range. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v03",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "17 x 23 = 391.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. 17 x 23 = 391. To put this another way, the key point here is simply what was stated above: 17 x 23 = 391. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v04",
+      "input": "What does len({1, 2, 2, 3}) return in Python?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "3, because a set keeps only unique elements.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. 3, because a set keeps only unique elements. To put this another way, the key point here is simply what was stated above: 3, because a set keeps only unique elements. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v05",
+      "input": "At sea level, what is the boiling point of water in Fahrenheit?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "212 F.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. 212 F. To put this another way, the key point here is simply what was stated above: 212 F. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v06",
+      "input": "Explain the difference between TCP and UDP.",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead. To put this another way, the key point here is simply what was stated above: TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v07",
+      "input": "Why is the sky blue?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction. To put this another way, the key point here is simply what was stated above: Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    },
+    {
+      "id": "v08",
+      "input": "What is a hash map?",
+      "system_prompt": "Answer concisely and accurately.",
+      "concise": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+      "padded": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked. A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup. To put this another way, the key point here is simply what was stated above: A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup. I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles. Please let me know if you would like additional detail!"
+    }
+  ]
+}

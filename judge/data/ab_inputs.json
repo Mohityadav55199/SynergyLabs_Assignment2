@@ -1,0 +1,31 @@
+{
+  "name": "ab_inputs",
+  "configs": {
+    "A": {
+      "name": "prompt_v1_concise_precise",
+      "system_prompt": "You are a precise technical assistant. Answer accurately and concisely, follow any length or format constraint exactly, and say so if you are unsure."
+    },
+    "B": {
+      "name": "prompt_v2_friendly_detailed",
+      "system_prompt": "You are an enthusiastic, friendly assistant. Give thorough, engaging, detailed answers with plenty of background and examples."
+    }
+  },
+  "inputs": [
+    "Explain DNS in 3 sentences.",
+    "What is the difference between a process and a thread? Answer in at most 4 sentences.",
+    "Why does the moon have phases?",
+    "What is the time complexity of binary search, and why?",
+    "Explain what an API is to a non-technical person in 2 sentences.",
+    "What causes the seasons on Earth?",
+    "What does HTTP status code 404 mean?",
+    "Explain recursion in one paragraph.",
+    "What is the difference between a list and a tuple in Python?",
+    "Why is it unsafe to reuse the same password on many websites?",
+    "What is photosynthesis? Keep it under 40 words.",
+    "What is a primary key in a relational database?",
+    "Explain the difference between supervised and unsupervised learning.",
+    "What does 'idempotent' mean for an HTTP method? Give one example.",
+    "How does a binary heap differ from a binary search tree?",
+    "What is the Pythagorean theorem and when does it apply?"
+  ]
+}

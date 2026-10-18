@@ -1,0 +1,225 @@
+{
+  "name": "position_pairs",
+  "cases": [
+    {
+      "id": "p01",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "Canberra.",
+      "output_b": "The capital of Australia is Sydney, its largest city.",
+      "gold_winner": "A",
+      "kind": "clear",
+      "gold_note": "g01 correct vs g13 flawed"
+    },
+    {
+      "id": "p02",
+      "input": "Convert 100 degrees Celsius to Fahrenheit.",
+      "system_prompt": "Show the formula and the result.",
+      "output_a": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+      "output_b": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+      "gold_winner": "B",
+      "kind": "clear",
+      "gold_note": "g04 correct vs g15 flawed"
+    },
+    {
+      "id": "p03",
+      "input": "How do I reset my Acme router password?",
+      "system_prompt": "You are Acme support. Answer ONLY from this knowledge base. KB: To reset the router password, hold the reset button for 10 seconds; after it restarts, log in with the default credentials admin/admin and set a new password.",
+      "output_a": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+      "output_b": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+      "gold_winner": "A",
+      "kind": "clear",
+      "gold_note": "g05 correct vs g16 flawed"
+    },
+    {
+      "id": "p04",
+      "input": "Summarize in one sentence: 'The city council voted 7-2 on Tuesday to approve a new bike lane network spanning 40 km, with construction beginning in spring and a budget of $12 million.'",
+      "system_prompt": "Summarize faithfully in exactly one sentence.",
+      "output_a": "The city council voted 7-2 to approve a $20 million, 40 km bike lane network, with construction starting in autumn.",
+      "output_b": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+      "gold_winner": "B",
+      "kind": "clear",
+      "gold_note": "g06 correct vs g17 flawed"
+    },
+    {
+      "id": "p05",
+      "input": "What does the Python expression len({1, 2, 2, 3}) return?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+      "output_b": "It returns 4, because len counts every element passed in, including duplicates.",
+      "gold_winner": "A",
+      "kind": "clear",
+      "gold_note": "g07 correct vs g18 flawed"
+    },
+    {
+      "id": "p06",
+      "input": "Who wrote Pride and Prejudice and when was it published?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+      "output_b": "Jane Austen wrote it; it was published in 1813.",
+      "gold_winner": "B",
+      "kind": "clear",
+      "gold_note": "g09 correct vs g19 flawed"
+    },
+    {
+      "id": "p07",
+      "input": "Is it safe to mix bleach and ammonia for cleaning?",
+      "system_prompt": "You are a helpful household assistant.",
+      "output_a": "No. Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage. Never combine them; use one product at a time with good ventilation.",
+      "output_b": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+      "gold_winner": "A",
+      "kind": "clear",
+      "gold_note": "g10 correct vs g20 flawed"
+    },
+    {
+      "id": "p08",
+      "input": "Explain the difference between TCP and UDP.",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "TCP and UDP are both transport protocols.",
+      "output_b": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+      "gold_winner": "B",
+      "kind": "clear",
+      "gold_note": "g11 correct vs g21 flawed"
+    },
+    {
+      "id": "p09",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "17 x 23 = 391.",
+      "output_b": "17 x 23 = 381.",
+      "gold_winner": "A",
+      "kind": "clear",
+      "gold_note": "g12 correct vs g22 flawed"
+    },
+    {
+      "id": "p10",
+      "input": "What is the time complexity of binary search on a sorted array of n elements?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "O(n log n), since each step halves the array and you must also scan it.",
+      "output_b": "O(log n), because each comparison halves the remaining range.",
+      "gold_winner": "B",
+      "kind": "clear",
+      "gold_note": "g26 correct vs g25 flawed"
+    },
+    {
+      "id": "p11",
+      "input": "Explain the difference between TCP and UDP.",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+      "output_b": "TCP is connection-oriented: it performs a handshake, then guarantees ordered, reliable delivery using acknowledgements and retransmission, plus flow and congestion control. UDP is connectionless: it sends independent datagrams with no handshake, ordering or delivery guarantee, which makes it lighter and lower-latency. Use TCP for web pages and file transfer; use UDP for DNS, voice/video streaming and games.",
+      "gold_winner": "B",
+      "kind": "closer",
+      "gold_note": "both correct; B more complete"
+    },
+    {
+      "id": "p12",
+      "input": "Explain what a hash map is in two sentences.",
+      "system_prompt": "Answer in at most two sentences.",
+      "output_a": "A hash map stores key-value pairs and uses a hash function to turn each key into an array index. Lookups, inserts and deletes take O(1) time on average. Collisions are handled with chaining or open addressing. They are used in caches, sets and databases.",
+      "output_b": "A hash map stores key-value pairs and uses a hash function to turn each key into an index into an array, so lookups, inserts and deletes take O(1) time on average. Collisions, where two keys map to the same index, are handled with techniques like chaining or open addressing.",
+      "gold_winner": "B",
+      "kind": "closer",
+      "gold_note": "both correct; A breaks the 2-sentence limit"
+    },
+    {
+      "id": "p13",
+      "input": "Write a polite one-line decline to a meeting invitation.",
+      "system_prompt": "Respond with exactly one sentence.",
+      "output_a": "No thanks, can't make it.",
+      "output_b": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+      "gold_winner": "B",
+      "kind": "closer",
+      "gold_note": "both comply; B is polite as asked"
+    },
+    {
+      "id": "p14",
+      "input": "How do I reset my Acme router password?",
+      "system_prompt": "You are Acme support. Answer ONLY from this knowledge base. KB: To reset the router password, hold the reset button for 10 seconds; after it restarts, log in with the default credentials admin/admin and set a new password.",
+      "output_a": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+      "output_b": "Hold the reset button for 10 seconds, then log in with admin/admin. You should also update the firmware to the latest version from acme.com/firmware.",
+      "gold_winner": "A",
+      "kind": "closer",
+      "gold_note": "B adds an unsupported claim not in the KB"
+    },
+    {
+      "id": "p15",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "Sydney.",
+      "output_b": "Melbourne.",
+      "gold_winner": "TIE",
+      "kind": "both_wrong",
+      "gold_note": "both wrong (Canberra is correct)"
+    },
+    {
+      "id": "p16",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "17 x 23 = 381.",
+      "output_b": "17 x 23 = 401.",
+      "gold_winner": "TIE",
+      "kind": "both_wrong",
+      "gold_note": "both wrong (391 is correct)"
+    },
+    {
+      "id": "p17",
+      "input": "What is the capital of Australia?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "Canberra.",
+      "output_b": "The capital of Australia is Canberra.",
+      "gold_winner": "TIE",
+      "kind": "near_equal",
+      "gold_note": "equivalent"
+    },
+    {
+      "id": "p18",
+      "input": "What is 17 x 23?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "17 x 23 = 391.",
+      "output_b": "The product of 17 and 23 is 391.",
+      "gold_winner": "TIE",
+      "kind": "near_equal",
+      "gold_note": "equivalent"
+    },
+    {
+      "id": "p19",
+      "input": "Who wrote Pride and Prejudice and when was it published?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "Jane Austen wrote it; it was published in 1813.",
+      "output_b": "Pride and Prejudice is by Jane Austen and came out in 1813.",
+      "gold_winner": "TIE",
+      "kind": "near_equal",
+      "gold_note": "equivalent"
+    },
+    {
+      "id": "p20",
+      "input": "What does the Python expression len({1, 2, 2, 3}) return?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+      "output_b": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+      "gold_winner": "TIE",
+      "kind": "identical",
+      "gold_note": "identical text: any non-TIE verdict is pure position bias"
+    },
+    {
+      "id": "p21",
+      "input": "Is it safe to mix bleach and ammonia for cleaning?",
+      "system_prompt": "You are a helpful household assistant.",
+      "output_a": "No. Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage. Never combine them; use one product at a time with good ventilation.",
+      "output_b": "No. Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage. Never combine them; use one product at a time with good ventilation.",
+      "gold_winner": "TIE",
+      "kind": "identical",
+      "gold_note": "identical text"
+    },
+    {
+      "id": "p22",
+      "input": "What is the time complexity of binary search on a sorted array of n elements?",
+      "system_prompt": "Answer concisely and accurately.",
+      "output_a": "O(log n), because each comparison halves the remaining range.",
+      "output_b": "O(log n), because each comparison halves the remaining range.",
+      "gold_winner": "TIE",
+      "kind": "identical",
+      "gold_note": "identical text"
+    }
+  ]
+}
