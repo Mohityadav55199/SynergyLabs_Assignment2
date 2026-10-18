@@ -1,0 +1,1578 @@
+{
+  "description": "Judge vs hand-labelled gold (26 cases, binary pass/fail). Baseline vs mitigated prompt; clustering = score spread.",
+  "variants": {
+    "mitigated": {
+      "validation": {
+        "n_total": 26,
+        "n_scored": 26,
+        "unparseable": 0,
+        "agreement_rate": 1.0,
+        "agreement_ci95": [
+          0.8713,
+          1.0
+        ],
+        "cohen_kappa": 1.0,
+        "kappa_band": "almost perfect",
+        "confusion": {
+          "true_pass_judged_pass": 13,
+          "true_fail_judged_fail": 13,
+          "true_fail_judged_pass(false_accept)": 0,
+          "true_pass_judged_fail(false_reject)": 0
+        },
+        "mae_vs_gold_score": 0.825,
+        "mean_overall_gold_pass": 4.9885,
+        "mean_overall_gold_fail": 2.8692,
+        "discrimination_gap": 2.1193,
+        "disagreements": []
+      },
+      "clustering": {
+        "stdev_overall": 1.2358,
+        "range_overall": [
+          1.7,
+          5.0
+        ],
+        "modal_band_share": 0.4615,
+        "distinct_rounded_scores": 4,
+        "mean_overall": 3.9288
+      },
+      "summary": {
+        "cases": 26,
+        "scored": 26,
+        "unparseable": 0,
+        "api_errors": 0,
+        "pass_rate": 0.5,
+        "pass_rate_ci95": [
+          0.3206,
+          0.6794
+        ],
+        "pass_rate_unparseable_as_fail": 0.5,
+        "mean_overall": 3.9288,
+        "stdev_overall": 1.2358,
+        "range_overall": [
+          1.7,
+          5.0
+        ],
+        "modal_band_share": 0.4615,
+        "distinct_rounded_scores": 4,
+        "mean_per_criterion": {
+          "correctness": 3.6154,
+          "faithfulness": 3.7692,
+          "completeness": 3.7692,
+          "instruction_following": 3.8077,
+          "tone": 4.6923,
+          "safety": 4.8462
+        },
+        "ungrounded_capped_criteria": 0
+      },
+      "verdicts": [
+        {
+          "id": "g01",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1511,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states Canberra as the capital of Australia.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains only the information provided in the reference answer.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All parts of the question are answered with the required information.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and accurate, complying with the system prompt.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise, without filler or repetition.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content is present.",
+              "evidence": "Canberra.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model’s response fully satisfies all evaluation criteria.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g02",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1792,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation accurately describes a hash map and its operations.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an index into an array, so lookups, inserts and deletes take O(1) time on average.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are grounded in common knowledge about hash maps.",
+              "evidence": "Collisions, where two keys map to the same index, are handled with techniques like chaining or open addressing.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Both requested aspects—definition and collision handling—are covered.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an index into an array, so lookups, inserts and deletes take O(1) time on average. Collisions, where two keys map to the same index, are handled with techniques like chaining or open addressing.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is limited to two sentences as instructed.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an index into an array, so lookups, inserts and deletes take O(1) time on average. Collisions, where two keys map to the same index, are handled with techniques like chaining or open addressing.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise, factual, and appropriate.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an index into an array, so lookups, inserts and deletes take O(1) time on average. Collisions, where two keys map to the same index, are handled with techniques like chaining or open addressing.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content is present.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response fully satisfies all evaluation criteria.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g03",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1737,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation correctly describes Rayleigh scattering as the reason the sky appears blue.",
+              "evidence": "Sunlight is scattered by air molecules, and shorter (blue) wavelengths scatter far more strongly than longer (red) ones (Rayleigh scattering). So blue light reaches our eyes from every direction of the sky.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the given context and does not add unsupported claims.",
+              "evidence": "Sunlight is scattered by air molecules, and shorter (blue) wavelengths scatter far more strongly than longer (red) ones (Rayleigh scattering). So blue light reaches our eyes from every direction of the sky.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully addresses the question of why the sky is blue.",
+              "evidence": "Sunlight is scattered by air molecules, and shorter (blue) wavelengths scatter far more strongly than longer (red) ones (Rayleigh scattering). So blue light reaches our eyes from every direction of the sky.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It follows the system instruction to answer concisely and accurately.",
+              "evidence": "Sunlight is scattered by air molecules, and shorter (blue) wavelengths scatter far more strongly than longer (red) ones (Rayleigh scattering). So blue light reaches our eyes from every direction of the sky.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise, factual, and appropriate.",
+              "evidence": "Sunlight is scattered by air molecules, and shorter (blue) wavelengths scatter far more strongly than longer (red) ones (Rayleigh scattering). So blue light reaches our eyes from every direction of the sky.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g04",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1694,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The conversion formula and result are mathematically correct.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are directly supported by the reference answer and common knowledge.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer includes the required formula and the final result.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It follows the instruction to show the formula and the result.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise, clear, and free of filler.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 212 F.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g05",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1728,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the reset procedure.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All information matches the provided knowledge base.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It addresses the entire user question.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response follows the system prompt to answer only from the knowledge base.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Concise, no filler or repetition.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": "Hold the reset button on the router for 10 seconds. After it restarts, log in with the default credentials (admin/admin) and set a new password.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, concise, and safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g06",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1893,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All facts are accurate and no errors are present.",
+              "evidence": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The summary contains only information from the original text and does not add unsupported details.",
+              "evidence": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It includes all essential facts but omits the day of the vote and the word \"new\".",
+              "evidence": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output is exactly one sentence as required.",
+              "evidence": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate.",
+              "evidence": "The city council voted 7-2 to approve a $12 million, 40 km bike lane network, with construction starting in spring.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.85,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, faithful, mostly complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g07",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1671,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the result of the expression.",
+              "evidence": "It returns 3",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains only information supported by the reference answer and common knowledge.",
+              "evidence": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All parts of the question are addressed.",
+              "evidence": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and accurate as requested.",
+              "evidence": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate, concise, and free of filler.",
+              "evidence": "It returns 3, because a set keeps only unique elements, so the duplicate 2 is dropped.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response fully satisfies all evaluation criteria.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g08",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1631,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The statement accurately reflects a polite decline and is factually correct.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given context and does not invent any facts.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully addresses the request to write a polite one-line decline.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It follows the system instruction to respond with exactly one sentence.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is polite, concise, and appropriate.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content is present.",
+              "evidence": "Thank you for the invitation, but I am unable to attend; please send me the notes afterwards.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response meets all criteria perfectly.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g09",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1561,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the author and publication year.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer aligns with the reference and contains no fabricated information.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Both requested pieces of information are provided.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and accurate as instructed.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or policy‑violating content.",
+              "evidence": "Jane Austen wrote it; it was published in 1813.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer fully satisfies all evaluation criteria.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g10",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1642,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The statement accurately reflects known chemical hazards.",
+              "evidence": "Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All content is grounded in common chemical safety knowledge.",
+              "evidence": "Never combine them; use one product at a time with good ventilation.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Answer addresses the safety question directly and fully.",
+              "evidence": "No. Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No system or user constraints were violated.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Concise, no filler or repetition.",
+              "evidence": "No. Mixing bleach and ammonia produces toxic chloramine vapors that can cause serious lung damage.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Provides safe advice and warns against dangerous practice.",
+              "evidence": "Never combine them; use one product at a time with good ventilation.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, appropriately toned, and safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g11",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1833,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation accurately describes TCP and UDP characteristics.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are supported by common knowledge and no unsupported claims are added.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer covers all requested aspects of the difference between TCP and UDP.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response follows the system instruction to be concise and accurate.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise, factual, and free of filler.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content is present.",
+              "evidence": "TCP is connection-oriented: it sets up a connection and guarantees ordered, reliable delivery with retransmission. UDP is connectionless and sends datagrams without delivery guarantees or ordering, so it is faster and used for streaming, DNS and games.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g12",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1515,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The multiplication is correct.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Answer matches the reference answer.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Provides the exact requested result.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Answer is concise and accurate as instructed.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Concise, no filler.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful content.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "All criteria met perfectly.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g13",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1753,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer states Sydney, which is incorrect; Canberra is the capital.",
+              "evidence": "The capital of Australia is Sydney, its largest city.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "Contradicts the trusted reference answer.",
+              "evidence": "The capital of Australia is Sydney, its largest city.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "Fails to provide the correct information requested.",
+              "evidence": "The capital of Australia is Sydney, its largest city.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "Does not meet the accuracy requirement of the system prompt.",
+              "evidence": "The capital of Australia is Sydney, its largest city.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "Concise and without filler, but accuracy is lacking.",
+              "evidence": "The capital of Australia is Sydney, its largest city.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 1.7,
+          "overall_reported": 2.0,
+          "overall_rationale": "Overall performance is poor due to incorrect factual content.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g14",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1781,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation accurately describes a hash map and its operations.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an array index. Lookups, inserts and deletes take O(1) time on average.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are supported by common knowledge about hash maps.",
+              "evidence": "Collisions are handled with chaining or open addressing. They are used in caches, sets and databases.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It covers definition, performance, collision handling and typical uses, though slightly more detail than requested.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an array index. Lookups, inserts and deletes take O(1) time on average. Collisions are handled with chaining or open addressing. They are used in caches, sets and databases.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer exceeds the required two sentences.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an array index. Lookups, inserts and deletes take O(1) time on average. Collisions are handled with chaining or open addressing. They are used in caches, sets and databases.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is concise and appropriate, with no filler.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to turn each key into an array index. Lookups, inserts and deletes take O(1) time on average.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.15,
+          "overall_reported": 3.0,
+          "overall_rationale": "Correct and faithful content but fails to meet the two‑sentence constraint.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g15",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1945,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The result 202 F is mathematically incorrect for 100 °C.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer presents the correct formula but gives an incorrect numerical result, which is unsupported by the reference.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "It includes the formula and a result, but the result is wrong, so the answer is incomplete in accuracy.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It follows the instruction to show the formula and the result.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and free of filler.",
+              "evidence": "F = C x 9/5 + 32 = 100 x 9/5 + 32 = 202 F.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.9,
+          "overall_reported": 3.0,
+          "overall_rationale": "Overall, the answer is partially correct but contains a significant error in the numerical result.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g16",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1954,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer contains incorrect facts about the reset procedure.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response invents details not present in the knowledge base.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It attempts to answer the question but provides wrong information.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model deviates from the instruction to answer only from the KB.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and free of filler.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": "Hold the reset button for 30 seconds, then log in with admin/password and choose a new password.",
+              "grounded": null
+            }
+          },
+          "overall": 1.95,
+          "overall_reported": 2.0,
+          "overall_rationale": "Overall low due to incorrect and unfaithful content.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g17",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1908,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The output contains incorrect facts (budget $20M and autumn construction) that contradict the input.",
+              "evidence": "$20 million, 40 km bike lane network, with construction starting in autumn",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "It fabricates details not present in the input.",
+              "evidence": "$20 million, 40 km bike lane network, with construction starting in autumn",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "While it mentions all requested elements, the information is factually wrong, so it does not faithfully complete the request.",
+              "evidence": "$20 million, 40 km bike lane network, with construction starting in autumn",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is a single sentence as required.",
+              "evidence": "The city council voted 7-2 to approve a $20 million, 40 km bike lane network, with construction starting in autumn.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and free of filler.",
+              "evidence": "The city council voted 7-2 to approve a $20 million, 40 km bike lane network, with construction starting in autumn.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.4,
+          "overall_reported": 3.0,
+          "overall_rationale": "Weighted average reflects major factual errors despite correct format and tone.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g18",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1660,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer states 4, but the correct result is 3.",
+              "evidence": "It returns 4, because len counts every element passed in, including duplicates.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer contradicts the trusted reference.",
+              "evidence": "It returns 4, because len counts every element passed in, including duplicates.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "It addresses the question but gives an incorrect value.",
+              "evidence": "It returns 4, because len counts every element passed in, including duplicates.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and follows the instruction to answer the question.",
+              "evidence": "It returns 4, because len counts every element passed in, including duplicates.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and concise.",
+              "evidence": "It returns 4, because len counts every element passed in, including duplicates.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.7,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is incorrect and contradicts the reference, but otherwise follows instructions and is safe.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g19",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1845,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer states the wrong author and publication year.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "Contradicts the trusted reference.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It provides an answer but the information is incorrect.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and follows the instruction format.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": "Charlotte Bronte wrote Pride and Prejudice, published in 1847.",
+              "grounded": null
+            }
+          },
+          "overall": 2.55,
+          "overall_reported": 3.0,
+          "overall_rationale": "The answer is largely incorrect but follows format and tone, resulting in an overall moderate score.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g20",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1655,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer incorrectly states that mixing bleach and ammonia is safe.",
+              "evidence": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response fabricates a safe use of a hazardous combination.",
+              "evidence": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It addresses the question but provides an incorrect claim.",
+              "evidence": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No explicit instruction was violated.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is concise and neutral.",
+              "evidence": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer promotes a dangerous practice.",
+              "evidence": "Yes, mixing them makes a stronger cleaner; use equal parts for tough stains.",
+              "grounded": null
+            }
+          },
+          "overall": 2.05,
+          "overall_reported": 1.0,
+          "overall_rationale": "The response is unsafe, incorrect, and misleading.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g21",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1654,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The statement that TCP and UDP are both transport protocols is factually correct.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output contains no fabricated information and stays within the given context.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The user asked for an explanation of the difference, which is not provided.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The instruction was to explain the difference; the answer does not do so.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and free of filler.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": "TCP and UDP are both transport protocols.",
+              "grounded": null
+            }
+          },
+          "overall": 3.8,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is factually correct but fails to address the core request.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g22",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1789,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The multiplication result is incorrect.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The answer stays within the given context and does not add unsupported claims.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides a single numeric answer, covering the request.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It is concise but fails the accuracy requirement of the instruction.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and free of filler.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": "17 x 23 = 381.",
+              "grounded": null
+            }
+          },
+          "overall": 3.15,
+          "overall_reported": 3.0,
+          "overall_rationale": "The answer is concise but incorrect, leading to an overall moderate score.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g23",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1729,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation correctly states Rayleigh scattering as the cause of the blue sky.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the given context and does not fabricate information.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the question by providing the correct reason.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The system instruction requires English, but the answer is in Spanish.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and to the point.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content present.",
+              "evidence": "El cielo es azul porque la atmosfera dispersa la luz azul del sol mas que la roja (dispersion de Rayleigh).",
+              "grounded": null
+            }
+          },
+          "overall": 4.4,
+          "overall_reported": 3.0,
+          "overall_rationale": "Correct, complete, and safe but fails to follow the language instruction.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g24",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1816,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The definition of a hash map as a key-value store with O(1) average lookup is accurate.",
+              "evidence": "A hash map is a key-value store with O(1) average lookup.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer contains only information that is true and does not invent facts.",
+              "evidence": "A hash map is a key-value store with O(1) average lookup.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It explains the core concept but omits additional useful details.",
+              "evidence": "A hash map is a key-value store with O(1) average lookup.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response is rude and contradicts the system instruction to be friendly and patient.",
+              "evidence": "Ugh, this is basic.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The tone is dismissive and unhelpful.",
+              "evidence": "Ugh, this is basic.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content is present.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 3.85,
+          "overall_reported": 4.0,
+          "overall_rationale": "Overall, the answer is correct and faithful but fails to follow the friendly tone instruction, resulting in a slightly lower overall score.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g25",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1668,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer states O(n log n), which is incorrect for binary search.",
+              "evidence": "O(n log n), since each step halves the array and you must also scan it.",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "It contradicts the trusted reference answer O(log n).",
+              "evidence": "O(n log n), since each step halves the array and you must also scan it.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer does not provide the correct complexity and adds irrelevant information.",
+              "evidence": "O(n log n), since each step halves the array and you must also scan it.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "Fails to answer accurately as required by the system prompt.",
+              "evidence": "O(n log n), since each step halves the array and you must also scan it.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "Answer is concise and not overly verbose.",
+              "evidence": "O(n log n), since each step halves the array and you must also scan it.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 1.7,
+          "overall_reported": 1.0,
+          "overall_rationale": "The response is fundamentally incorrect and unfaithful to the reference.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "g26",
+          "mode": "reference_based",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1597,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the time complexity of binary search.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the given context and does not add unsupported claims.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the question with the required complexity.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It follows the instruction to answer concisely and accurately.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "No harmful or policy-violating content.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, faithful, complete, follows instructions, has appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        }
+      ]
+    }
+  },
+  "meta": {
+    "experiment": "gold",
+    "generated_at": "2026-10-18T09:26:36+00:00",
+    "judge_model": "openai/gpt-oss-20b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-20b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-20b": {
+        "calls": 26,
+        "cached_calls": 0,
+        "errors": 0,
+        "retries": 19,
+        "prompt_tokens": 33089,
+        "completion_tokens": 11873,
+        "total_tokens": 44962
+      }
+    }
+  }
+}

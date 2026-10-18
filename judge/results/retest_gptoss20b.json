@@ -1,0 +1,52 @@
+{
+  "description": "Mitigated judge on 13 of the 26 gold cases (every second one), repeated. Temperature 0: run vs rerun. Temperature 0.7: two independent runs.",
+  "temperature_0": {
+    "n_compared": 13,
+    "pass_flips": 0,
+    "pass_flip_rate": 0.0,
+    "mean_abs_score_diff": 0.0654,
+    "max_abs_score_diff": 0.6999999999999997,
+    "flipped_ids": []
+  },
+  "temperature_0.7": {
+    "n_compared": 13,
+    "pass_flips": 0,
+    "pass_flip_rate": 0.0,
+    "mean_abs_score_diff": 0.2577,
+    "max_abs_score_diff": 1.3000000000000003,
+    "flipped_ids": []
+  },
+  "temperature_0_vs_0.7": {
+    "n_compared": 13,
+    "pass_flips": 0,
+    "pass_flip_rate": 0.0,
+    "mean_abs_score_diff": 0.2077,
+    "max_abs_score_diff": 1.15,
+    "flipped_ids": []
+  },
+  "meta": {
+    "experiment": "retest",
+    "generated_at": "2026-10-18T09:43:04+00:00",
+    "judge_model": "openai/gpt-oss-20b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-20b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-20b": {
+        "calls": 112,
+        "cached_calls": 13,
+        "errors": 0,
+        "retries": 107,
+        "prompt_tokens": 138226,
+        "completion_tokens": 39169,
+        "total_tokens": 177395
+      }
+    }
+  }
+}

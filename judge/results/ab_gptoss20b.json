@@ -1,0 +1,2122 @@
+{
+  "suite": "ab_prompt_v1_vs_v2",
+  "mode": "pairwise",
+  "variant": "mitigated",
+  "comparison": {
+    "config_a": "prompt_v1_concise_precise",
+    "config_b": "prompt_v2_friendly_detailed",
+    "pairwise": {
+      "pairs": 14,
+      "scored": 14,
+      "unparseable": 0,
+      "wins_a": 0,
+      "wins_b": 0,
+      "ties": 14,
+      "win_rate_a": 0.0,
+      "win_rate_b": 0.0,
+      "tie_rate": 1.0,
+      "order_disagreement_rate": 0.4286,
+      "hard_flip_rate": 0.0,
+      "single_order_wins_a": 5,
+      "single_order_wins_b": 1,
+      "single_order_ties": 8
+    },
+    "decision": {
+      "winner": null,
+      "lean": null,
+      "decisive_pairs": 0,
+      "ties_or_disagreements": 14,
+      "p_value": null,
+      "verdict": "INCONCLUSIVE: only 0 decisive pairs (< 8)",
+      "rule": "decisive >= 8 and exact two-sided sign test p < 0.05; ties/disagreements excluded",
+      "caveat": "Small suite: the test has low power (a real but modest difference will usually read as 'no significant difference'), pairs come from one hand-written input set, and the judge itself is imperfect (see judge validation), so a declared winner is evidence for this suite, not a general claim."
+    },
+    "pointwise": {
+      "prompt_v1_concise_precise": {
+        "cases": 14,
+        "scored": 13,
+        "unparseable": 1,
+        "api_errors": 0,
+        "pass_rate": 1.0,
+        "pass_rate_ci95": [
+          0.7719,
+          1.0
+        ],
+        "pass_rate_unparseable_as_fail": 0.9286,
+        "mean_overall": 4.8692,
+        "stdev_overall": 0.2462,
+        "range_overall": [
+          4.3,
+          5.0
+        ],
+        "modal_band_share": 0.7692,
+        "distinct_rounded_scores": 2,
+        "mean_per_criterion": {
+          "correctness": 4.8462,
+          "faithfulness": 4.6923,
+          "completeness": 4.8462,
+          "instruction_following": 5.0,
+          "tone": 5.0,
+          "safety": 5.0
+        },
+        "ungrounded_capped_criteria": 4
+      },
+      "prompt_v2_friendly_detailed": {
+        "cases": 14,
+        "scored": 14,
+        "unparseable": 0,
+        "api_errors": 0,
+        "pass_rate": 0.8571,
+        "pass_rate_ci95": [
+          0.6006,
+          0.9599
+        ],
+        "pass_rate_unparseable_as_fail": 0.8571,
+        "mean_overall": 4.7357,
+        "stdev_overall": 0.4015,
+        "range_overall": [
+          3.7,
+          5.0
+        ],
+        "modal_band_share": 0.6429,
+        "distinct_rounded_scores": 2,
+        "mean_per_criterion": {
+          "correctness": 4.7143,
+          "faithfulness": 4.8571,
+          "completeness": 4.7143,
+          "instruction_following": 4.4286,
+          "tone": 4.7857,
+          "safety": 5.0
+        },
+        "ungrounded_capped_criteria": 4
+      },
+      "paired_n": 13,
+      "mean_diff_a_minus_b": 0.1538,
+      "mean_diff_ci95_bootstrap": [
+        -0.0731,
+        0.3846
+      ]
+    }
+  },
+  "pairs": [
+    {
+      "id": "q01",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1118,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly explain DNS in three sentences, are faithful, complete, follow instructions, have appropriate tone, and are safe."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1137,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses are correct, concise, and fully address the request with no errors or violations; they are substantively equivalent in quality."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2255,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q02",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1201,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "B",
+          "winner_shown": "B",
+          "confidence": "medium",
+          "rationale": "Both responses are correct and faithful, but Response B provides a slightly more complete explanation by adding an example and discussing stability implications, while still staying within the 4‑sentence limit."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1218,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly explain the difference, stay within the 4‑sentence limit, and meet all other criteria."
+        }
+      },
+      "single_order": "B",
+      "tokens": 2419,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q03",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1400,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "A",
+          "winner_shown": "A",
+          "confidence": "high",
+          "rationale": "Response A provides a more complete, step‑by‑step explanation of the phases, covering all key points, while Response B is correct but less detailed."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1413,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain the phases of the Moon, are faithful to the facts, complete, follow instructions, have appropriate tone, and contain no safety issues."
+        }
+      },
+      "single_order": "A",
+      "tokens": 2813,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q04",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1554,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "A",
+          "winner_shown": "A",
+          "confidence": "high",
+          "rationale": "Response A provides a correct, detailed explanation, includes the prerequisite that the array must be sorted, and fully addresses the question, whereas Response B omits that important detail."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1513,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly state O(log n) and explain the halving logic; neither contains errors or omissions that would make one superior."
+        }
+      },
+      "single_order": "A",
+      "tokens": 3067,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q05",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1117,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "A",
+          "winner_shown": "A",
+          "confidence": "high",
+          "rationale": "Response A correctly explains an API with a clear analogy and accurate description, while Response B contains a factual error in the waiter analogy and adds unnecessary detail."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1090,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly explain an API in two sentences, are faithful, complete, follow instructions, have appropriate tone, and contain no safety issues."
+        }
+      },
+      "single_order": "A",
+      "tokens": 2207,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q06",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1461,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain that seasons are caused by Earth's axial tilt, are concise, and contain no errors or policy violations. No significant difference in quality."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1461,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain that seasons are caused by Earth's axial tilt, are faithful to the prompt, complete, follow instructions, maintain appropriate tone, and contain no safety issues."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2922,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q07",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1200,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain that 404 means Not Found, are faithful, complete, follow instructions, have appropriate tone, and are safe."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1202,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain that 404 means Not Found, are faithful, complete, follow instructions, have appropriate tone, and are safe."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2402,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q08",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1262,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain recursion, include base case and recursive step, are complete and faithful, with no significant difference in quality."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1267,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain recursion, include base case and example, and meet all rubric criteria equally."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2529,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q09",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1374,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "A",
+          "winner_shown": "A",
+          "confidence": "high",
+          "rationale": "Response A is more concise, fully correct, and covers all requested aspects without unnecessary fluff, whereas Response B adds extraneous commentary."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1392,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain mutability, give examples, and mention performance; B adds hashability but A covers the core request equally well, so neither is superior."
+        }
+      },
+      "single_order": "A",
+      "tokens": 2766,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q10",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1386,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain the risks of password reuse, are faithful to the prompt, complete, follow instructions, maintain appropriate tone, and contain no safety issues."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1381,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain the risks of password reuse, are faithful to the prompt, complete, follow instructions, maintain appropriate tone, and contain no safety issues."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2767,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q11",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1205,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses are correct, faithful, complete, follow instructions, and safe; B is only marginally longer but still within the 40‑word limit, so neither is superior."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1292,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses are factually correct, concise, and meet the word limit; neither is superior in correctness, completeness, or adherence to instructions."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2497,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q12",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1373,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses accurately explain what a primary key is, cover the key characteristics, and provide an example. Neither contains errors or omissions, and both meet the instruction requirements."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1390,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "medium",
+          "rationale": "Both responses accurately define a primary key, cover its key characteristics, and provide an example. Neither contains errors or omissions, and both comply with the rubric."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2763,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q14",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1296,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly define idempotence and provide a valid example; neither contains errors or violations, and both are equally concise and complete."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1295,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly define idempotence and provide a valid example; neither is superior in correctness, completeness, or adherence to instructions."
+        }
+      },
+      "single_order": "TIE",
+      "tokens": 2591,
+      "status": "ok",
+      "agree": true,
+      "hard_flip": false,
+      "final": "TIE"
+    },
+    {
+      "id": "q16",
+      "orders": {
+        "AB": {
+          "order": "AB",
+          "tokens": 1528,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "A",
+          "winner_shown": "A",
+          "confidence": "high",
+          "rationale": "Both responses are correct and faithful; Response A provides a more complete explanation by explicitly noting the Euclidean context and the conditions for applicability, giving it a slight edge over Response B."
+        },
+        "BA": {
+          "order": "BA",
+          "tokens": 1533,
+          "attempts": 1,
+          "status": "ok",
+          "winner": "TIE",
+          "winner_shown": "TIE",
+          "confidence": "high",
+          "rationale": "Both responses correctly state the theorem, its applicability to right triangles, and provide accurate examples or notes; neither has a clear advantage in correctness, completeness, or adherence to instructions."
+        }
+      },
+      "single_order": "A",
+      "tokens": 3061,
+      "status": "ok",
+      "agree": false,
+      "hard_flip": false,
+      "final": "TIE"
+    }
+  ],
+  "pointwise_a": [
+    {
+      "id": "q01",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1736,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes DNS functions.",
+          "evidence": "DNS, or the Domain Name System, acts as the internet's phone book by translating human-readable domain names into IP addresses that computers use to identify each other.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common knowledge about DNS.",
+          "evidence": "It operates through a distributed, hierarchical network of servers that work together to resolve these names efficiently and reliably.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the requested explanation in exactly three sentences.",
+          "evidence": "This system allows users to access websites and services using simple, memorable names rather than complex numerical addresses.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response follows the instruction to explain DNS in three sentences.",
+          "evidence": "DNS, or the Domain Name System, acts as the internet's phone book by translating human-readable domain names into IP addresses that computers use to identify each other.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, technical, and appropriate.",
+          "evidence": "DNS, or the Domain Name System, acts as the internet's phone book by translating human-readable domain names into IP addresses that computers use to identify each other.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q02",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1752,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately distinguishes processes and threads.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares the process's memory and resources.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common knowledge about processes and threads.",
+          "evidence": "Because threads share memory, they can communicate more efficiently but require synchronization to avoid race conditions, whereas processes are isolated and safer but incur higher overhead for creation and inter-process communication.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers all requested aspects within the sentence limit.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares the process's memory and resources.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It obeys the 4-sentence limit and is concise.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares the process's memory and resources.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise and appropriate.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares the process's memory and resources.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is correct, faithful, complete, follows instructions, appropriately toned, and safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q03",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1975,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes the cause of lunar phases.",
+          "evidence": "The Moon has phases because of its position relative to the Earth and the Sun. As the Moon orbits the Earth, the angle at which sunlight hits the Moon changes from our perspective on Earth.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common astronomical knowledge and no fabrication is present.",
+          "evidence": "The Moon does not produce its own light; it reflects sunlight. The phases are not caused by the Earth’s shadow falling on the Moon (that is a lunar eclipse), but simply by the changing geometry of the Sun-Moon-Earth system.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the full explanation of lunar phases, including illumination, orbit, and perspective.",
+          "evidence": "Here is the step-by-step breakdown:\n\n1.  **Sunlight Illumination**: The Sun always illuminates exactly half of the Moon (the side facing the Sun).\n2.  **Orbital Motion**: The Moon orbits the Earth approximately every 29.5 days.\n3.  **Changing Perspective**: As the Moon moves in its orbit, we see different portions of the illuminated half from Earth.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is concise, accurate, and follows the system prompt’s instruction to be precise and technical.",
+          "evidence": "The Moon has phases because of its position relative to the Earth and the Sun. As the Moon orbits the Earth, the angle at which sunlight hits the Moon changes from our perspective on Earth.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, technical, and free of filler.",
+          "evidence": "The Moon has phases because of its position relative to the Earth and the Sun.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content is present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q04",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 2,
+      "tokens": 5058,
+      "status": "unparseable",
+      "error": "no_json_found",
+      "criteria": null,
+      "overall": null,
+      "passed": null
+    },
+    {
+      "id": "q05",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1766,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes an API as a communication interface between software, using a correct analogy.",
+          "evidence": "An API acts like a waiter in a restaurant, taking your order to the kitchen and bringing the food back to you without you needing to know how the meal is prepared.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common knowledge about APIs.",
+          "evidence": "It allows different software applications to communicate and share data with each other in a standardized way.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Both requested sentences are present and cover the definition and purpose of an API.",
+          "evidence": "An API acts like a waiter in a restaurant, taking your order to the kitchen and bringing the food back to you without you needing to know how the meal is prepared. It allows different software applications to communicate and share data with each other in a standardized way.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is exactly two sentences as requested.",
+          "evidence": "An API acts like a waiter in a restaurant, taking your order to the kitchen and bringing the food back to you without you needing to know how the meal is prepared. It allows different software applications to communicate and share data with each other in a standardized way.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, clear, and appropriate for a non-technical audience.",
+          "evidence": "An API acts like a waiter in a restaurant, taking your order to the kitchen and bringing the food back to you without you needing to know how the meal is prepared.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content is present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response fully satisfies all criteria with accurate, concise, and safe content.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q06",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 2103,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Accurately explains axial tilt as cause of seasons.",
+          "evidence": "The seasons on Earth are caused by the **tilt of Earth's axis** relative to its orbital plane, not by the distance from the Sun.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge and no fabrication.",
+          "evidence": "Earth’s axis is tilted approximately **23.5 degrees** from the perpendicular to its orbit around the Sun.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Covers tilt, orbital motion, sunlight angle, and misconception about distance.",
+          "evidence": "Here’s a concise breakdown:\n\n1. **Axial Tilt**: Earth’s axis is tilted approximately **23.5 degrees** from the perpendicular to its orbit around the Sun.\n2. **Orbital Motion**: As Earth orbits the Sun over the course of a year, different hemispheres are tilted toward or away from the Sun at different times.\n   - When the Northern Hemisphere is tilted **toward** the Sun, it receives more direct sunlight and longer days, resulting in **summer**.\n   - When the Northern Hemisphere is tilted **away** from the Sun, it receives less direct sunlight and shorter days, resulting in **winter**.\n   - The Southern Hemisphere experiences the opposite seasons at the same time.\n3. **Angle of Sunlight**: The tilt causes the angle at which sunlight strikes the surface to vary. More direct (perpendicular) sunlight concentrates energy over a smaller area, increasing heating. More oblique sunlight spreads energy over a larger area, reducing heating.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Follows instruction to answer accurately and concisely.",
+          "evidence": "The seasons on Earth are caused by the **tilt of Earth's axis** relative to its orbital plane, not by the distance from the Sun.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Concise, no padding or repetition.",
+          "evidence": "**Common Misconception**: Seasons are **not** caused by Earth being closer to or farther from the Sun.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, concise, and safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q07",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1649,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes the 404 status code.",
+          "evidence": "HTTP status code **404** means **Not Found**.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge and no fabrication.",
+          "evidence": "It indicates that the server cannot find the requested resource (such as a webpage, file, or API endpoint) at the specified URL.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the definition and typical causes of a 404 error.",
+          "evidence": "This is a client error, meaning the issue lies with the request (e.g., a typo in the URL, a deleted page, or a moved resource without a redirect).",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No explicit constraints were violated.",
+          "evidence": null,
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is concise and appropriately technical.",
+          "evidence": "HTTP status code **404** means **Not Found**.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q08",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1914,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes recursion, base case, recursive step, and mentions stack management.",
+          "evidence": "Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, more manageable sub-problems that are structurally identical to the original task. For a recursive solution to be valid and terminate, it must include a base case—a specific condition that stops the function from calling itself further and a recursive step that reduces the problem size with each call, eventually leading to the base case.",
+          "grounded": false
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge and no fabrication is present.",
+          "evidence": "This approach simplifies complex problems, such as traversing tree structures or calculating factorials, by leveraging the principle that a solution to a large problem can be constructed from solutions to its smaller components, though it requires careful management of the call stack to avoid infinite loops or stack overflow errors.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The paragraph covers definition, base case, recursive step, examples, and stack considerations, fulfilling the request.",
+          "evidence": "Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, more manageable sub-problems that are structurally identical to the original task.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is one paragraph, concise, and follows the instruction to explain recursion.",
+          "evidence": "Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, more manageable sub-problems that are structurally identical to the original task.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, technical, and appropriate for the audience.",
+          "evidence": "Recursion is a programming technique where a function calls itself to solve a problem by breaking it down into smaller, more manageable sub-problems that are structurally identical to the original task.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content is present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.4,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 1
+    },
+    {
+      "id": "q09",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 2116,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All facts about mutability, syntax, performance, hashability, and use cases are accurate.",
+          "evidence": "The primary difference between a list and a tuple in Python is **mutability**:\n\n1.  **Lists are mutable**: You can change, add, or remove elements after creation.\n    *   Syntax: `[]`\n    *   Example: `my_list = [1, 2, 3]` → `my_list[0] = 10` is valid.\n\n2.  **Tuples are immutable**: You cannot change, add, or remove elements after creation.\n    *   Syntax: `()`\n    *   Example: `my_tuple = (1, 2, 3)` → `my_tuple[0] = 10` raises a `TypeError`.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response contains only information supported by common Python knowledge and does not fabricate details.",
+          "evidence": "### Key Implications:\n*   **Performance**: Tuples are generally faster and use less memory because they are immutable and can be optimized by Python.\n*   **Hashability**: Tuples (containing only hashable elements) can be used as dictionary keys or in sets; lists cannot.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All requested aspects—mutability, syntax, performance, hashability, and use cases—are covered.",
+          "evidence": "Use lists for collections of items that may change. Use tuples for fixed collections of items (e.g., coordinates, RGB colors, database records).",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is concise, follows the instruction to be accurate and concise, and does not add extraneous content.",
+          "evidence": "The primary difference between a list and a tuple in Python is **mutability**:",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, factual, and free of filler or repetition.",
+          "evidence": "The primary difference between a list and a tuple in Python is **mutability**:",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content is present.",
+          "evidence": "The primary difference between a list and a tuple in Python is **mutability**:",
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, concise, and safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q10",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 2031,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer accurately explains credential stuffing, lateral movement, and email compromise.",
+          "evidence": "Reusing the same password across multiple websites is unsafe primarily due to the risk of **credential stuffing** and **lateral movement** in the event of a data breach.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common cybersecurity knowledge and no unsupported claims are made.",
+          "evidence": "Use a unique, strong password for every account, ideally managed by a reputable password manager.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It addresses all major reasons why reusing passwords is unsafe.",
+          "evidence": "Here’s why:\n\n1. **Single Point of Failure**: If one website you use suffers a data breach and your email/password combination is exposed, attackers can automatically try that same credential on other popular sites (like email, banking, or social media).",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response follows the system prompt to be precise, technical, and concise.",
+          "evidence": "Use a unique, strong password for every account, ideally managed by a reputable password manager.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The tone is concise, technical, and free of filler.",
+          "evidence": "**Best Practice**: Use a unique, strong password for every account, ideally managed by a reputable password manager.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy-violating content.",
+          "evidence": "No content violates safety guidelines.",
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q11",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1863,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Accurate definition of photosynthesis.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Stays within the given context, no fabrication.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Covers all requested aspects of the definition.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Follows length constraint and concise style.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Concise, no filler or repetition.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": "Photosynthesis is the biological process where plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose, releasing oxygen as a byproduct.",
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "All criteria met with perfect scores.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q12",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1846,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The definition and properties of a primary key are accurate.",
+          "evidence": "A **primary key** is a specific column (or a combination of columns) in a relational database table that uniquely identifies each row (record) in that table.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common database knowledge and no fabrication.",
+          "evidence": "No unsupported claims are present.",
+          "grounded": false
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It covers definition, characteristics, purpose, and gives an example.",
+          "evidence": "### Key Characteristics:\n1. **Uniqueness**: No two rows can have the same primary key value.\n2. **Non-Null**: A primary key column cannot contain `NULL` values.\n3. **Stability**: Primary key values should not change over time, as they are used to establish relationships with other tables.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is concise, accurate, and follows the instruction to be precise and technical.",
+          "evidence": "Answer is concise and technical.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is concise, factual, and appropriate for a technical audience.",
+          "evidence": "Answer is concise and factual.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": "No unsafe content present.",
+          "grounded": null
+        }
+      },
+      "overall": 4.6,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 1
+    },
+    {
+      "id": "q14",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1775,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Accurately defines idempotence and gives correct example.",
+          "evidence": "In the context of HTTP, a method is **idempotent** if making multiple identical requests to the same server resource has the same effect as making a single request.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Stays within the question, no fabrication.",
+          "evidence": "In other words, the state of the server does not change after the second, third, or *n*-th request compared to the first.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Provides definition, example, and notes other methods.",
+          "evidence": "**Example:**\n`GET` is an idempotent method. If you request `GET /api/users/123` five times, the server should return the same user data each time, and the server's state (the user record) remains unchanged.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Answer is concise, no extra formatting beyond plain text.",
+          "evidence": "In the context of HTTP, a method is **idempotent** if making multiple identical requests to the same server resource has the same effect as making a single request.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Clear, concise, no filler.",
+          "evidence": "In the context of HTTP, a method is **idempotent** if making multiple identical requests to the same server resource has the same effect as making a single request.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "All criteria met at the highest level.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q16",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1897,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The theorem statement and conditions are accurate.",
+          "evidence": "In a right-angled triangle, the square of the length of the **hypotenuse** (the side opposite the right angle) is equal to the sum of the squares of the lengths of the other two sides (the legs).",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "All content is grounded in the prompt and common knowledge.",
+          "evidence": "The output only discusses the Pythagorean theorem and its applicability, with no fabricated claims.",
+          "grounded": false
+        },
+        "completeness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "It answers both parts of the question fully.",
+          "evidence": "It defines the theorem and explains when it applies.",
+          "grounded": false
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It is concise, follows the instruction to be accurate and concise, and does not add unnecessary length.",
+          "evidence": "The response is brief and directly addresses the question.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is appropriate, concise, and free of filler.",
+          "evidence": "The answer is straightforward and to the point.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.3,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is correct, faithful, complete, follows instructions, has appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 2
+    }
+  ],
+  "pointwise_b": [
+    {
+      "id": "q01",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1837,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes DNS function and resolution process.",
+          "evidence": "Think of DNS as the internet’s ultimate phone book, translating human-friendly domain names like `example.com` into the numeric IP addresses that computers actually use to find each other.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common knowledge about DNS.",
+          "evidence": "When you type a URL, your device queries a DNS server, which acts like a helpful librarian, quickly locating the correct digital address and directing your traffic to the right web server.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the requested explanation in three sentences.",
+          "evidence": "For instance, when you visit `google.com`, DNS instantly resolves that name to an IP address like `142.250.80.46`, ensuring your browser connects to Google’s servers without you needing to memorize complex numbers.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 3.0,
+          "raw_score": 3.0,
+          "rationale": "The response is concise but falls short of the ~150‑word target.",
+          "evidence": null,
+          "grounded": null
+        },
+        "tone": {
+          "score": 4.0,
+          "raw_score": 4.0,
+          "rationale": "Engaging and concise without filler.",
+          "evidence": "Think of DNS as the internet’s ultimate phone book, translating human-friendly domain names like `example.com` into the numeric IP addresses that computers actually use to find each other.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.6,
+      "overall_reported": 4.0,
+      "overall_rationale": "Overall, the answer is correct, faithful, complete, and safe, but slightly under the requested length.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q02",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1858,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are factually accurate.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares memory and resources.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer stays within the user request and system prompt without adding unsupported claims.",
+          "evidence": "This shared memory allows threads to communicate and coordinate more efficiently than separate processes, which require complex inter-process communication mechanisms.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All requested aspects are covered within four sentences.",
+          "evidence": "For example, a web browser uses separate processes for different tabs to ensure security, but multiple threads within a single tab handle rendering, networking, and user input simultaneously for smooth performance.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer obeys the instruction to use at most four sentences and remains concise.",
+          "evidence": "A process is an independent program execution with its own memory space, while a thread is a lightweight unit of execution within a process that shares memory and resources.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is concise, engaging, and appropriate for the audience.",
+          "evidence": "However, because threads share the same address space, a crash in one thread can potentially bring down the entire process, whereas processes provide better isolation and stability.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response is correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q03",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1774,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes lunar phases and the geometry involved.",
+          "evidence": "As the Moon orbits Earth, we see different portions of its sunlit side. It’s not that the Moon changes shape; rather, our perspective shifts.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common astronomical knowledge and no fabrication.",
+          "evidence": "When the Moon is between Earth and the Sun, we see the \"New Moon\" (dark side facing us).",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the why, how, and cycle length, meeting the request fully.",
+          "evidence": "This cycle, called a synodic month, takes about 29.5 days.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "Think of it like holding a tennis ball in a room with a single lamp.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, concise, and appropriate for the persona.",
+          "evidence": "The moon’s phases are a fascinating cosmic dance driven by geometry and light!",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The model’s answer is correct, faithful, complete, follows instructions, has ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q04",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1819,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer correctly states the time complexity and explains why.",
+          "evidence": "Binary search is a masterpiece of algorithmic efficiency, boasting a time complexity of **O(log n)**. This logarithmic performance is the result of its elegant \"divide and conquer\" strategy.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common knowledge about binary search.",
+          "evidence": "Because the problem size is halved at every step, the number of steps required grows very slowly, even as the dataset becomes enormous.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the requested complexity and the reasoning behind it, with an example.",
+          "evidence": "Imagine you are looking for a specific word in a massive dictionary. You wouldn’t start at page one; you’d open the book to the middle.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "Binary search is a masterpiece of algorithmic efficiency, boasting a time complexity of **O(log n)**. This logarithmic performance is the result of its elegant \"divide and conquer\" strategy.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, friendly, concise, and free of filler.",
+          "evidence": "Binary search is a masterpiece of algorithmic efficiency, boasting a time complexity of **O(log n)**.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer fully satisfies all criteria.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q05",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1887,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes an API as an interface that allows software to communicate, using a correct analogy.",
+          "evidence": "Think of an API as a friendly waiter in a restaurant who takes your order from the kitchen and brings your food back to you, allowing you to enjoy the meal without needing to know how the chefs cook it.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response stays within the given context and does not invent facts.",
+          "evidence": "This digital bridge lets different software applications talk to each other seamlessly, so your banking app can securely check your balance without you ever having to log into the bank’s internal system directly.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It fully answers the request to explain an API in two sentences.",
+          "evidence": "Think of an API as a friendly waiter in a restaurant who takes your order from the kitchen and brings your food back to you, allowing you to enjoy the meal without needing to know how the chefs cook it.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 2.0,
+          "raw_score": 2.0,
+          "rationale": "The system prompt asked for about 150 words, enthusiastic, friendly, detailed with background and example, but the answer is only two sentences and lacks detail.",
+          "evidence": null,
+          "grounded": null
+        },
+        "tone": {
+          "score": 4.0,
+          "raw_score": 4.0,
+          "rationale": "The tone is friendly and concise, with no filler or repetition.",
+          "evidence": "Think of an API as a friendly waiter in a restaurant who takes your order from the kitchen and brings your food back to you, allowing you to enjoy the meal without needing to know how the chefs cook it.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.45,
+      "overall_reported": 4.0,
+      "overall_rationale": "The answer is correct, faithful, and complete, but does not meet the system prompt’s length and detail requirements.",
+      "passed": false,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q06",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1837,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation correctly states that seasons are caused by Earth's axial tilt and provides accurate details about sunlight angle and duration.",
+          "evidence": "The seasons are primarily caused by the **tilt of Earth’s axis**, not its distance from the Sun! Imagine Earth spinning like a top, but leaning at a 23.5-degree angle.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in known facts; no fabrication or unsupported claims are present.",
+          "evidence": "When the Northern Hemisphere tilts *toward* the Sun, sunlight hits it more directly and for longer hours, creating summer.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the main cause, explains the mechanism, and gives a concrete example, fulfilling the request fully.",
+          "evidence": "For example, during the June solstice, the North Pole is tilted toward the Sun, giving the Arctic Circle 24 hours of daylight.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and an example, and is about 150 words as requested.",
+          "evidence": "It’s a beautiful celestial dance that keeps our planet in perfect seasonal rhythm!",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, friendly, concise, and free of filler.",
+          "evidence": "It’s a beautiful celestial dance that keeps our planet in perfect seasonal rhythm!",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content; safe educational explanation.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is accurate, faithful, complete, follows instructions, has ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q07",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1813,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes HTTP 404 as a client error indicating resource not found.",
+          "evidence": "\"Technically, it’s a client error response indicating that the server cannot find the requested resource.\"",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge about HTTP 404.",
+          "evidence": "\"It’s not that the server is broken; it’s just that the specific URL you typed (or clicked) doesn’t exist on that particular website.\"",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers definition, context, example, and relevance to web development.",
+          "evidence": "\"For example, if you try to access `example.com/old-blog-post` but the site owner deleted that article, your browser will display a 404 error.\"",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "Entire output meets the style and length guidelines.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, friendly, concise, with no filler.",
+          "evidence": "\"Ah, the legendary 404! This status code is the digital world’s way of saying, \"Hey, I can’t find that page!\"\"",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q08",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1938,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes recursion, base case, and factorial example.",
+          "evidence": "Recursion is a powerful programming concept where a function solves a problem by calling itself to handle smaller, simpler versions of that same problem... This smallest, unbreakable case is known as the \"base case,\" which stops the function from calling itself infinitely... For example, if you wanted to calculate the factorial of 5 (5!), you’d break it down into 5 multiplied by the factorial of 4, then 4 times the factorial of 3, and so on, until you hit the base case of 1! (which is 1).",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All content is grounded in the user request and system prompt; no fabrication.",
+          "evidence": "Recursion is a powerful programming concept where a function solves a problem by calling itself to handle smaller, simpler versions of that same problem...",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers definition, analogy, base case, example, and summary in one paragraph as requested.",
+          "evidence": "Recursion is a powerful programming concept where a function solves a problem by calling itself to handle smaller, simpler versions of that same problem. Think of it like a set of Russian nesting dolls...",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is a single paragraph, ~150 words, enthusiastic and friendly as instructed.",
+          "evidence": "Recursion is a powerful programming concept where a function solves a problem by calling itself to handle smaller, simpler versions of that same problem. Think of it like a set of Russian nesting dolls...",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is enthusiastic, friendly, concise, no filler.",
+          "evidence": "Recursion is a powerful programming concept where a function solves a problem by calling itself to handle smaller, simpler versions of that same problem. Think of it like a set of Russian nesting dolls...",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer fully satisfies all criteria with accurate, faithful, complete, instruction‑following, appropriately toned, and safe content.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q09",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1888,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation correctly states that lists are mutable and tuples are immutable, and notes performance and safety implications.",
+          "evidence": "The core difference lies in **mutability**. A list is a mutable sequence, meaning you can change, add, or remove its elements after creation. In contrast, a tuple is an immutable sequence.",
+          "grounded": false
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common Python knowledge and no unsupported claims are made.",
+          "evidence": "This makes tuples slightly faster and safer for data that shouldn’t change, such as coordinates or database records.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers mutability, performance, safety, and gives a concrete example, addressing all aspects of the question.",
+          "evidence": "For example, if you have a list `colors = ['red', 'blue']`, you can easily update it with `colors[0] = 'green'`. However, if you have a tuple `point = (3, 4)`, trying to change `point[0]` will raise an error.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and an example, and is about 150 words as requested.",
+          "evidence": "Ah, what a fantastic question! Understanding the distinction between lists and tuples is a rite of passage for every Python developer.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, friendly, concise, and free of filler.",
+          "evidence": "Ah, what a fantastic question! Understanding the distinction between lists and tuples is a rite of passage for every Python developer.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content is present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.4,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has an ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 1
+    },
+    {
+      "id": "q10",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1868,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes why reusing passwords is unsafe and correctly identifies credential stuffing.",
+          "evidence": "Reusing passwords is like using the same key for your house, car, and office! If a hacker steals that one key (through a data breach), they can unlock everything. This is known as a \"credential stuffing\" attack.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge and no fabrication.",
+          "evidence": "Cybercriminals often scrape leaked databases from smaller, less secure sites and automatically try those username/password combinations on major platforms like banks or email providers.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers the main reason, gives an example, and offers a solution.",
+          "evidence": "For example, imagine you use \"Password123\" for your social media and your online banking. If the social media site gets hacked, the attacker now has your banking login.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is friendly, engaging, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "Reusing passwords is like using the same key for your house, car, and office! If a hacker steals that one key (through a data breach), they can unlock everything.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is enthusiastic, friendly, concise, and appropriate.",
+          "evidence": "Reusing passwords is like using the same key for your house, car, and office!",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content; advice is safe and responsible.",
+          "evidence": "To stay safe, use a unique, complex password for every account. Even better, use a password manager to generate and store these unique keys securely.",
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q11",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1723,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The definition of photosynthesis is accurate.",
+          "evidence": "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into oxygen and glucose.",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge.",
+          "evidence": "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into oxygen and glucose.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 3.0,
+          "raw_score": 3.0,
+          "rationale": "It provides a definition but does not meet the 40‑word limit.",
+          "evidence": "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into oxygen and glucose. This vital process fuels plant growth and produces the oxygen we breathe, sustaining nearly all life on Earth by creating the foundation of our food webs.",
+          "grounded": null
+        },
+        "instruction_following": {
+          "score": 2.0,
+          "raw_score": 2.0,
+          "rationale": "The answer exceeds the 40‑word constraint.",
+          "evidence": "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into oxygen and glucose. This vital process fuels plant growth and produces the oxygen we breathe, sustaining nearly all life on Earth by creating the foundation of our food webs.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 4.0,
+          "raw_score": 4.0,
+          "rationale": "Tone is friendly and concise, though slightly verbose.",
+          "evidence": "Photosynthesis is how plants convert sunlight, water, and carbon dioxide into oxygen and glucose.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 4.15,
+      "overall_reported": 3.0,
+      "overall_rationale": "The answer is correct and faithful but fails to meet the word‑limit instruction, affecting overall quality.",
+      "passed": false,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q12",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1820,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The explanation accurately describes a primary key’s role and constraints.",
+          "evidence": "A primary key is the ultimate superhero of your database table! It’s a unique identifier that ensures every single row is distinct and easily locatable. Think of it as a social security number for your data: no two records can share the same value, and it can never be null (empty).",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are grounded in common database knowledge and no fabrication.",
+          "evidence": "This uniqueness is crucial because it allows other tables to reference this specific record reliably through foreign keys, maintaining the integrity of your entire relational structure.",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer covers definition, constraints, purpose, and gives an example.",
+          "evidence": "For example, imagine a `Customers` table. Instead of using names (which can be duplicated), you’d assign a unique `CustomerID` like 101, 102, 103.",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The response is enthusiastic, friendly, detailed, includes background and example, and is about 150 words.",
+          "evidence": "It’s the backbone of efficient database design!",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is engaging, friendly, concise, with no filler.",
+          "evidence": "A primary key is the ultimate superhero of your database table!",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content present.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The answer is fully correct, faithful, complete, follows instructions, has ideal tone, and is safe.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q14",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1846,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The definition and example are accurate.",
+          "evidence": "\"essentially, an HTTP method is idempotent if making the same request multiple times produces the same result as making it just once.\"",
+          "grounded": true
+        },
+        "faithfulness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "All statements are supported by common knowledge about HTTP.",
+          "evidence": "\"For example, the **PUT** method is idempotent. If you send a `PUT /users/123` request to update a user's email address to \"new@example.com,\" sending that exact same request five times will still result in the user's email being \"new@example.com.\"",
+          "grounded": true
+        },
+        "completeness": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "It defines idempotence and gives an example, covering the request fully.",
+          "evidence": "\"For example, the **PUT** method is idempotent.\"",
+          "grounded": true
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is engaging, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "Entire response",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Friendly, concise, no filler.",
+          "evidence": "\"In the world of web development, \"idempotent\" is a fantastic concept that brings a sense of safety and predictability to your API interactions!\"",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or policy‑violating content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 5.0,
+      "overall_reported": 5.0,
+      "overall_rationale": "The response meets all criteria excellently.",
+      "passed": true,
+      "ungrounded_capped": 0
+    },
+    {
+      "id": "q16",
+      "mode": "reference_free",
+      "variant": "mitigated",
+      "attempts": 1,
+      "tokens": 1846,
+      "status": "ok",
+      "criteria": {
+        "correctness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "The theorem statement and example calculations are accurate.",
+          "evidence": "It states that the square of the hypotenuse is equal to the sum of the squares of the other two sides. ... $3^2 + h^2 = 5^2$, which simplifies to $9 + h^2 = 25$. Solving for $h$ reveals the ladder reaches 4 feet up the wall.",
+          "grounded": false
+        },
+        "faithfulness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "All content aligns with the system prompt and user request.",
+          "evidence": "The response stays within the given context and does not invent any facts.",
+          "grounded": false
+        },
+        "completeness": {
+          "score": 3.0,
+          "raw_score": 5.0,
+          "rationale": "It explains the theorem, its applicability, and gives a concrete example.",
+          "evidence": "It defines the theorem, states it applies only to right triangles, and provides a ladder example.",
+          "grounded": false
+        },
+        "instruction_following": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "The answer is engaging, detailed, includes background and an example, and is about 150 words.",
+          "evidence": "The response is friendly, detailed, includes background and an example, and is roughly 150 words.",
+          "grounded": null
+        },
+        "tone": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "Tone is enthusiastic, friendly, concise, and appropriate.",
+          "evidence": "The response uses enthusiastic language and is concise.",
+          "grounded": null
+        },
+        "safety": {
+          "score": 5.0,
+          "raw_score": 5.0,
+          "rationale": "No harmful or unsafe content.",
+          "evidence": null,
+          "grounded": null
+        }
+      },
+      "overall": 3.7,
+      "overall_reported": 5.0,
+      "overall_rationale": "The model fully satisfies all evaluation criteria.",
+      "passed": true,
+      "ungrounded_capped": 3
+    }
+  ],
+  "generator_model": "qwen/qwen3.8-27b",
+  "lengths_chars": {
+    "mean_output_a": 795.5,
+    "mean_output_b": 813.8571
+  },
+  "meta": {
+    "experiment": "ab",
+    "generated_at": "2026-10-18T09:36:58+00:00",
+    "judge_model": "openai/gpt-oss-20b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-20b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-20b": {
+        "calls": 73,
+        "cached_calls": 0,
+        "errors": 0,
+        "retries": 69,
+        "prompt_tokens": 88666,
+        "completion_tokens": 22349,
+        "total_tokens": 111015
+      }
+    }
+  }
+}

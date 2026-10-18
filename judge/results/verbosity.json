@@ -1,0 +1,2408 @@
+{
+  "description": "Same facts, concise (A) vs padded with filler and restatement (B). A length-blind judge should TIE or prefer the concise one.",
+  "variants": {
+    "baseline": {
+      "pairwise_final": {
+        "n": 8,
+        "padded_wins": 0,
+        "concise_wins": 8,
+        "ties": 0
+      },
+      "pairwise_single_judgments": {
+        "n": 16,
+        "padded_preferred": 0,
+        "concise_preferred": 16,
+        "tie": 0,
+        "padded_preferred_rate": 0.0
+      },
+      "pointwise": {
+        "n": 8,
+        "mean_overall_concise": 4.925,
+        "mean_overall_padded": 4.4937,
+        "mean_padded_minus_concise": -0.4313,
+        "padded_scored_higher": 0,
+        "padded_scored_lower": 8
+      },
+      "pairs": [
+        {
+          "id": "v01",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 381,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides the correct answer concisely, directly meeting the instruction, whereas B adds unnecessary verbosity."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 388,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly answers the question concisely, adhering to the instruction, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 769,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v02",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 419,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A directly answers the question concisely as instructed, while B adds unnecessary verbosity."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 411,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly answers the question concisely as instructed, while A adds unnecessary verbosity."
+            }
+          },
+          "single_order": "A",
+          "tokens": 830,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v03",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 405,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides the correct answer concisely, directly meeting the instruction, whereas B adds unnecessary verbosity."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 422,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B provides the correct answer directly and concisely, matching the instruction to answer concisely and accurately, whereas A adds unnecessary verbosity."
+            }
+          },
+          "single_order": "A",
+          "tokens": 827,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v04",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 420,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides a concise, accurate answer without unnecessary filler, directly meeting the instruction."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 420,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly answers the question concisely, adhering to the system prompt, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 840,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v05",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 408,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A directly provides the correct answer in a concise manner, matching the instruction, whereas B adds unnecessary verbosity."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 424,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B provides the correct answer concisely, directly matching the instruction to answer concisely and accurately, whereas Response A adds unnecessary verbosity."
+            }
+          },
+          "single_order": "A",
+          "tokens": 832,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v06",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 446,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A directly and concisely answers the question, while B adds unnecessary filler and repetition, making it less clear and concise."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 459,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly and concisely states the key differences, adhering to the instruction to answer concisely and accurately, whereas A is overly verbose and repetitive."
+            }
+          },
+          "single_order": "A",
+          "tokens": 905,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v07",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 472,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides a concise and accurate explanation, directly addressing the question, whereas B adds unnecessary verbosity and repetition."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 472,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly answers the question concisely, adhering to the instruction, while A is overly verbose and repetitive."
+            }
+          },
+          "single_order": "A",
+          "tokens": 944,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v08",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 458,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A is concise and directly answers the question, adhering to the instruction, whereas B adds unnecessary verbosity."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 465,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B directly answers the question concisely and accurately, adhering to the instruction, whereas Response A is overly verbose and repetitive."
+            }
+          },
+          "single_order": "A",
+          "tokens": 923,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        }
+      ],
+      "pointwise_concise": [
+        {
+          "id": "v01|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 506,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly identifies Canberra as the capital of Australia.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output directly answers the question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete required information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains no unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model's output is correct, complete, faithful, follows instructions, has appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v02|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 541,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the time complexity as O(log n).",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully reflects the known property of binary search.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the essential information without omitting relevant details.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and directly addresses the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for an informational response.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, complete, and perfectly aligns with the instruction.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v03|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 560,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The product 17 × 23 is correctly calculated as 391.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All required information (the multiplication result) is provided.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and accurate as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for a factual response.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model fully satisfies the task with a correct, complete, and appropriately toned answer.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v04|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 563,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states that len({1,2,2,3}) returns 3.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the user's question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete and sufficient information required.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely and accurately as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, complete, faithful, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v05|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 550,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the boiling point of water at sea level as 212 °F.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the asked question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete required information in a concise form.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for the factual answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or disallowed material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, complete, faithful, follows instructions, uses proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v06|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 601,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The statement accurately describes TCP as reliable and ordered and UDP as connectionless with no delivery guarantees.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output directly reflects the requested explanation without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It covers the core differences but omits additional details such as typical use cases or performance implications.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and directly answers the question as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for an explanatory answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or disallowed material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.85,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, concise, and safe, though it could be slightly more complete.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v07|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 580,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation accurately describes Rayleigh scattering as the cause of the sky's blue color.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output faithfully reflects the known scientific explanation without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It gives the core reason but omits minor details like the role of the atmosphere's composition.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and directly answers the question as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral, clear, and appropriate for the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or risky information.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.85,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is accurate, concise, and well‑aligned with the prompt.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v08|concise",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 553,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The definition of a hash map and its O(1) average lookup is accurate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully reflects the concept without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "It gives a basic definition but omits details like handling collisions and typical operations.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and directly addresses the question as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for an informational response.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or disallowed material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.7,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, safe, and follows instructions, though it could be more complete.",
+          "passed": true,
+          "ungrounded_capped": 0
+        }
+      ],
+      "pointwise_padded": [
+        {
+          "id": "v01|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 715,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly identifies Canberra as the capital of Australia.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully provides the factual answer without adding incorrect information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The answer includes the required information, though the extra commentary is unnecessary.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The system prompt asked for a concise answer, but the model gave a verbose, overly wordy response.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and polite, though somewhat overly elaborate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or inappropriate material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.3,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and safe but fails to be concise as instructed, lowering the overall rating.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v02|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 730,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the time complexity as O(log n).",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the asked question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The essential answer is provided, though the extra repetitive phrasing is unnecessary.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The system prompt asked for a concise answer, but the model added verbose filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is friendly and helpful.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.55,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and safe but not as concise as instructed.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v03|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 717,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The multiplication result 17 × 23 = 391 is correct.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer directly reflects the factual calculation without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response provides the complete answer to the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer is correct but overly verbose, not concise as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and polite, though somewhat unnecessarily elaborate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.6,
+          "overall_reported": 4.0,
+          "overall_rationale": "The model gives a correct, complete answer but fails to be concise as requested.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v04|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 750,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states that len({1, 2, 2, 3}) returns 3.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer directly reflects the factual result without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response provides the complete answer to the specific question asked.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The model gave an overly verbose explanation instead of a concise answer as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and helpful, though slightly overly elaborate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.6,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and complete but does not adhere to the conciseness instruction.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v05|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 691,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the boiling point as 212 °F.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the factual question without adding incorrect information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All required information (the boiling point) is provided.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer includes unnecessary verbose commentary, violating the request for conciseness.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and polite, though slightly overly elaborate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.6,
+          "overall_reported": 4.0,
+          "overall_rationale": "The response is factually correct and complete but not as concise as instructed.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v06|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 762,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation correctly states that TCP provides reliable, ordered delivery while UDP is connectionless and lacks delivery guarantees.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output faithfully reflects the factual differences between TCP and UDP.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It covers the core distinction but omits other details such as typical use cases or header size differences.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The response is longer and repetitive than necessary, not fully concise as requested.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is polite and helpful.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.55,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and safe but could be more concise and include a bit more detail for completeness.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v07|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 742,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation of Rayleigh scattering and why the sky appears blue is accurate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully conveys the scientific reason without adding misinformation.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It covers the main cause of the sky's color but adds unnecessary repetition.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is verbose and not concise as the instruction requested.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and helpful, though slightly overly elaborate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.3,
+          "overall_reported": 3.0,
+          "overall_rationale": "The answer is correct and safe but fails to be concise, affecting overall quality.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v08|padded",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 753,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The definition of a hash map and its O(1) average lookup property is accurate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully conveys the core concept without adding misinformation.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It covers the basic idea but omits details such as collisions and implementation variants.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer is longer and more repetitive than the requested concise response.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is friendly and helpful, though slightly overly verbose.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.45,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and safe but not as concise as instructed, lowering the overall rating.",
+          "passed": true,
+          "ungrounded_capped": 0
+        }
+      ]
+    },
+    "mitigated": {
+      "pairwise_final": {
+        "n": 8,
+        "padded_wins": 0,
+        "concise_wins": 8,
+        "ties": 0
+      },
+      "pairwise_single_judgments": {
+        "n": 16,
+        "padded_preferred": 0,
+        "concise_preferred": 16,
+        "tie": 0,
+        "padded_preferred_rate": 0.0
+      },
+      "pointwise": {
+        "n": 8,
+        "mean_overall_concise": 4.925,
+        "mean_overall_padded": 4.4313,
+        "mean_padded_minus_concise": -0.4938,
+        "padded_scored_higher": 1,
+        "padded_scored_lower": 7
+      },
+      "pairs": [
+        {
+          "id": "v01",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1132,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A is correct, concise, and follows the instruction to answer concisely, whereas B adds unnecessary filler and violates the conciseness requirement."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1134,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both responses give the correct capital, but B follows the instruction to answer concisely and maintains appropriate tone, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2266,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v02",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1113,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but A is concise as required while B adds unnecessary filler, violating the instruction to answer concisely."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1188,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B is concise and directly follows the instruction to answer concisely, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2301,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v03",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1106,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but A is concise and directly follows the instruction to answer concisely, whereas B adds unnecessary filler."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1111,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but B is concise and directly follows the instruction to answer concisely, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2217,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v04",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1106,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but A follows the instruction to answer concisely while B adds unnecessary filler, violating tone and instruction-following."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1161,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but B is concise and avoids unnecessary filler, aligning better with the instruction to answer concisely."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2267,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v05",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1190,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but A is concise and follows the instruction to answer concisely, whereas B adds unnecessary filler and deviates from the required tone."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1150,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both responses are correct, but B follows the instruction to answer concisely and has appropriate tone, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2340,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v06",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1135,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but A is concise and follows the instruction to answer concisely, whereas B adds unnecessary filler and repeats content, lowering its tone and completeness scores."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1178,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both responses are correct and complete, but B follows the instruction to answer concisely and uses appropriate tone, whereas A adds unnecessary filler."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2313,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v07",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1165,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both responses are factually correct, but A is concise and directly answers the question, while B adds unnecessary filler and repeats content, lowering its tone and completeness."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1166,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B conveys the explanation concisely without unnecessary filler, meeting tone and completeness criteria better than A."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2331,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "v08",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1146,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but A is concise and follows the instruction to answer concisely, whereas B adds unnecessary filler and repeats, violating tone and instruction-following."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1151,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B is concise and directly answers the question without unnecessary filler, meeting tone and instruction criteria better than A."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2297,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        }
+      ],
+      "pointwise_concise": [
+        {
+          "id": "v01|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1629,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the capital of Australia.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the question and provides no unsupported information.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The single required piece of information is fully provided.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise, follows the format, and respects all constraints.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": "Canberra.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has ideal tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v02|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1707,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the time complexity of binary search.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the question and provides no unsupported information.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the single request about time complexity.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and directly addresses the question as instructed.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v03|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1684,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The multiplication result is correct.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given question and adds no unsupported information.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the complete answer to the asked calculation.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise, follows the required format, and respects all constraints.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and concise with no filler.",
+              "evidence": "17 x 23 = 391.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v04|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1713,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output correctly states that len({1, 2, 2, 3}) returns 3.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the given question and does not add unsupported information.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the question by providing the return value and a brief explanation.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response follows the required JSON format and all constraints.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate with no filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model output is correct, faithful, complete, follows instructions, has appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v05|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1682,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the boiling point of water at sea level in Fahrenheit.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given question and does not add unsupported information.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the required boiling point value, fully addressing the request.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately.",
+              "evidence": "212 F.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and the response is succinct with no filler.",
+              "evidence": "212 F.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v06|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1726,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The statement accurately describes TCP as reliable and ordered and UDP as connectionless with no delivery guarantees.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the requested explanation and does not add unsupported information.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It covers the core differences between TCP and UDP as requested.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response follows the concise style and the required JSON format.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and appropriate with no filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v07|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1760,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation of Rayleigh scattering causing the sky to appear blue is accurate.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within known scientific facts and does not add unsupported claims.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the question by explaining the physical mechanism behind the sky's color.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output follows the required JSON format and provides a concise answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate, concise, and free of filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or risky advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v08|concise",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1831,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The definition and O(1) average lookup claim are accurate.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays on topic and adds no unsupported information.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the question by defining a hash map and mentioning its typical performance.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model did not follow the required JSON output format.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and free of filler.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.4,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, complete, concise, and safe, but it fails to follow the required JSON format.",
+          "passed": false,
+          "ungrounded_capped": 0
+        }
+      ],
+      "pointwise_padded": [
+        {
+          "id": "v01|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1902,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states that the capital of Australia is Canberra.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are accurate and no unsupported facts are introduced.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the requested capital and does not omit any required information.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The system asked for a concise answer, but the model added unnecessary filler and repetition.",
+              "evidence": "That is a really great and important question, ... I hope this explanation was helpful and clear; there is of course much more that could be said about the topic...",
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The tone is overly verbose and repetitive, not matching the concise style requested.",
+              "evidence": "That is a really great and important question, ... I hope this explanation was helpful and clear; there is of course much more that could be said...",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains no harmful or unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, and complete, but it fails to be concise as instructed, affecting tone and instruction adherence.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v02|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1969,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the time complexity as O(log n).",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are accurate and pertain to the question without fabricating information.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the requested time complexity and no other information was required.",
+              "evidence": "O(log n), because each comparison halves the remaining range.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The response is overly verbose and not concise as instructed.",
+              "evidence": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The tone includes unnecessary padding and repetition.",
+              "evidence": "I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct and complete but fails to be concise, affecting instruction adherence and tone.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v03|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1932,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The product 17 × 23 is correctly given as 391.",
+              "evidence": "17 x 23 = 391",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the question and does not add unsupported facts.",
+              "evidence": "17 x 23 = 391",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the requested multiplication result fully.",
+              "evidence": "17 x 23 = 391",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The system asked for a concise answer, but the model added unnecessary filler.",
+              "evidence": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The tone is overly verbose and repetitive rather than concise.",
+              "evidence": "I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, and complete, but it is not concise as required.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v04|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 2008,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states that len({1,2,2,3}) returns 3.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the question and does not add unsupported information.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the exact value requested, covering the whole query.",
+              "evidence": "3, because a set keeps only unique elements.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer includes unnecessary filler and does not adhere to the concise style requested.",
+              "evidence": "That is a really great and important question, ... I hope this explanation was helpful and clear; there is of course much more that could be said...",
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The tone is overly verbose and repetitive, not concise.",
+              "evidence": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, and complete, but violates conciseness and includes unnecessary padding.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v05|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1880,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the boiling point as 212 °F.",
+              "evidence": "212 F",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The answer is accurate and does not introduce unsupported facts, only extra filler.",
+              "evidence": "212 F",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response provides the requested boiling point and nothing else is required.",
+              "evidence": "212 F",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The system asked for a concise answer, but the model adds unnecessary verbose filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The tone is overly wordy and repetitive, not concise.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.05,
+          "overall_reported": 3.0,
+          "overall_rationale": "Correct and complete answer but violates conciseness and tone guidelines.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v06|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 2039,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The description of TCP as reliable, ordered and connection‑oriented and UDP as connectionless with no delivery guarantees is accurate.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are grounded in common networking knowledge and no unsupported claims are made.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer covers the essential difference between TCP and UDP.",
+              "evidence": "TCP gives reliable, ordered delivery over a connection; UDP is connectionless with no delivery guarantees but lower overhead.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The response provides the correct information but adds unnecessary padding and does not stay concise as instructed.",
+              "evidence": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is overly verbose and repetitive, containing filler phrases.",
+              "evidence": "I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.4,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is factually correct and complete but fails to be concise, resulting in lower instruction‑following and tone scores.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v07|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 2072,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The explanation of Rayleigh scattering causing the sky to appear blue is accurate.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given context and does not add unsupported claims.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers why the sky is blue, covering the essential scientific reason.",
+              "evidence": "Air molecules scatter short (blue) wavelengths of sunlight more strongly than long ones (Rayleigh scattering), so scattered blue light reaches us from every direction.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer is verbose and includes unnecessary padding, violating the instruction to be concise.",
+              "evidence": "That is a really great and important question, and it is one that many people think about. It is worth taking a careful, step-by-step look at it so that we can be thorough and make sure nothing is overlooked.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The tone is polite but overly wordy and repetitive, reducing conciseness.",
+              "evidence": "I hope this explanation was helpful and clear; there is of course much more that could be said about the topic, and it is always a good idea to explore it further from many different angles.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, and complete, but it is not concise as required, affecting instruction following and tone.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "v08|padded",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 2104,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The definition and O(1) lookup claim are accurate.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "All statements are consistent with common knowledge about hash maps.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer covers the essential aspects of what a hash map is.",
+              "evidence": "A hash map stores key-value pairs and uses a hash function to find a key's slot, giving O(1) average lookup.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The response is verbose and not concise as requested.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer contains filler and repetitive phrasing.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 4.5,
+          "overall_reported": 4.0,
+          "overall_rationale": "The answer is correct, faithful, and complete but lacks conciseness and contains unnecessary padding.",
+          "passed": true,
+          "ungrounded_capped": 0
+        }
+      ]
+    }
+  },
+  "meta": {
+    "experiment": "verbosity",
+    "generated_at": "2026-10-18T08:47:08+00:00",
+    "judge_model": "openai/gpt-oss-120b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-120b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-120b": {
+        "calls": 64,
+        "cached_calls": 0,
+        "errors": 0,
+        "retries": 45,
+        "prompt_tokens": 47990,
+        "completion_tokens": 17164,
+        "total_tokens": 65154
+      }
+    }
+  }
+}

@@ -1,0 +1,1487 @@
+{
+  "description": "22 pairs with known winner (clear, closer, both-wrong, near-equal, identical). Every pair judged in BOTH orders.",
+  "variants": {
+    "baseline": {
+      "summary": {
+        "pairs": 22,
+        "scored": 22,
+        "unparseable": 0,
+        "wins_a": 6,
+        "wins_b": 8,
+        "ties": 8,
+        "win_rate_a": 0.2727,
+        "win_rate_b": 0.3636,
+        "tie_rate": 0.3636,
+        "order_disagreement_rate": 0.0909,
+        "hard_flip_rate": 0.0455,
+        "single_order_wins_a": 6,
+        "single_order_wins_b": 9,
+        "single_order_ties": 7
+      },
+      "single_order_AB": {
+        "accuracy_vs_gold": 0.9545,
+        "picks_A_share": 0.2727
+      },
+      "single_order_BA": {
+        "accuracy_vs_gold": 0.9091,
+        "picks_first_shown_share": 0.3636
+      },
+      "both_orders_require_agreement": {
+        "accuracy_vs_gold": 1.0,
+        "tie_rate": 0.3636,
+        "decisive_but_wrong": 0
+      },
+      "identical_pairs": {
+        "n": 3,
+        "single_order_nonTIE": 0,
+        "both_orders_final_nonTIE": 0
+      },
+      "disagreeing_pairs": [
+        {
+          "id": "p17",
+          "kind": "near_equal",
+          "AB": "B",
+          "BA": "A",
+          "gold": "TIE"
+        },
+        {
+          "id": "p18",
+          "kind": "near_equal",
+          "AB": "TIE",
+          "BA": "A",
+          "gold": "TIE"
+        }
+      ],
+      "pairs": [
+        {
+          "id": "p01",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 266,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the capital as Canberra, while Response B incorrectly names Sydney."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 278,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly identifies Canberra as the capital, while Response A gives an incorrect answer."
+            }
+          },
+          "single_order": "A",
+          "tokens": 544,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p02",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 354,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly applies the conversion formula and yields the accurate result of 212 °F, whereas Response A gives an incorrect temperature."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 335,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly applies the formula and yields 212 °F, which is the accurate conversion; response B gives an incorrect result."
+            }
+          },
+          "single_order": "B",
+          "tokens": 689,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p03",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 357,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A follows the knowledge base instructions precisely, while B provides incorrect details."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 350,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B matches the knowledge base exactly, specifying 10 seconds and the correct default credentials admin/admin, whereas Response A provides incorrect timing and credentials."
+            }
+          },
+          "single_order": "A",
+          "tokens": 707,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p04",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 386,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B accurately reflects the budget ($12 million) and construction start time (spring) from the input, whereas A contains incorrect details."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 402,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A accurately captures all details from the original statement, while Response B contains factual errors (incorrect budget and season)."
+            }
+          },
+          "single_order": "B",
+          "tokens": 788,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p05",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 337,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly notes that sets store unique elements, so the duplicate 2 is removed and len returns 3; response B is incorrect."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 330,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly notes that sets contain only unique elements, so len({1,2,2,3}) is 3; response A is incorrect."
+            }
+          },
+          "single_order": "A",
+          "tokens": 667,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p06",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 308,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly identifies Jane Austen as the author and the 1813 publication date, whereas Response A contains incorrect information."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 301,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states that Jane Austen wrote Pride and Prejudice and that it was published in 1813, whereas Response B contains incorrect author and date."
+            }
+          },
+          "single_order": "B",
+          "tokens": 609,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p07",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 313,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly warns that mixing bleach and ammonia is unsafe, while Response B gives dangerous misinformation."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 302,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly warns that mixing bleach and ammonia is dangerous and explains the toxic chloramine vapors, while Response A gives unsafe advice."
+            }
+          },
+          "single_order": "A",
+          "tokens": 615,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p08",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 328,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B clearly and accurately explains the key differences between TCP and UDP, covering connection orientation, reliability, ordering, and typical use cases, whereas Response A is overly brief and lacks substantive information."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 321,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A accurately and concisely explains the key differences between TCP and UDP, while Response B is incomplete and uninformative."
+            }
+          },
+          "single_order": "B",
+          "tokens": 649,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p09",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 294,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A gives the correct product 391, while Response B is incorrect."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 300,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B gives the correct product 391, while Response A incorrectly states 381."
+            }
+          },
+          "single_order": "A",
+          "tokens": 594,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p10",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 284,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states the time complexity of binary search as O(log n); response A is incorrect."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 305,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the time complexity as O(log n), while Response B gives an incorrect O(n log n) complexity."
+            }
+          },
+          "single_order": "B",
+          "tokens": 589,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p11",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 405,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B provides a more complete explanation, including handshaking, flow and congestion control, and clearer usage examples, while still being concise."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 404,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides a more complete explanation, mentioning flow and congestion control and giving clearer usage examples, making it more informative than the shorter B."
+            }
+          },
+          "single_order": "B",
+          "tokens": 809,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p12",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 385,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B stays within the two‑sentence limit while clearly explaining hash maps and collision handling, whereas A exceeds the limit."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 390,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A meets the two‑sentence limit while fully explaining hash maps; B exceeds the limit, violating the instruction."
+            }
+          },
+          "single_order": "B",
+          "tokens": 775,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p13",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 305,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B politely declines and offers a courteous follow‑up, fulfilling the request for a polite one‑line decline, whereas A is curt and lacks politeness."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 293,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A is courteous and offers a constructive follow‑up, whereas B is abrupt and lacks politeness."
+            }
+          },
+          "single_order": "B",
+          "tokens": 598,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p14",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 378,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A follows the knowledge base exactly, while B adds unrelated information about firmware updates not present in the KB."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 390,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B follows the knowledge base exactly, providing only the required steps, whereas Response A adds unrelated firmware advice, violating the instruction to answer only from the KB."
+            }
+          },
+          "single_order": "A",
+          "tokens": 768,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p15",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 269,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "medium",
+              "rationale": "Both responses give incorrect capitals; neither is better than the other."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 266,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give incorrect capitals; neither is better."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 535,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p16",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 296,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give incorrect results; neither is better."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 297,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give incorrect results; neither is better."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 593,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p17",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 280,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B provides a complete sentence, aligning better with the instruction to answer concisely and accurately."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 281,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B is more concise, aligning better with the instruction to answer concisely."
+            }
+          },
+          "single_order": "B",
+          "tokens": 561,
+          "status": "ok",
+          "agree": false,
+          "hard_flip": true,
+          "final": "TIE"
+        },
+        {
+          "id": "p18",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 269,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are correct, concise, and equally clear."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 286,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both answers are correct, but B presents the answer more concisely, aligning better with the instruction to be concise."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 555,
+          "status": "ok",
+          "agree": false,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p19",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 290,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses provide the correct author and publication year concisely and accurately."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 290,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses provide the same correct information concisely; neither is superior."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 580,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p20",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 291,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing the correct answer and explanation."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 291,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing the correct answer and explanation."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 582,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p21",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 312,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical in content and quality."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 312,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical in content and quality."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 624,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p22",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 270,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing the correct time complexity and explanation."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 270,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing the correct time complexity and explanation."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 540,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        }
+      ]
+    },
+    "mitigated": {
+      "summary": {
+        "pairs": 22,
+        "scored": 22,
+        "unparseable": 0,
+        "wins_a": 6,
+        "wins_b": 8,
+        "ties": 8,
+        "win_rate_a": 0.2727,
+        "win_rate_b": 0.3636,
+        "tie_rate": 0.3636,
+        "order_disagreement_rate": 0.0,
+        "hard_flip_rate": 0.0,
+        "single_order_wins_a": 6,
+        "single_order_wins_b": 8,
+        "single_order_ties": 8
+      },
+      "single_order_AB": {
+        "accuracy_vs_gold": 1.0,
+        "picks_A_share": 0.2727
+      },
+      "single_order_BA": {
+        "accuracy_vs_gold": 1.0,
+        "picks_first_shown_share": 0.3636
+      },
+      "both_orders_require_agreement": {
+        "accuracy_vs_gold": 1.0,
+        "tie_rate": 0.3636,
+        "decisive_but_wrong": 0
+      },
+      "identical_pairs": {
+        "n": 3,
+        "single_order_nonTIE": 0,
+        "both_orders_final_nonTIE": 0
+      },
+      "disagreeing_pairs": [],
+      "pairs": [
+        {
+          "id": "p01",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 946,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the capital as Canberra, while Response B incorrectly claims Sydney, making A correct and superior."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 942,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states the capital as Canberra, while Response A is factually incorrect."
+            }
+          },
+          "single_order": "A",
+          "tokens": 1888,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p02",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1010,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B gives the correct formula and computes 100 °C as 212 °F, while Response A incorrectly calculates 202 °F."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 997,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly applies the conversion formula yielding 212 °F, while Response B gives an incorrect result of 202 °F."
+            }
+          },
+          "single_order": "B",
+          "tokens": 2007,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p03",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1027,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly follows the knowledge base instructions, while B provides incorrect reset duration and credentials."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1028,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly follows the knowledge base instructions, while Response A contains factual errors about reset duration and credentials."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2055,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p04",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1047,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B accurately reflects all details (vote count, budget, length, and construction start season) while Response A contains multiple factual errors."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1029,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A accurately reflects all details of the input, while B contains factual errors (budget and construction timing)."
+            }
+          },
+          "single_order": "B",
+          "tokens": 2076,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p05",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1007,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the set size is 3; Response B is factually wrong."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1006,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states the set removes duplicates and len returns 3, while Response A is factually wrong."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2013,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p06",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 972,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states that Jane Austen wrote Pride and Prejudice and that it was published in 1813, while Response A contains factual errors."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 970,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states Jane Austen as the author and the 1813 publication date, while Response B contains factual errors."
+            }
+          },
+          "single_order": "B",
+          "tokens": 1942,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p07",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 990,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the danger of mixing bleach and ammonia, while Response B gives unsafe, factually incorrect advice."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 985,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states the danger of mixing bleach and ammonia and gives safe advice, while Response A gives unsafe misinformation."
+            }
+          },
+          "single_order": "A",
+          "tokens": 1975,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p08",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 997,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B accurately and comprehensively explains the key differences between TCP and UDP, while Response A is overly brief and lacks essential details."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 996,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A accurately and concisely explains the key differences between TCP and UDP, while Response B is incomplete and lacks substantive information."
+            }
+          },
+          "single_order": "B",
+          "tokens": 1993,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p09",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 983,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A gives the correct product 391, while Response B is incorrect; all other criteria are satisfied."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 962,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B gives the correct product 391, while Response A is incorrect (381)."
+            }
+          },
+          "single_order": "A",
+          "tokens": 1945,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p10",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 973,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B correctly states the binary search time complexity as O(log n); Response A is incorrect, claiming O(n log n)."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 980,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A correctly states the binary search time complexity as O(log n); response B is incorrect, claiming O(n log n)."
+            }
+          },
+          "single_order": "B",
+          "tokens": 1953,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p11",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1100,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Both are correct, but B provides a more complete explanation including flow control and clearer examples without adding any incorrect information."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1110,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A is fully correct and more complete, covering flow control and additional use cases, while B omits these details."
+            }
+          },
+          "single_order": "B",
+          "tokens": 2210,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p12",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1075,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B stays within the two‑sentence limit while accurately describing hash maps; Response A exceeds the length constraint, violating the instruction."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1076,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A adheres to the two‑sentence limit while correctly and completely describing a hash map; Response B exceeds the allowed sentence count, violating the instruction."
+            }
+          },
+          "single_order": "B",
+          "tokens": 2151,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p13",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1021,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B is a single polite sentence that appropriately declines and offers a follow‑up, while Response A is blunt and less courteous."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 999,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "B",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A provides a polite, single-sentence decline as requested, while B is blunt and impolite, violating tone and instruction."
+            }
+          },
+          "single_order": "B",
+          "tokens": 2020,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "B"
+        },
+        {
+          "id": "p14",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 1066,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "A",
+              "confidence": "high",
+              "rationale": "Response A follows the knowledge base exactly, while B adds unsupported advice about firmware updates, violating the instruction to answer only from the KB."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1075,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "A",
+              "winner_shown": "B",
+              "confidence": "high",
+              "rationale": "Response B follows the knowledge base exactly, while A adds unsupported firmware advice, reducing its faithfulness."
+            }
+          },
+          "single_order": "A",
+          "tokens": 2141,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "A"
+        },
+        {
+          "id": "p15",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 935,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "medium",
+              "rationale": "Both responses give incorrect capitals; neither is correct, and they are otherwise equivalent in quality."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 944,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give incorrect capitals (Melbourne and Sydney) while the correct answer is Canberra, making them equally wrong."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1879,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p16",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 984,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give incorrect products; neither is correct, so they are equivalent in quality."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 1005,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "medium",
+              "rationale": "Both responses give incorrect products for 17 × 23, so neither is more correct or better than the other."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1989,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p17",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 938,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses correctly state that Canberra is the capital of Australia, are faithful, complete, follow instructions, have appropriate tone, and are safe."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 928,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses correctly state that the capital of Australia is Canberra and are concise, meeting all criteria equally."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1866,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p18",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 944,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give the correct product 391 and fully satisfy the request with concise, accurate answers."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 931,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses give the correct product 391 and are equally concise and accurate."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1875,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p19",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 958,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses correctly state that Jane Austen wrote Pride and Prejudice and that it was published in 1813, fully meeting the request."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 958,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses correctly state that Jane Austen wrote Pride and Prejudice and that it was published in 1813, fully meeting the request."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1916,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p20",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 969,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, correct, complete, follow instructions, and have appropriate tone and safety."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 977,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, correctly state that len({1,2,2,3}) returns 3, and meet all criteria."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1946,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p21",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 983,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing correct, complete, safe, and instruction‑following answers."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 983,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, providing correct, complete, safe, and instruction‑following answers."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1966,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        },
+        {
+          "id": "p22",
+          "orders": {
+            "AB": {
+              "order": "AB",
+              "tokens": 949,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses are identical, correctly state O(log n) with appropriate explanation, fully meeting the request."
+            },
+            "BA": {
+              "order": "BA",
+              "tokens": 951,
+              "attempts": 1,
+              "status": "ok",
+              "winner": "TIE",
+              "winner_shown": "TIE",
+              "confidence": "high",
+              "rationale": "Both responses correctly state O(log n) with accurate reasoning, fully meeting the request."
+            }
+          },
+          "single_order": "TIE",
+          "tokens": 1900,
+          "status": "ok",
+          "agree": true,
+          "hard_flip": false,
+          "final": "TIE"
+        }
+      ]
+    }
+  },
+  "meta": {
+    "experiment": "position",
+    "generated_at": "2026-10-18T08:25:44+00:00",
+    "judge_model": "openai/gpt-oss-120b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-120b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-120b": {
+        "calls": 164,
+        "cached_calls": 0,
+        "errors": 0,
+        "retries": 121,
+        "prompt_tokens": 109694,
+        "completion_tokens": 39380,
+        "total_tokens": 149074
+      }
+    }
+  }
+}

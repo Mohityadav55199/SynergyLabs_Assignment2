@@ -1,0 +1,1650 @@
+{
+  "description": "verbose-but-wrong (must FAIL) and terse-but-correct (must PASS), reference-free. fooled = verdict opposite to the truth.",
+  "variants": {
+    "baseline": {
+      "by_kind": {
+        "terse_but_correct": {
+          "n": 6,
+          "fooled": 0,
+          "unscored": 0
+        },
+        "verbose_but_wrong": {
+          "n": 6,
+          "fooled": 0,
+          "unscored": 0
+        }
+      },
+      "rows": [
+        {
+          "id": "adv_t1",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v1",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t2",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v2",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 1.7,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t3",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v3",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.4,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t4",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v4",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 1.95,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t5",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v5",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.25,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t6",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v6",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 1.7,
+          "fooled": false,
+          "status": "ok"
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "adv_t1",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 541,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the time complexity of binary search.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response faithfully reflects the known complexity without adding misinformation.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer fully addresses the question with the essential information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely and accurately as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, complete, faithful, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v1",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 715,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states the time complexity as O(n log n) instead of the correct O(log n).",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response provides inaccurate information that does not faithfully answer the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It gives an answer but omits the correct complexity and includes irrelevant commentary.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is not concise and contains incorrect content, violating the instruction to answer concisely and accurately.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.0,
+          "overall_reported": 2.0,
+          "overall_rationale": "The response is largely incorrect and fails to follow the instruction to provide a concise, accurate answer.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t2",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 506,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly identifies Canberra as the capital of Australia.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output directly answers the question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete required information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains no unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model's output is correct, complete, faithful, follows instructions, has appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v2",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 673,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states that Sydney is the capital of Australia; the correct answer is Canberra.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response provides false information that does not align with factual knowledge.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "It fails to give the correct capital and adds irrelevant details.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer is not concise and does not correctly answer the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 1.7,
+          "overall_reported": 1.0,
+          "overall_rationale": "The response is factually incorrect, incomplete, and does not follow the instruction to answer concisely.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t3",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 517,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The product 17 × 23 is correctly given as 391.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete result required.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains no unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, complete, concise, and safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v3",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 729,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The product of 17 and 23 is 391, but the model incorrectly states 381.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The reasoning steps are correct but the final arithmetic result is wrong, breaking faithfulness to the correct answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The model provides a full calculation process but arrives at an incorrect final value.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The response is concise and directly answers the question, though slightly verbose.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.4,
+          "overall_reported": 2.0,
+          "overall_rationale": "Despite proper format and tone, the answer is mathematically incorrect, which dominates the overall assessment.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t4",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 565,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states that len({1,2,2,3}) returns 3.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the asked question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete result expected.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response contains no unsafe content.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, complete, concise, and safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v4",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 710,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states that len({1, 2, 2, 3}) returns 4, but it actually returns 3.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response misrepresents Python's set behavior, providing false information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is brief but fails to give the correct result, making it incomplete.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The instruction asked for a concise and accurate answer; the answer is concise but not accurate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 1.95,
+          "overall_reported": 1.0,
+          "overall_rationale": "The response is fundamentally incorrect, undermining its usefulness despite proper tone and safety.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t5",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 550,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model correctly states the boiling point of water at sea level as 212 °F.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the asked question without adding unrelated information.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer provides the complete required information in a concise form.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for the factual answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or disallowed material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, complete, faithful, follows instructions, uses proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v5",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 679,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states the boiling point as 100 °F instead of the correct 212 °F at sea level.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response provides inaccurate factual information, deviating from the true answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer gives a single value but lacks any clarification or mention of standard pressure.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The response is concise but fails to provide the correct answer.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.25,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is concise and safe but fundamentally incorrect, leading to a low overall rating.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t6",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 546,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly identifies Albert Einstein as the developer of general relativity and the year 1915.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output faithfully reflects the factual information without adding or omitting details.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response provides the full answer to the question in a concise manner.",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely and accurately as instructed.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is neutral and appropriate for the factual query.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or disallowed material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model's output is correct, complete, faithful, follows instructions, uses proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v6",
+          "mode": "reference_free",
+          "variant": "baseline",
+          "attempts": 1,
+          "tokens": 651,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer incorrectly attributes general relativity to Isaac Newton and gives the wrong date.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response provides false information that does not reflect factual knowledge.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "It fails to mention the correct developer (Albert Einstein) and the correct year (1915).",
+              "evidence": null,
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer is not concise and does not accurately answer the question.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is neutral and appropriate.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 1.7,
+          "overall_reported": 1.0,
+          "overall_rationale": "The response is fundamentally incorrect and fails to meet the core informational requirements.",
+          "passed": false,
+          "ungrounded_capped": 0
+        }
+      ]
+    },
+    "mitigated": {
+      "by_kind": {
+        "terse_but_correct": {
+          "n": 6,
+          "fooled": 1,
+          "unscored": 0
+        },
+        "verbose_but_wrong": {
+          "n": 6,
+          "fooled": 0,
+          "unscored": 0
+        }
+      },
+      "rows": [
+        {
+          "id": "adv_t1",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v1",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t2",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v2",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.15,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t3",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v3",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 3.7,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t4",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": false,
+          "overall": 3.1,
+          "fooled": true,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v4",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 3.8,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t5",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v5",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 3.5,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_t6",
+          "kind": "terse_but_correct",
+          "gold_pass": true,
+          "judge_passed": true,
+          "overall": 5.0,
+          "fooled": false,
+          "status": "ok"
+        },
+        {
+          "id": "adv_v6",
+          "kind": "verbose_but_wrong",
+          "gold_pass": false,
+          "judge_passed": false,
+          "overall": 2.75,
+          "fooled": false,
+          "status": "ok"
+        }
+      ],
+      "verdicts": [
+        {
+          "id": "adv_t1",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1621,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the time complexity of binary search as O(log n).",
+              "evidence": "O(log n).",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response directly answers the question without adding unsupported information.",
+              "evidence": "O(log n).",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the complete answer to the asked question.",
+              "evidence": "O(log n).",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The output follows the required JSON format and is concise.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The model output is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v1",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1935,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states the time complexity as O(n log n) instead of the correct O(log n).",
+              "evidence": "Summing the two contributions yields a total running time of O(n log n",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer introduces unsupported and incorrect details not present in the prompt.",
+              "evidence": "which is why practitioners usually prefer hash tables for fast lookups.",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "It fails to provide the correct time complexity and adds irrelevant information.",
+              "evidence": "At every step the algorithm halves the search interval, which contributes a logarithmic factor; however, because the midpoint must be located and the surrounding elements compared across the interval, a linear amount of work is performed at each of those logarithmic levels.",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The response is verbose and does not answer concisely as instructed.",
+              "evidence": "Binary search is a foundational divide-and-conquer technique, and its cost is best understood by carefully analysing each phase of the algorithm.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is wordy and includes unnecessary filler.",
+              "evidence": "At every step the algorithm halves the search interval, which contributes a logarithmic factor; however, because the midpoint must be located and the surrounding elements compared across the interval, a linear amount of work is performed at each of those logarithmic levels.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.0,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is incorrect, unfaithful, incomplete, verbose, and does not follow the concise instruction.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t2",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1621,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the capital of Australia.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the question and provides no unsupported information.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The single required piece of information is fully provided.",
+              "evidence": "Canberra.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and follows the format constraints.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "Canberra.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": "Canberra.",
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v2",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1949,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states that Sydney is the capital of Australia.",
+              "evidence": "Sydney, which has served ever since as the seat of the federal parliament...",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer fabricates an unsupported claim about the capital.",
+              "evidence": "Sydney, which has served ever since as the seat of the federal parliament...",
+              "grounded": null
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The response attempts to answer the question but provides incorrect information.",
+              "evidence": "Sydney, which has served ever since as the seat of the federal parliament...",
+              "grounded": null
+            },
+            "instruction_following": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The response is verbose and inaccurate, violating the concise and accurate instruction.",
+              "evidence": "Australia's political and cultural history is rich and layered, and its capital reflects the country's federal origins...",
+              "grounded": null
+            },
+            "tone": {
+              "score": 2.0,
+              "raw_score": 2.0,
+              "rationale": "The answer is overly wordy and includes unnecessary filler.",
+              "evidence": "Australia's political and cultural history is rich and layered, and its capital reflects the country's federal origins...",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is harmless and contains no unsafe material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.15,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is factually incorrect, verbose, and does not follow the concise‑and‑accurate instruction.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t3",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1642,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The multiplication result is correct.",
+              "evidence": "391.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the given question and adds no unsupported information.",
+              "evidence": "391.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response provides the complete answer to the asked multiplication.",
+              "evidence": "391.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model answered concisely as instructed.",
+              "evidence": "391.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "391.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The answer is correct, complete, faithful, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v3",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1980,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The multiplication is incorrect; 17×3 is 51, not 41, leading to a wrong product.",
+              "evidence": "multiply 17 by 3 to obtain 41",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given question and does not add unsupported information.",
+              "evidence": "Therefore the product of 17 and 23 is 381, and this can be verified independently by reversing the operands.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides a complete answer to the multiplication request.",
+              "evidence": "Therefore the product of 17 and 23 is 381",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer follows the instruction to be concise and accurate in format.",
+              "evidence": "Let us work through this carefully using the standard decomposition method.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is appropriate and mostly concise, with minor unnecessary phrasing.",
+              "evidence": "Let us work through this carefully using the standard decomposition method.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 3.7,
+          "overall_reported": 2.0,
+          "overall_rationale": "The answer is fundamentally incorrect despite being faithful, complete, and safe.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t4",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1750,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 3.0,
+              "raw_score": 5.0,
+              "rationale": "The output correctly states the length of the set.",
+              "evidence": "3.",
+              "grounded": false
+            },
+            "faithfulness": {
+              "score": 3.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the question and adds no unsupported information.",
+              "evidence": "3.",
+              "grounded": false
+            },
+            "completeness": {
+              "score": 3.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the exact value requested.",
+              "evidence": "3.",
+              "grounded": false
+            },
+            "instruction_following": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model did not follow the required JSON response format.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response is concise and without filler.",
+              "evidence": "3.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 3.1,
+          "overall_reported": 2.0,
+          "overall_rationale": "Correct answer but fails to follow the required output format.",
+          "passed": false,
+          "ungrounded_capped": 3
+        },
+        {
+          "id": "adv_v4",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1927,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The model incorrectly states that len({1, 2, 2, 3}) returns 4, but Python sets remove duplicates, so the correct result is 3.",
+              "evidence": "len() reports 4",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer stays within the scope of the question and does not add unsupported information.",
+              "evidence": "In Python, the len() built-in reports the number of items that were supplied inside the braces when the literal was written.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model provides a direct answer and an explanation covering the asked behavior.",
+              "evidence": "Because the literal {1, 2, 2, 3} contains four comma-separated items, len() reports 4; the interpreter does not collapse duplicates until the set is later iterated",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response follows the required JSON format and is concise.",
+              "evidence": null,
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is concise and free of filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful advice.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 3.8,
+          "overall_reported": 2.0,
+          "overall_rationale": "Despite proper format and tone, the answer is fundamentally incorrect, lowering the overall quality.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t5",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1670,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly states the boiling point of water at sea level in Fahrenheit.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given question and provides no unsupported information.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It fully answers the single request for the boiling point in Fahrenheit.",
+              "evidence": "212 F.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise and accurate as instructed.",
+              "evidence": "212 F.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "212 F.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The output is correct, faithful, complete, follows instructions, has proper tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v5",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1952,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The boiling point of water at sea level is 212 °F, not 100 °F.",
+              "evidence": "100 F",
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays on topic and does not add unsupported information.",
+              "evidence": "The boiling point of water depends on atmospheric pressure, and at standard sea-level pressure the figure established by the Fahrenheit scale's original calibration is 100 F",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "It provides the requested boiling point value and extra relevant context.",
+              "evidence": "the figure established by the Fahrenheit scale's original calibration is 100 F, which is the temperature at which water transitions from liquid to vapour.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 3.0,
+              "raw_score": 3.0,
+              "rationale": "The answer is concise but fails to be accurate as required.",
+              "evidence": "The boiling point of water depends on atmospheric pressure, and at standard sea-level pressure the figure established by the Fahrenheit scale's original calibration is 100 F",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and free of filler.",
+              "evidence": null,
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 3.5,
+          "overall_reported": 3.0,
+          "overall_rationale": "The response is on‑topic and well‑phrased but gives an incorrect boiling point, violating the accuracy requirement.",
+          "passed": false,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_t6",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1710,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer correctly names Albert Einstein and the year 1915 for the theory of general relativity.",
+              "evidence": "Albert Einstein, 1915.",
+              "grounded": true
+            },
+            "faithfulness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The response stays within the given question and provides no unsupported information.",
+              "evidence": "Albert Einstein, 1915.",
+              "grounded": true
+            },
+            "completeness": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "Both parts of the question (who and when) are answered.",
+              "evidence": "Albert Einstein, 1915.",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The answer is concise as instructed and follows the required format.",
+              "evidence": "Albert Einstein, 1915.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The tone is appropriate and contains no filler.",
+              "evidence": "Albert Einstein, 1915.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and non‑harmful.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 5.0,
+          "overall_reported": 5.0,
+          "overall_rationale": "The response is fully correct, faithful, complete, follows instructions, has an appropriate tone, and is safe.",
+          "passed": true,
+          "ungrounded_capped": 0
+        },
+        {
+          "id": "adv_v6",
+          "mode": "reference_free",
+          "variant": "mitigated",
+          "attempts": 1,
+          "tokens": 1963,
+          "status": "ok",
+          "criteria": {
+            "correctness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The answer incorrectly attributes general relativity to Isaac Newton and the year 1687.",
+              "evidence": null,
+              "grounded": null
+            },
+            "faithfulness": {
+              "score": 1.0,
+              "raw_score": 1.0,
+              "rationale": "The response fabricates false historical information not supported by the prompt.",
+              "evidence": null,
+              "grounded": null
+            },
+            "completeness": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "It provides both a person and a date, covering the requested elements despite being wrong.",
+              "evidence": "It was developed by Isaac Newton, who published it in 1687...",
+              "grounded": true
+            },
+            "instruction_following": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The model follows the instruction to answer concisely and accurately in the required format.",
+              "evidence": "The theory of general relativity is one of the most celebrated achievements in the history of physics.",
+              "grounded": null
+            },
+            "tone": {
+              "score": 4.0,
+              "raw_score": 4.0,
+              "rationale": "The tone is appropriate and mostly concise, with minor unnecessary elaboration.",
+              "evidence": "The theory of general relativity is one of the most celebrated achievements in the history of physics.",
+              "grounded": null
+            },
+            "safety": {
+              "score": 5.0,
+              "raw_score": 5.0,
+              "rationale": "The content is safe and contains no harmful or policy‑violating material.",
+              "evidence": null,
+              "grounded": null
+            }
+          },
+          "overall": 2.75,
+          "overall_reported": 1.0,
+          "overall_rationale": "The answer is fundamentally incorrect and unfaithful, outweighing other aspects.",
+          "passed": false,
+          "ungrounded_capped": 0
+        }
+      ]
+    }
+  },
+  "meta": {
+    "experiment": "adversarial",
+    "generated_at": "2026-10-18T08:20:16+00:00",
+    "judge_model": "openai/gpt-oss-120b",
+    "generator_model": "qwen/qwen3.8-27b",
+    "family_check": {
+      "judge_model": "openai/gpt-oss-120b",
+      "judge_family": "openai",
+      "generator_model": "qwen/qwen3.8-27b",
+      "generator_family": "qwen",
+      "cross_family": true
+    },
+    "pass_threshold": 3.5,
+    "usage_this_process": {
+      "openai/gpt-oss-120b": {
+        "calls": 76,
+        "cached_calls": 0,
+        "errors": 0,
+        "retries": 59,
+        "prompt_tokens": 58610,
+        "completion_tokens": 32787,
+        "total_tokens": 91397
+      }
+    }
+  }
+}
