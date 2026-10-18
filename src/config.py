@@ -49,6 +49,14 @@ class PipelineConfig(BaseModel):
     enable_evidence_grounding: bool = Field(default_factory=lambda: os.getenv("ENABLE_EVIDENCE_GROUNDING", "true").lower() == "true")
     enable_anchor_calibration: bool = Field(default_factory=lambda: os.getenv("ENABLE_ANCHOR_CALIBRATION", "true").lower() == "true")
     
+    # Resilient Fallback Hierarchy
+    enable_fallback: bool = Field(default_factory=lambda: os.getenv("ENABLE_FALLBACK", "true").lower() == "true")
+    fallback_models: list = Field(default_factory=lambda: [
+        "llama-3.1-70b-versatile",
+        "llama-3.1-8b-instant",
+        "mixtral-8x7b-32768",
+    ])
+
     # Quality thresholds
     pass_threshold: float = Field(default_factory=lambda: float(os.getenv("PASS_THRESHOLD", "3.5")))
     confidence_threshold: float = Field(default_factory=lambda: float(os.getenv("CONFIDENCE_THRESHOLD", "0.7")))

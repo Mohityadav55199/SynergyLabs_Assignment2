@@ -10,6 +10,8 @@ class LLMResponse(BaseModel):
     latency_ms: float
     model: str
     raw_response: Optional[Dict[str, Any]] = None
+    execution_mode: Optional[str] = "direct"
+    fallback_notice: Optional[str] = None
 
 class BaseLLMClient(ABC):
     @abstractmethod

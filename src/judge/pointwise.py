@@ -168,6 +168,8 @@ Do NOT output any markdown commentary outside the JSON block.
             completion_tokens=response.completion_tokens,
             total_tokens=response.total_tokens,
             cost_usd=cost_usd,
+            execution_mode=getattr(response, "execution_mode", "direct"),
+            fallback_notice=getattr(response, "fallback_notice", None),
             raw_response=response.content,
             raw_prompt=prompt
         )
@@ -188,7 +190,9 @@ Do NOT output any markdown commentary outside the JSON block.
             metadata={
                 "overall_score": overall_score,
                 "passed": passed,
-                "reference_mode": self.determine_reference_mode(test_case)
+                "reference_mode": self.determine_reference_mode(test_case),
+                "execution_mode": getattr(response, "execution_mode", "direct"),
+                "fallback_notice": getattr(response, "fallback_notice", None)
             }
         )
 

@@ -111,7 +111,12 @@ Do NOT output any conversational text outside the JSON block.
             total_tokens=response.total_tokens,
             latency_ms=response.latency_ms,
             cost_usd=cost_usd,
-            metadata={"winner": winner, "order_tag": order_tag}
+            metadata={
+                "winner": winner, 
+                "order_tag": order_tag,
+                "execution_mode": getattr(response, "execution_mode", "direct"),
+                "fallback_notice": getattr(response, "fallback_notice", None)
+            }
         )
 
         return SinglePairEvaluation(
@@ -123,7 +128,9 @@ Do NOT output any conversational text outside the JSON block.
             prompt_tokens=response.prompt_tokens,
             completion_tokens=response.completion_tokens,
             total_tokens=response.total_tokens,
-            cost_usd=cost_usd
+            cost_usd=cost_usd,
+            execution_mode=getattr(response, "execution_mode", "direct"),
+            fallback_notice=getattr(response, "fallback_notice", None)
         )
 
     def evaluate_pair(self, test_case: PairwiseTestCase) -> PairwiseVerdict:
@@ -142,7 +149,9 @@ Do NOT output any conversational text outside the JSON block.
                 average_score_b=forward_eval.score_b,
                 synthesis_rationale=forward_eval.rationale,
                 total_tokens=forward_eval.total_tokens,
-                total_cost_usd=forward_eval.cost_usd
+                total_cost_usd=forward_eval.cost_usd,
+                execution_mode=forward_eval.execution_mode,
+                fallback_notice=forward_eval.fallback_notice
             )
 
         # Pass 2: Reverse order (B, A)
@@ -167,7 +176,9 @@ Do NOT output any conversational text outside the JSON block.
             average_score_b=avg_b,
             synthesis_rationale=syn_rationale,
             total_tokens=total_tokens,
-            total_cost_usd=total_cost
+            total_cost_usd=total_cost,
+            execution_mode=forward_eval.execution_mode,
+            fallback_notice=forward_eval.fallback_notice or (reverse_eval.fallback_notice if reverse_eval else None)
         )
 
     def evaluate_ab_suite(

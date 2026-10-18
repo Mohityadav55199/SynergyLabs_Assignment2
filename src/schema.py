@@ -55,6 +55,8 @@ class CaseVerdict(BaseModel):
     completion_tokens: int
     total_tokens: int
     cost_usd: float
+    execution_mode: Optional[str] = "direct"
+    fallback_notice: Optional[str] = None
     raw_response: Optional[str] = None
     raw_prompt: Optional[str] = None
 
@@ -110,6 +112,8 @@ class SinglePairEvaluation(BaseModel):
     completion_tokens: int
     total_tokens: int
     cost_usd: float
+    execution_mode: Optional[str] = "direct"
+    fallback_notice: Optional[str] = None
 
 class PairwiseVerdict(BaseModel):
     test_case_id: str
@@ -123,6 +127,8 @@ class PairwiseVerdict(BaseModel):
     synthesis_rationale: str
     total_tokens: int
     total_cost_usd: float
+    execution_mode: Optional[str] = "direct"
+    fallback_notice: Optional[str] = None
 
 class ABComparisonReport(BaseModel):
     config_a_name: str

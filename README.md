@@ -189,6 +189,36 @@ Every evaluation writes an immutable record to `artifacts/audit_logs/audit_run_*
 - **Average Latency:** ~15.2 ms (Mock) / ~340 ms (Groq Llama-3.3-70b)
 - **Estimated Cost per 1,000 Evaluations:** ~$0.55 USD (using Groq Llama-3.3-70b)
 
+### Multi-Tier Resilient Fallback Architecture
+In production, upstream LLM API outages, deprecated model IDs (e.g., HTTP 404 from provider tier upgrades), or rate limits (HTTP 429) can crash automated evaluation pipelines. To prevent single points of failure, the framework includes a first-class `ResilientLLMClient`:
+
+```
+┌────────────────────────────────────────────────────────┐
+│               Evaluation Request Entry                 │
+└───────────────────────────┬────────────────────────────┘
+                            │
+                            ▼
+┌────────────────────────────────────────────────────────┐
+│ Tier 1: Primary Target Model                           │
+│ (e.g. Groq llama-3.3-70b-versatile)                    │
+└───────────────┬────────────────────────────────────────┘
+                │ If HTTP 404, 429, or network error
+                ▼
+┌────────────────────────────────────────────────────────┐
+│ Tier 2: Provider Alternative Live Models               │
+│ (llama-3.1-70b-versatile, llama-3.1-8b-instant, etc.)  │
+└───────────────┬────────────────────────────────────────┘
+                │ If all live models unavailable / unauth
+                ▼
+┌────────────────────────────────────────────────────────┐
+│ Tier 3: Deterministic Calibrated Benchmark Judge       │
+│ (Embedded high-fidelity reference judge with full      │
+│  execution_mode and fallback_notice audit metadata)    │
+└────────────────────────────────────────────────────────┘
+```
+- **Auditable Provenance:** Every verdict records its exact `execution_mode` (`live_groq`, `live_model_fallback`, or `deterministic_fallback`) and human-readable `fallback_notice`.
+- **Configurable:** Toggled globally via `ENABLE_FALLBACK=true` and custom `FALLBACK_MODELS` list in `config.py` or `.env`.
+
 ---
 
 ## In-Depth Discussion: Release Gating Safeguards
