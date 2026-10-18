@@ -27,22 +27,23 @@ class Judge:
     def _ask(self, messages: List[Dict[str, str]], tag: str, parser):
         """Returns (parsed, attempts[list of dict]). At most two attempts."""
         attempts, parsed = [], None
-        msgs = messages
-        for n in (1, 2):
-            res = self.client.chat(msgs, self.config.judge_model, self.temperature, self.config.judge_max_tokens, tag=tag + ("" if n == 1 else "#retry"))
-            if res.error:
-                parsed_err = f"api_error: {res.error}"
-                attempts.append({"n": n, "error": res.error, "tokens": 0})
-                why = parsed_err
-                parsed = None
-            else:
+        for model in self.config.judge_chain:   # primary judge, then live fallback models; never a mock
+            msgs = messages
+            api_failed = False
+            for n in (1, 2):
+                res = self.client.chat(msgs, model, self.temperature, self.config.judge_max_tokens, tag=tag + ("" if n == 1 else "#retry"))
+                if res.error:
+                    attempts.append({"n": n, "model": model, "error": res.error, "tokens": 0})
+                    parsed, api_failed = None, True
+                    break   # the client already retried transient errors: move on to the next model
                 parsed = parser(res.text)
-                attempts.append({"n": n, "raw_response": res.text, "tokens": res.prompt_tokens + res.completion_tokens, "cached": res.cached,
+                attempts.append({"n": n, "model": model, "raw_response": res.text, "tokens": res.prompt_tokens + res.completion_tokens, "cached": res.cached,
                                  "parse_ok": parsed.ok, "parse_error": parsed.error})
                 if parsed.ok:
                     return parsed, attempts
-                why = parsed.error or "invalid"
-            msgs = messages + [{"role": "assistant", "content": (res.text or "")[:1500]}, {"role": "user", "content": RETRY_NUDGE.format(why=why)}]
+                msgs = messages + [{"role": "assistant", "content": (res.text or "")[:1500]}, {"role": "user", "content": RETRY_NUDGE.format(why=parsed.error or "invalid")}]
+            if not api_failed:
+                break   # reachable but unparseable twice: do not shop around for a friendlier answer
         return parsed, attempts
 
     # ------------------------------------------------------------------ pointwise
@@ -51,7 +52,9 @@ class Judge:
         mode = "reference_based" if case.get("expected_output") else "reference_free"
         tag = f"pointwise|{self.variant}|{case['id']}|t{self.temperature}|{run_tag}"
         parsed, attempts = self._ask(pointwise_messages(case, self.variant), tag, lambda raw: parse_pointwise(raw, ids))
-        base = {"id": case["id"], "mode": mode, "variant": self.variant, "attempts": len(attempts), "tokens": sum(a.get("tokens", 0) for a in attempts)}
+        used = attempts[-1].get("model") if attempts else None
+        base = {"id": case["id"], "mode": mode, "variant": self.variant, "attempts": len(attempts), "tokens": sum(a.get("tokens", 0) for a in attempts),
+                "judge_model_used": used, "fallback_used": bool(used and used != self.config.judge_model)}
         if parsed is None or not parsed.ok:
             last = attempts[-1]
             status = "api_error" if "error" in last else "unparseable"
@@ -75,7 +78,9 @@ class Judge:
                  "output_a": case["output_b"] if swapped else case["output_a"], "output_b": case["output_a"] if swapped else case["output_b"]}
         tag = f"pairwise|{self.variant}|{case['id']}|{'BA' if swapped else 'AB'}|t{self.temperature}|{run_tag}"
         parsed, attempts = self._ask(pairwise_messages(shown, self.variant), tag, parse_pairwise)
-        rec = {"order": "BA" if swapped else "AB", "tokens": sum(a.get("tokens", 0) for a in attempts), "attempts": len(attempts)}
+        used = attempts[-1].get("model") if attempts else None
+        rec = {"order": "BA" if swapped else "AB", "tokens": sum(a.get("tokens", 0) for a in attempts), "attempts": len(attempts),
+               "judge_model_used": used, "fallback_used": bool(used and used != self.config.judge_model)}
         if parsed is None or not parsed.ok:
             last = attempts[-1]
             return {**rec, "status": "api_error" if "error" in last else "unparseable", "winner": None, "winner_shown": None, "error": last.get("error") or last.get("parse_error")}

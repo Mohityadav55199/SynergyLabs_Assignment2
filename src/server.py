@@ -51,7 +51,7 @@ def _judge(api_key: Optional[str]) -> Judge:
     cfg = JudgeConfig()
     if api_key:
         cfg.api_key = api_key.strip()   # per-request key is used for this call only and is never logged
-    return Judge(LLMClient(cfg, log_path=WEB_LOG), cfg, "mitigated")
+    return Judge(LLMClient(cfg, log_path=WEB_LOG, fail_fast_wait=20.0), cfg, "mitigated")   # fail fast on quota 429s so the fallback model answers within the request
 
 
 @app.get("/health")
@@ -59,13 +59,21 @@ def _judge(api_key: Optional[str]) -> Judge:
 def health_check():
     cfg = JudgeConfig()
     return {"status": "healthy", "service": "llm-judge-pipeline", "timestamp": datetime.now(timezone.utc).isoformat(), "version": app.version,
-            "provider": "groq", "judge_model": cfg.judge_model, "generator_model": cfg.generator_model, "api_key_configured": bool(cfg.api_key)}
+            "provider": "groq", "judge_model": cfg.judge_model, "judge_chain": cfg.judge_chain, "generator_model": cfg.generator_model, "api_key_configured": bool(cfg.api_key)}
 
 
 @app.get("/", response_class=HTMLResponse)
 def serve_ui():
     index_file = BASE_DIR / "index.html"
     return HTMLResponse(index_file.read_text(encoding="utf-8")) if index_file.exists() else HTMLResponse("<h1>LLM-as-Judge API</h1><p>See /docs</p>")
+
+
+def _notice(judge: Judge, v: dict) -> Optional[str]:
+    """Honest provenance: say when a different LIVE model than the configured judge answered. There is no mock fallback."""
+    if v.get("fallback_used"):
+        return (f"Primary judge '{judge.config.judge_model}' was unavailable (quota or error); this verdict was produced by live fallback model "
+                f"'{v['judge_model_used']}'. Fallback verdicts are not covered by the validation of the primary judge.")
+    return None
 
 
 def _strip(obj: Any) -> Any:
@@ -106,8 +114,8 @@ def evaluate_case(request: EvaluationRequest):
     return {"test_case_id": case["id"], "overall_score": v["overall"], "passed": v["passed"], "mode": v["mode"],
             "criterion_scores": {k: c["score"] for k, c in v["criteria"].items()},
             "criterion_verdicts": [{"criterion_id": k, "score": c["score"], "rationale": c["rationale"], "evidence_quote": c["evidence"], "grounded": c["grounded"]} for k, c in v["criteria"].items()],
-            "overall_rationale": v["overall_rationale"], "judge_model": judge.config.judge_model, "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
-            "total_tokens": v["tokens"], "execution_mode": "live", "fallback_notice": None, "ungrounded_capped": v["ungrounded_capped"]}
+            "overall_rationale": v["overall_rationale"], "judge_model": v["judge_model_used"], "latency_ms": round((time.perf_counter() - t0) * 1000, 1),
+            "total_tokens": v["tokens"], "execution_mode": "live_fallback_model" if v["fallback_used"] else "live", "fallback_notice": _notice(judge, v), "ungrounded_capped": v["ungrounded_capped"]}
 
 
 @app.post("/api/compare", summary="Pairwise A-vs-B in BOTH orders (position-bias check)")
@@ -124,4 +132,5 @@ def compare_pair(request: PairwiseEvaluationRequest):
     return {"test_case_id": case["id"], "final_winner": r["final"], "flip_detected": not r["agree"], "hard_flip": r["hard_flip"], "single_order_winner": r["single_order"],
             "forward_evaluation": {"winner": ab["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ab.get("rationale")},
             "reverse_evaluation": {"winner": ba["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ba.get("rationale")},
-            "overall_rationale": ab.get("rationale"), "total_tokens": r["tokens"], "execution_mode": "live"}
+            "overall_rationale": ab.get("rationale"), "total_tokens": r["tokens"], "judge_model": ab.get("judge_model_used"),
+            "execution_mode": "live_fallback_model" if (ab.get("fallback_used") or ba.get("fallback_used")) else "live", "fallback_notice": _notice(judge, ab if ab.get("fallback_used") else ba)}

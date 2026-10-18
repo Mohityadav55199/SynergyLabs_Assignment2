@@ -30,7 +30,17 @@ class JudgeConfig:
     base_url: str = field(default_factory=lambda: os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1"))
     judge_temperature: float = field(default_factory=lambda: float(os.getenv("JUDGE_TEMPERATURE", "0")))
     judge_max_tokens: int = field(default_factory=lambda: int(os.getenv("JUDGE_MAX_TOKENS", "1500")))
+    fallback_models: list = field(default_factory=lambda: [m.strip() for m in os.getenv("JUDGE_FALLBACK_MODELS", "openai/gpt-oss-120b,openai/gpt-oss-20b").split(",") if m.strip()])
     log_path: Path = field(default_factory=lambda: Path(os.getenv("JUDGE_LOG", str(ROOT / "judge" / "logs" / "judge_calls.jsonl"))))
+
+    @property
+    def judge_chain(self) -> list:
+        """Primary judge first, then live fallback models. A fallback from the generator's own family is never used (self-enhancement guard)."""
+        chain = []
+        for m in [self.judge_model] + self.fallback_models:
+            if m not in chain and (m == self.judge_model or family_of(m) != family_of(self.generator_model)):
+                chain.append(m)
+        return chain
 
     @property
     def same_family(self) -> bool:

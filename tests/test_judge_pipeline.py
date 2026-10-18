@@ -221,3 +221,45 @@ def test_load_suite_json_yaml_and_validation(tmp_path):
     (tmp_path / "dup.json").write_text(json.dumps({"cases": [CASE, CASE]}), encoding="utf-8")
     with pytest.raises(ValueError):
         load_suite(tmp_path / "dup.json")
+
+
+# ------------------------------------------------------------------ live-model fallback chain
+def test_fallback_model_used_when_primary_errors(tmp_path):
+    seen = []
+
+    class Chain(FakeClient):
+        def chat(self, messages, model, temperature=0.0, max_tokens=3000, tag="", role="judge"):
+            seen.append(model)
+            return ChatResult("", error="HTTP 429: tokens per day") if model == "openai/gpt-oss-120b" else ChatResult(pw(5), 10, 5)
+
+    v = Judge(Chain([], tmp_path)).judge_case(CASE)
+    assert v["status"] == "ok" and v["fallback_used"] and v["judge_model_used"] == "openai/gpt-oss-20b" and seen == ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+
+
+def test_no_fallback_when_primary_answers_or_is_merely_unparseable(tmp_path):
+    ok = Judge(FakeClient([pw(5)], tmp_path)).judge_case(CASE)
+    assert not ok["fallback_used"] and ok["judge_model_used"] == "openai/gpt-oss-120b"
+    bad = Judge(FakeClient(["nope", "nope"], tmp_path)).judge_case(CASE)   # reachable but unparseable: never shop for a friendlier model
+    assert bad["status"] == "unparseable" and not bad["fallback_used"]
+
+
+def test_fallback_chain_respects_family_guard():
+    c = JudgeConfig(api_key="x")
+    c.generator_model = "openai/gpt-oss-20b"       # generator in the OpenAI family: OpenAI fallbacks must be skipped
+    c.judge_model = "qwen/qwen3.8-27b"
+    assert c.judge_chain == ["qwen/qwen3.8-27b"]
+    assert JudgeConfig(api_key="x").judge_chain == ["openai/gpt-oss-120b", "openai/gpt-oss-20b"]
+
+
+def test_fail_fast_on_long_retry_after(tmp_path):
+    class R429:
+        status_code, headers, text = 429, {"retry-after": "600"}, "tokens per day"
+    class Http:
+        calls = 0
+        def post(self, *a, **k):
+            Http.calls += 1
+            return R429()
+    c = LLMClient(JudgeConfig(api_key="k"), log_path=tmp_path / "l.jsonl", fail_fast_wait=20.0)
+    c._http = Http()
+    res = c.chat([{"role": "user", "content": "x"}], "openai/gpt-oss-120b")
+    assert res.error.startswith("rate_limited") and Http.calls == 1

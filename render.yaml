@@ -11,9 +11,3 @@ services:
     envVars:
       - key: GROQ_API_KEY
         sync: false
-      - key: JUDGE_MODEL
-        value: openai/gpt-oss-120b
-      - key: GENERATOR_MODEL
-        value: qwen/qwen3.8-27b
-      - key: JUDGE_TEMPERATURE
-        value: "0"

@@ -57,11 +57,12 @@ def _extra_params(model: str) -> dict:
 
 
 class LLMClient:
-    def __init__(self, config: Optional[JudgeConfig] = None, log_path: Optional[Path] = None, replay_only: bool = False, max_attempts: int = 7):
+    def __init__(self, config: Optional[JudgeConfig] = None, log_path: Optional[Path] = None, replay_only: bool = False, max_attempts: int = 7, fail_fast_wait: Optional[float] = None):
         self.config = config or JudgeConfig()
         self.log_path = Path(log_path or self.config.log_path)
         self.replay_only = replay_only
         self.max_attempts = max_attempts
+        self.fail_fast_wait = fail_fast_wait   # if set, a 429 whose retry-after exceeds this many seconds fails immediately (lets the caller fall back)
         self.usage: Dict[str, Usage] = {}
         self._cache: Dict[str, dict] = {}
         self._http = None
@@ -114,6 +115,9 @@ class LLMClient:
                 err = f"HTTP {r.status_code}: {r.text[:200]}"
                 if r.status_code in (429, 500, 502, 503, 504):
                     wait = float(r.headers.get("retry-after") or min(2 ** attempt, 30))
+                    if self.fail_fast_wait is not None and wait > self.fail_fast_wait:
+                        err = f"rate_limited: retry-after {wait:.0f}s exceeds fail-fast limit ({err})"
+                        break
                     u.retries += 1
                     print(f"  [llm] {model} {r.status_code}, retry {attempt}/{self.max_attempts} in {wait:.0f}s", file=sys.stderr)
                     time.sleep(wait + 0.5)
