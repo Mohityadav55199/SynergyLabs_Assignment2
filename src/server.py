@@ -130,7 +130,7 @@ def compare_pair(request: PairwiseEvaluationRequest):
         raise HTTPException(status_code=502, detail=f"Judge produced no usable verdict ({errs}). No winner was invented.")
     ab, ba = r["orders"]["AB"], r["orders"]["BA"]
     return {"test_case_id": case["id"], "final_winner": r["final"], "flip_detected": not r["agree"], "hard_flip": r["hard_flip"], "single_order_winner": r["single_order"],
-            "forward_evaluation": {"winner": ab["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ab.get("rationale")},
-            "reverse_evaluation": {"winner": ba["winner"], "judge_model": judge.config.judge_model, "comparative_rationale": ba.get("rationale")},
+            "forward_evaluation": {"winner": ab["winner"], "judge_model": ab.get("judge_model_used"), "comparative_rationale": ab.get("rationale")},
+            "reverse_evaluation": {"winner": ba["winner"], "judge_model": ba.get("judge_model_used"), "comparative_rationale": ba.get("rationale")},
             "overall_rationale": ab.get("rationale"), "total_tokens": r["tokens"], "judge_model": ab.get("judge_model_used"),
             "execution_mode": "live_fallback_model" if (ab.get("fallback_used") or ba.get("fallback_used")) else "live", "fallback_notice": _notice(judge, ab if ab.get("fallback_used") else ba)}

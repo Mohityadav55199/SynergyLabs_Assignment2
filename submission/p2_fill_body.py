@@ -152,6 +152,14 @@ def fill_problem2(d, body, T, set_cell, set_after_label, ROOT):
         set_cell(T[34].rows[0].cells[0], "From judge/logs/judge_calls.jsonl, record tag '" + ab_rec["tag"] + "', model " + ab_rec["model"] + ", temperature " + str(ab_rec["temperature"]) +
                  f", tokens {ab_rec['prompt_tokens']}+{ab_rec['completion_tokens']}.\n\nRAW PROMPT (user message):\n" + ab_rec["messages"][-1]["content"] + "\n\nRAW RESPONSE:\n" + ab_rec["raw_response"] +
                  "\n\n(Text excerpt; replace with a screenshot of the log line if you prefer.)", mono=True, size=7)
+    from docx.shared import Inches
+    cell34 = T[34].rows[0].cells[0]
+    for name, cap in (("p2_live_verdict.png", "Live deployment (https://synergylabs-assignment2.vercel.app/), pointwise verdict: judge openai/gpt-oss-120b, executed live on Groq, latency and tokens shown."),
+                      ("p2_live_verdict_criteria.png", "Same verdict: per-criterion score, rationale and verbatim evidence quote from the model output.")):
+        shot = ROOT / "submission" / "screenshots" / name
+        if shot.exists():
+            cell34.add_paragraph().add_run(cap)
+            cell34.add_paragraph().add_run().add_picture(str(shot), width=Inches(6.0))
     if ab_rec and ba_rec:
         set_cell(T[35].rows[0].cells[0],
                  "Same pair (p17: 'Canberra.' vs 'The capital of Australia is Canberra.', gold = TIE), baseline judge prompt, gpt-oss-120b, raw replies from the log:\n"

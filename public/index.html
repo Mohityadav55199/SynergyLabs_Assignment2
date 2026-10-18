@@ -1040,7 +1040,7 @@
             <div style="text-align: right;">
               <div style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Judge Model:</div>
               <div style="font-family: var(--font-mono); font-weight: 700; color: var(--text-main);" id="verdict-model">openai/gpt-oss-120b</div>
-              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;" id="verdict-latency">Latency: 120ms | Cost: $0.0004</div>
+              <div style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;" id="verdict-latency">Latency: n/a | Tokens: n/a</div>
             </div>
           </div>
 
@@ -1372,6 +1372,10 @@
         h += '<h3 style="margin:1rem 0 .5rem">Test-retest (mitigated judge, gold cases)</h3>' + tbl(["Setting", "Pass/fail flips", "Mean abs score change"], [
           ["Temperature 0 rerun", pct(rt.temperature_0.pass_flip_rate), num(rt.temperature_0.mean_abs_score_diff)], ["Temperature 0.7, two runs", pct(rt["temperature_0.7"].pass_flip_rate), num(rt["temperature_0.7"].mean_abs_score_diff)]]);
       }
+      const setBadge = (id, n) => { const el = document.getElementById(id); if (el && n !== undefined) el.textContent = n; };
+      setBadge("count-benchmarks", g ? g.mitigated.validation.n_total : 0);
+      setBadge("count-ab", ab ? ab.comparison.pairwise.pairs : 0);
+      setBadge("count-adversarial", ad ? Object.values(ad.mitigated.by_kind).reduce((s, k) => s + k.n, 0) : 0);
       document.getElementById("bm-root").innerHTML = h || "<p>No measured results found on this backend.</p>";
       if (ab) {
         const c = ab.comparison, s = c.pairwise, pw = c.pointwise || {};
@@ -1686,8 +1690,7 @@
         document.querySelector(".score-max").textContent = "";
 
         modelVal.textContent = data.forward_evaluation?.judge_model || "Dual-Order Judge";
-        const cost = data.total_cost_usd ? `$${data.total_cost_usd.toFixed(4)}` : "$0.0004";
-        latencyVal.textContent = `Bidirectional Swap: ${data.flip_detected ? 'FLIP DETECTED' : 'CONSISTENT'} | Cost: ${cost}`;
+        latencyVal.textContent = `Both orders: ${data.flip_detected ? 'ORDERS DISAGREE (TIE)' : 'orders agree'} | Tokens: ${data.total_tokens ?? "n/a"} (free tier)`;
         document.getElementById("criteria-section").style.display = "none";
       } else {
         document.querySelector(".score-max").textContent = "/ 5.0";
@@ -1698,9 +1701,8 @@
         badge.textContent = data.passed ? "PASSED" : "FAILED / NEEDS REVIEW";
 
         modelVal.textContent = data.judge_model || "openai/gpt-oss-120b";
-        const lat = data.latency_ms ? `${Math.round(data.latency_ms)}ms` : "140ms";
-        const cost = data.cost_usd ? `$${data.cost_usd.toFixed(4)}` : "$0.0002";
-        latencyVal.textContent = `Latency: ${lat} | Cost: ${cost}`;
+        const lat = data.latency_ms ? `${Math.round(data.latency_ms)}ms` : "n/a";
+        latencyVal.textContent = `Latency: ${lat} | Tokens: ${data.total_tokens ?? "n/a"} (free tier)`;
 
         // Render Criteria visual cards
         document.getElementById("criteria-section").style.display = "block";
