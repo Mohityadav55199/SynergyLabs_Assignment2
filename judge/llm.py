@@ -75,7 +75,9 @@ class LLMClient:
                 rec = json.loads(line)
             except json.JSONDecodeError:
                 continue
-            if rec.get("error") is None and rec.get("key"):
+            cap = rec.get("max_tokens")
+            truncated = bool(cap) and rec.get("completion_tokens", 0) >= cap   # hit the token cap: never reuse a cut-off answer
+            if rec.get("error") is None and rec.get("key") and not truncated:
                 self._cache.setdefault(rec["key"], rec)
 
     def _log(self, rec: dict) -> None:
@@ -128,9 +130,9 @@ class LLMClient:
         if err:
             u.errors += 1
         rec = {"ts": datetime.now(timezone.utc).isoformat(timespec="seconds"), "key": key, "tag": tag, "role": role, "model": model, "temperature": temperature,
-               "messages": messages, "raw_response": text, "prompt_tokens": pt, "completion_tokens": ct, "latency_s": latency, "error": err}
+               "max_tokens": max_tokens, "messages": messages, "raw_response": text, "prompt_tokens": pt, "completion_tokens": ct, "latency_s": latency, "error": err}
         self._log(rec)
-        if err is None:
+        if err is None and not (max_tokens and ct >= max_tokens):
             self._cache[key] = rec
         return ChatResult(text, pt, ct, latency, err)
 
